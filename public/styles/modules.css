@@ -1,0 +1,310 @@
+* {
+    background-color: #D6D6D6;
+    font-family: 'Open Sans';
+    overflow: hidden;
+
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.sideBar {
+    background-color: #ffff;
+    border: 2px solid white;
+    border-radius: 0px 30px 30px 0px;
+    height: 100vh;
+    width: 20vw;
+    filter: drop-shadow(6px 4px 9px #B5B5B5);
+    align-self: left;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.userInfo {
+    height: 30vh;
+    width: 20vw;
+    border-radius: 30px;
+    padding: 0px 0px 10px 0px;
+    margin: 0rem 0rem 2rem 0rem;
+    background-color: #ffff;
+}
+
+.sideBarButtons {
+    background-color: #ffff;
+    display: flex;
+    flex-direction: column;
+}
+
+.sideBarButtons button {
+  display: flex;
+  font-size: 0.9rem;
+  font-weight: bold;
+  font-stretch: condensed;
+  color: #5c5c5c;
+  background-color: #ffff;
+  border: 2px solid #EAEAEA;
+  border-radius: 25px;
+  filter: drop-shadow(1px 2px 4px #B5B5B5);
+  padding: 20px 0px 20px 0px;
+  margin: 0px 10px 10px 5px;
+
+}
+
+button img {
+  margin: 0px 30px 0px 20px;
+  width: 20px;
+  height: 20px;
+  padding-right: 30px;
+  background-color:#ffff;
+
+}
+.btnModule img {
+  margin: 0px 30px 0px 20px;
+  width: 20px;
+  height: 20px;
+  padding-right: 30px;
+  background-color: #00A651;
+}
+
+.sideBarButtons button:hover {
+    border: 2px solid #c1c1c1;
+    filter: drop-shadow(1px 2px 4px #9e9e9e) brightness(1.1);
+
+}
+
+.sideBarButtons .btnModule {
+  font-size: 0.9rem;
+  font-weight: bold;
+  font-stretch: condensed;
+  color: #ffff;
+  background-color: #00A651;
+  border: 2px solid #18CE71;
+}
+
+.headerBar {
+    border: 2px solid #1A5639;
+    border-radius: 0px 30px 30px 0px;
+    background-color: #1A5639;
+    display: flex;
+    justify-content: center;    
+    margin: 20px 30px;
+    width: 70vw;
+    height: 10vh;
+    filter: drop-shadow(1px 2px 4px #7a7a7a);   
+}
+
+.headerBar p {
+    align-self: center;
+    font-size: 24px;
+    font-weight: bold;
+    font-stretch: condensed;
+    color: #ffff;
+    background-color: #1A5639;
+}
+.moduleData, .moduleRegisterData {
+    border: 2px solid #CFCFCF;
+    background-color: #F6F4F4;
+    border-radius: 10px;
+    margin: 10px 20px 20px 30px;
+    height: 65vh;
+
+}
+
+.dataHeader, .dataHeader span, .dataHeaderInfo, .dataHeaderInfo span, .dataHeaderButtons, .dataHeaderButtons span{
+  background-color: #f6f4f4;
+  color: #a1a1a1;
+  font-weight: bold;
+  font-stretch: condensed;
+}
+
+.dataHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 20px 0px 20px;
+}
+
+.dataHeaderInfo span {
+  margin: 0px 80px 0px 80px;
+  font-size: 15px;
+
+}
+
+.dataHeaderButtons span {
+  margin: 0px 20px 0px 20px;
+  font-size: 15px;
+
+}
+
+.btnCreateContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.createModuleBtn {
+    font-size: 16px;
+    font-weight: bold;
+    font-stretch: condensed;
+    color: #ffff;
+    background-color: #00A651;
+    border: 2px solid #00A651;
+    border-radius: 15px;
+    filter: drop-shadow(1px 4px 4px #9e9e9e);
+    margin: 0px 20px 10px 0px;
+    padding: 10px 50px 10px 50px;
+}
+
+.createModuleBtn:hover {
+    filter: drop-shadow(1px 4px 4px #9e9e9e) brightness(1.1);
+}
+
+form, h2, label, input, textarea, .form-group {
+  background-color: #F6F4F4;
+}
+
+.moduleRegisterData {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.create, .cancel {
+  font-size: 1rem;
+  font-weight: bold;
+  font-stretch: condensed;
+  color: #5c5c5c;
+  background-color: #ffff;
+  border: 2px solid #EAEAEA;
+  border-radius: 25px;
+  filter: drop-shadow(1px 2px 4px #B5B5B5);
+  padding: 10px 30px 10px 30px;
+  margin: 0px 10px 13px 10px;
+
+}
+
+.form-group label {
+  color: #575757;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+
+.form-group input, textarea{
+  background-color: #ffff;
+  border: 2px solid #D7D7D7;
+  border-radius: 5px;
+  height: 6vh;
+  width: 18vw;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  padding-left: 20px;
+
+}
+
+.form-group input::placeholder {
+  text-align: center;
+  font-size: 12px;
+  color: #C7C7C7;
+}
+
+.form-group span{
+  margin-left: 11vw;
+  margin-bottom: 5px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #A1A1A1
+
+}
+.create {
+  background-color: #00A651;
+  border: 2px solid #00A651;
+  color: #ffff;
+}
+
+.create:hover{
+  filter: drop-shadow(1px 4px 4px #9e9e9e) brightness(1.1);
+}
+
+.cancel {
+  border: 2px solid #e7e7e7;
+  background-color: #e7e7e7;
+  color: #a1a1a1;
+}
+
+.cancel:hover{
+  filter: drop-shadow(1px 4px 4px #9e9e9e) brightness(1.04);
+  color: #878787;
+}
+
+  
+@media screen and (max-width: 768px) {
+    
+    .sideBar {
+        width: 15vw; 
+        height: 85vh;
+        justify-content: center;
+      }
+    
+    .headerBar {
+        height: 30px;
+    }
+    
+    .headerBar p{
+        font-size: 20px;
+    }
+
+    .moduleData {
+        height: 70vh;
+        width: 80vw;
+        margin: 10px;
+      }
+
+    .userInfo {
+      display: none;
+    }
+  
+    .sideBarButtons button {
+        font-size: 0; 
+        padding: 15px 15px;
+        margin-bottom: 40px;
+    }
+
+    .sideBarButtons .btnModule {
+        font-size: 0; 
+        padding: 15px 15px;
+        margin-bottom: 40px;
+    }
+  
+    .createModuleBtn {
+      font-size: 14px; 
+      padding: 8px 15px; 
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+  .sideBar {
+      width: 20vw;
+      height: 80vh;
+    }
+  
+    .headerBar,
+    .moduleData {
+      margin: 15px; 
+    }
+  
+    .sideBarButtons button {
+        font-size: 0.8rem; 
+        padding: 18px 0px; 
+      }
+  
+    .sideBarButtons .btnModule {
+        font-size: 0.8rem; 
+      }
+  
+    .createModuleBtn {
+      font-size: 15px; 
+      padding: 10px 40px; 
+    }
+}

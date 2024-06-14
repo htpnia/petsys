@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQTech - BaB Módulos</title>
+
+    <!---Normalize CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Styles -->
+    
+    <link rel="stylesheet" href="../../public/styles/modules.css"/>
+    
+    <!--- Fonte Open Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+<div class="container">
+   
+    <!--- Side Bar -->
+    <div class="sideBar">
+        <div class="userInfo">
+            
+        </div>
+        <div class="sideBarButtons">
+            <button class="btnDashboard" onclick="navigateToPage(this)"><img src="/public/images/dashboard.svg"/>Dashboard</button>
+            <button class="btnUser" onclick="navigateToPage(this)"><img src="/public/images/usuario.svg"/>Usuários</button>
+            <button class="btnProfile" onclick="navigateToPage(this)"><img src="/public/images/perfis.svg"/>Perfis</button>
+            <button class="btnModule" onclick="navigateToPage(this)"><img src="/public/images/modulos.svg"/>Módulos</button>
+            <button class="btnFT" onclick="navigateToPage(this)"><img src="/public/images/ft.svg"/>Funções&Transações</button>
+        </div>
+    </div>
+    <div class="pageContent">
+        <!--- Header Bar -->
+        <div class="headerBar">
+            <p>Módulos</p>
+        </div>
+
+        <!-- Data Content -->
+        <div class="moduleRegisterData">
+            <h2>Cadastro de Módulo</h2>
+            <form id="formModule" action="/cadmodulo" method="POST">
+                <div class="form-group">
+                    <label for="nomeModulo">Nome:</label>
+                    <br>
+                    <input type="text" id="nomeModulo" name="nomeModulo" required>
+                </div>
+                <div class="form-group">
+                  <label for="descricaoModulo">Descrição:</label>
+                  <br>
+                  <textarea id="descricaoModulo" name="descricaoModulo"></textarea>
+                </div>  
+                <input type="hidden" id="idModulo">     
+            </form>
+        </div>
+
+        <div class="btnCreateContainer">
+            <button class="cancel" onclick="window.location.href='modules.html'">Cancelar</button>
+            <button class="create" type="submit">Confirmar</button>
+        
+        </div>
+
+        
+    </div>
+
+   
+    
+</body>
+
+<!--- Script JS -->
+<script src="../../public/js/menu.js"></script>
+<!--- Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</html>

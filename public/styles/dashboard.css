@@ -1,0 +1,182 @@
+* {
+    background-color: #D6D6D6;
+    font-family: 'Open Sans';
+    overflow: hidden;
+
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.sideBar {
+    background-color: #ffff;
+    border: 2px solid white;
+    border-radius: 0px 30px 30px 0px;
+    height: 100vh;
+    width: 20vw;
+    filter: drop-shadow(6px 4px 9px #B5B5B5);
+    align-self: left;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.userInfo {
+    height: 30vh;
+    width: 20vw;
+    border-radius: 30px;
+    padding: 0px 0px 10px 0px;
+    margin: 0rem 0rem 2rem 0rem;
+    background-color: #ffff;
+}
+
+.sideBarButtons {
+    background-color: #ffff;
+    display: flex;
+    flex-direction: column;
+}
+
+.sideBarButtons button {
+    display: flex;
+    font-size: 0.9rem;
+    font-weight: bold;
+    font-stretch: condensed;
+    color: #5c5c5c;
+    background-color: #ffff;
+    border: 2px solid #EAEAEA;
+    border-radius: 25px;
+    filter: drop-shadow(1px 2px 4px #B5B5B5);
+    padding: 20px 0px 20px 0px;
+    margin: 0px 10px 10px 5px;
+
+}
+
+button img {
+  margin: 0px 30px 0px 20px;
+  width: 20px;
+  height: 20px;
+  padding-right: 30px;
+  background-color:#ffff;
+
+}
+.btnDashboard img {
+  margin: 0px 30px 0px 20px;
+  width: 20px;
+  height: 20px;
+  padding-right: 30px;
+  background-color: #00A651;
+}
+
+.sideBarButtons button:hover {
+  border: 2px solid #c1c1c1;
+  filter: drop-shadow(1px 2px 4px #9e9e9e) brightness(1.1);
+
+}
+
+
+.sideBarButtons .btnDashboard {
+    font-size: 0.9rem;
+    font-weight: bold;
+    font-stretch: condensed;
+    color: #ffff;
+    background-color: #00A651;
+    border: 2px solid #18CE71;
+}
+
+.headerBar {
+    border: 2px solid #1A5639;
+    border-radius: 0px 30px 30px 0px;
+    background-color: #1A5639;
+    display: flex;
+    justify-content: center;    
+    margin: 20px 30px;
+    width: 70vw;
+    height: 10vh;
+    filter: drop-shadow(1px 2px 4px #7a7a7a);   
+}
+
+.headerBar p {
+    align-self: center;
+    font-size: 24px;
+    font-weight: bold;
+    font-stretch: condensed;
+    color: #ffff;
+    background-color: #1A5639;
+}
+
+.dashboardData {
+    border: 2px solid #CFCFCF;
+    background-color: #F6F4F4;
+    border-radius: 10px;
+    margin: 10px 20px 20px 30px;
+    height: 65vh;
+
+}
+
+
+@media screen and (max-width: 768px) {
+    
+    .sideBar {
+        width: 15vw; 
+        height: 85vh;
+        justify-content: center;
+      }
+    
+    .headerBar {
+        height: 30px;
+    }
+    
+    .headerBar p{
+        font-size: 20px;
+    }
+
+      .dashboardData {
+        height: 70vh;
+        width: 80vw;
+        margin: 10px;
+      }
+
+    .userInfo {
+      display: none;
+    }
+  
+    .sideBarButtons button {
+      font-size: 0; 
+      padding: 15px 15px;
+      margin-bottom: 40px;
+    }
+
+    .sideBarButtons .btnDashboard {
+      font-size: 0; 
+      padding: 15px 15px;
+      margin-bottom: 40px;
+    }
+  
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+  .sideBar {
+      width: 20vw;
+      height: 80vh;
+    }
+  
+    .headerBar,
+    .dashboardData {
+      margin: 15px; 
+    }
+  
+    .sideBarButtons button {
+        font-size: 0.8rem; 
+        padding: 18px 0px; 
+      }
+  
+    .sideBarButtons .btnDashboard {
+        font-size: 0.8rem; 
+      }
+  
+
+}
+
