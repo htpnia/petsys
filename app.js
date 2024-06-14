@@ -278,7 +278,35 @@ app.put('/api/transacoes/:id', async (req, res) => {
 });
 
 // Deletar um usuário
+app.delete('/api/usuarios/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const usuario = await Usuario.findByPk(id);
+        if (!usuario) {
+            return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
+        }
+        await usuario.destroy();
+        res.status(204).send();
+    } catch (error) {
+        console.error('Erro ao deletar usuário:', error);
+        res.status(500).json({ success: false, message: 'Erro ao deletar usuário' });
+    }
+});
 // Deletar um perfil
+app.delete('/api/perfis/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const perfil = await Perfil.findByPk(id);
+        if (!perfil) {
+            return res.status(404).json({ success: false, message: 'Perfil não encontrado' });
+        }
+        await perfil.destroy();
+        res.status(204).send();
+    } catch (error) {
+        console.error('Erro ao deletar perfil:', error);
+        res.status(500).json({ success: false, message: 'Erro ao deletar perfil' });
+    }
+});
 // Deletar um módulo
 app.delete('/api/modulos/:id', async (req, res) => {
     const { id } = req.params;
@@ -296,7 +324,35 @@ app.delete('/api/modulos/:id', async (req, res) => {
 });
 
 // Deletar uma função
+app.delete('/api/funcoes/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const funcao = await Funcao.findByPk(id);
+        if (!funcao) {
+            return res.status(404).json({ success: false, message: 'Função não encontrada' });
+        }
+        await funcao.destroy();
+        res.status(204).send();
+    } catch (error) {
+        console.error('Erro ao deletar função:', error);
+        res.status(500).json({ success: false, message: 'Erro ao deletar função' });
+    }
+});
 // Deletar uma transação
+app.delete('/api/transacoes/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const transacao = await Transacao.findByPk(id);
+        if (!transacao) {
+            return res.status(404).json({ success: false, message: 'Transação não encontrada' });
+        }
+        await transacao.destroy();
+        res.status(204).send();
+    } catch (error) {
+        console.error('Erro ao deletar transação:', error);
+        res.status(500).json({ success: false, message: 'Erro ao deletar transação' });
+    }
+});
 
 
 
