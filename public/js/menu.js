@@ -1,10 +1,10 @@
 function navigateToPage(button) {
     const pageMapping = {
-        "Dashboard": "../../view/Dashboard/dashboard.html",
-        "Perfis": "../../view/Profile/profiles.html",
-        "Usuários": "../../view/User/users.html",
-        "Módulos":"../../view/Modules/modules.html",
-        "Funções&Transações": "../../view/FunctionTransaction/functiontransaction.html",
+        "Dashboard": "/dashboard",
+        "Perfis": "/perfis",
+        "Usuários": "/users",
+        "Módulos":"/modulos",
+        "Funções&Transações": "/funcoestransacoes",
     };
 
     const clickedButtonText = button.textContent.trim();

@@ -6,6 +6,8 @@ const Perfil = require('./model/profile'); // Corrigido para importar corretamen
 const Modulo = require('./model/module');
 const Transacao = require('./model/transaction');
 const Funcao = require('./model/function');
+const UsuarioPerfil = require('./model/userProfile');
+const ModuloTransacao = require('./model/moduleTransaction')
 
 
 
@@ -16,7 +18,7 @@ const PORT = 3000;
 app.use(bodyParser.json());
 
 // Middleware para servir arquivos estáticos.
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/')));
 
 // Rota GET para servir o arquivo 'regUser.html'
 app.get('/dashboard', (req, res) => {

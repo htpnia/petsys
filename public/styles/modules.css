@@ -109,7 +109,7 @@ button img {
     background-color: #F6F4F4;
     border-radius: 10px;
     margin: 10px 20px 20px 30px;
-    height: 65vh;
+    height: 70vh;
 
 }
 
@@ -170,6 +170,12 @@ form, h2, label, input, textarea, .form-group {
   align-items: center;
 }
 
+.btnFormContainer {
+  background-color: #F6F4F4;
+  margin-top: 22vh;
+  padding-top: 25px;
+}
+
 .create, .cancel {
   font-size: 1rem;
   font-weight: bold;
@@ -196,7 +202,7 @@ form, h2, label, input, textarea, .form-group {
   border: 2px solid #D7D7D7;
   border-radius: 5px;
   height: 6vh;
-  width: 18vw;
+  width: 22vw;
   margin-bottom: 10px;
   margin-top: 5px;
   padding-left: 20px;
