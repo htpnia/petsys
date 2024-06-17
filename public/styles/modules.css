@@ -108,10 +108,12 @@ button img {
     border: 2px solid #CFCFCF;
     background-color: #F6F4F4;
     border-radius: 10px;
-    margin: 10px 20px 20px 30px;
+    margin: 10px 15px 20px 30px;
     height: 70vh;
+    overflow: auto;
 
 }
+
 
 .dataHeader, .dataHeader span, .dataHeaderInfo, .dataHeaderInfo span, .dataHeaderButtons, .dataHeaderButtons span{
   background-color: #f6f4f4;
@@ -244,6 +246,22 @@ form, h2, label, input, textarea, .form-group {
   color: #878787;
 }
 
+ul, .moduleListContainer {
+  background-color: #f6f4f4;
+}
+
+li {
+  background-color: #ffff;
+  border: 1px solid #d7d7d7;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 13px;
+  padding: 3px;
+  margin: 0px 3px 3px 5px;
+  width: 94%;
+  padding: 10px;
+  color: #606060
+}
   
 @media screen and (max-width: 768px) {
     
