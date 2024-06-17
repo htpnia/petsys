@@ -2,7 +2,7 @@ document.getElementById('formProfile').addEventListener('submit', function(event
     event.preventDefault();  // Impede que o formulário seja submetido de maneira convencional
 
     const nomePerfil = document.getElementById('nomePerfil').value;
-    const descricao = document.getElementById('descricao').value;
+    const descricao = document.getElementById('descricaoPerfil').value;
 
     const perfilData = {
         nomePerfil: nomePerfil,

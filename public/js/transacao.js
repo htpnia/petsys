@@ -1,12 +1,12 @@
 document.getElementById('formTransaction').addEventListener('submit', function(event) {
     event.preventDefault();  // Impede que o formulário seja submetido de maneira convencional
 
-    const nomeModulo = document.getElementById('nomeTransacao').value;
-    const descricaoModulo = document.getElementById('descricaoTransacao').value;
+    const nomeTransacao = document.getElementById('nomeTransacao').value;
+    const descricao = document.getElementById('descricaoTransacao').value;
 
     const transactionData = {
         nomeTransacao: nomeTransacao,
-        descricaoTransacao: descricaoTransacao
+        descricao: descricao
     };
 
     console.log('Dados do registro de transacao:', transactionData);  // Loga os dados do registro no console para verificação

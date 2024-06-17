@@ -12,7 +12,7 @@ const Transacao = sequelize.define('Transacao', {
         type: DataTypes.STRING(100),
         allowNull: false,
         unique: true,
-        field: 'nome_funcao' // Mapeia para a coluna 'nome_transacao' no banco de dados
+        field: 'nome_transacao' // Mapeia para a coluna 'nome_transacao' no banco de dados
     },
     descricao: {
         type: DataTypes.STRING(255),
@@ -20,7 +20,7 @@ const Transacao = sequelize.define('Transacao', {
         field: 'descricao_transacao' // Mapeia para a coluna 'descricao' no banco de dados
     }
 }, {
-    tableName: 'Transacao',
+    tableName: 'transacao',
     timestamps: false // Desabilita os campos createdAt e updatedAt
 });
 

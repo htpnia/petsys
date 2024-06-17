@@ -20,7 +20,7 @@ const Funcao = sequelize.define('Funcao', {
         field: 'descricao_funcao' // Mapeia para a coluna 'descricao' no banco de dados
     }
 }, {
-    tableName: 'Funcao',
+    tableName: 'funcao',
     timestamps: false // Desabilita os campos createdAt e updatedAt
 });
 

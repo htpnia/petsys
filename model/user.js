@@ -38,7 +38,7 @@ const Usuario = sequelize.define('usuario', {
 }, {
     // Opções do modelo
     tableName: 'usuario',
-    timestamps: true // Sequelize adiciona automaticamente os campos createdAt e updatedAt
+    timestamps: false // Sequelize adiciona automaticamente os campos createdAt e updatedAt
 });
 
 // Exporta o modelo
