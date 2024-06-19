@@ -169,6 +169,7 @@ form, h2, label, input, textarea, .form-group {
   flex-direction: column;
   align-items: center;
   height: 70vh;
+  overflow: auto;
 }
 
 .create, .cancel {
@@ -254,9 +255,6 @@ form, h2, label, input, textarea, .form-group {
   color: #878787;
 }
 
-.userListContainer {
-  overflow: scroll;
-}
 
 ul, .userListContainer {
   background-color: #f6f4f4;

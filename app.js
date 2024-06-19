@@ -1,13 +1,15 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
 const Usuario = require('./model/user'); // Corrigido para importar corretamente
 const Perfil = require('./model/profile'); // Corrigido para importar corretamente
 const Modulo = require('./model/module');
 const Transacao = require('./model/transaction');
 const Funcao = require('./model/function');
 const UsuarioPerfil = require('./model/userProfile');
-const ModuloTransacao = require('./model/moduleTransaction')
+const ModuloTransacao = require('./model/moduleTransaction');
+const authenticate = require('./middleware/auth');
 
 
 
@@ -20,18 +22,56 @@ app.use(bodyParser.json());
 // Middleware para servir arquivos estáticos.
 app.use(express.static(path.join(__dirname, '/')));
 
+const SECRET_KEY = 'chave';
+
+// Rota raiz para direcionar para a página de login
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'view', 'Login/login.html'));
+});
+
+// Rota de login
+app.post('/login', async (req, res) => {
+    const { email, senha } = req.body;
+    console.log('Tentativa de login:', { email, senha });
+
+    try {
+        const user = await Usuario.findOne({ where: { email } });
+        console.log('Usuário encontrado:', user);
+
+        if (!user) {
+            return res.status(400).json({ success: false, message: 'Usuário não encontrado' });
+        }
+
+        if (senha !== user.senha) { 
+            return res.status(400).json({ success: false, message: 'Senha incorreta' });
+        }
+
+        const token = jwt.sign({ id: user.idUsuario }, SECRET_KEY, { expiresIn: '5h' });
+
+        res.json({ success: true, token });
+    } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        res.status(500).json({ success: false, message: 'Erro ao fazer login' });
+    }
+});
+
+
+// Middleware de autenticação aplicado a todas as rotas abaixo
+
+
 // Rota GET para servir o arquivo 'regUser.html'
-app.get('/dashboard', (req, res) => {
+app.get('/dashboard', authenticate, (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'Dashboard/dashboard.html'));
 });
 
+
 // Rota GET para servir o arquivo 'regUser.html'
-app.get('/users', (req, res) => {
+app.get('/users', authenticate, (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'User/users.html'));
 });
 
 // Rota GET para servir o arquivo 'regProfile.html' para cadastro de perfil
-app.get('/perfis', (req, res) => {
+app.get('/perfis', authenticate, (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'profile/profiles.html'));
 });
 
@@ -73,15 +113,16 @@ app.get('/cadtransacao', (req, res) => {
 });
 
 
+
 // Rota POST para criar um novo usuário
 app.post('/caduser', async (req, res) => {
     try {
-        const { nomeusuario, email, matricula, senha } = req.body;
-        const novoUsuario = await Usuario.create({ nomeusuario, email, matricula, senha });
-        res.status(201).json(novoUsuario);
+        const { nomeusuario, email, matricula, senha, idPerfil } = req.body;
+        const novoUsuario = await Usuario.create({ nomeusuario, email, matricula, senha, idPerfil });
+        res.status(201).json({ success: true, usuario: novoUsuario });
     } catch (error) {
         console.error('Erro ao criar usuário:', error);
-        res.status(500).json({ error: 'Erro ao criar usuário' });
+        res.status(500).json({ success: false, message: 'Erro ao criar usuário' });
     }
 });
 

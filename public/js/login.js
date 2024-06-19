@@ -1,30 +1,33 @@
 document.getElementById('loginForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const username = document.getElementById('email').value;
-    const password = document.getElementById('senha').value;
+    const email = document.getElementById('email').value;
+    const senha = document.getElementById('senha').value;
 
-    const loginData = {
-        username: username,
-        password: password
-    };
+    console.log('Tentativa de login no frontend:', { email, senha });
 
     fetch('/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(loginData)
+        body: JSON.stringify({ email, senha })
     })
     .then(response => response.json())
     .then(data => {
+        console.log('Dados da resposta do servidor:', data);
         if (data.success) {
-            window.location.href = '/dashboard'; // Redirecionar para o dashboard
+            console.log('Token recebido:', data.token);
+            localStorage.setItem('token', data.token);
+            console.log('Token armazenado no localStorage:', localStorage.getItem('token'));
+            alert('Login bem-sucedido');
+            window.location.href = '/dashboard'; // Certifique-se de que o caminho está correto
         } else {
-            alert('Login falhou: ' + data.message);
+            alert('Falha no login: ' + data.message);
         }
     })
     .catch(error => {
         console.error('Erro:', error);
+        alert('Erro ao fazer login: ' + error.message);
     });
 });

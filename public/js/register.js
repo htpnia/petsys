@@ -1,3 +1,26 @@
+let perfisMap = {};
+
+fetch('/api/perfis')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Falha ao carregar perfis: ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        const perfilSelect = document.getElementById('perfilSelect');
+        data.forEach(perfil => {
+            let option = new Option(perfil.nomePerfil, perfil.nomePerfil); // nomePerfil como texto, idPerfil como valor
+            perfilSelect.add(option);
+            perfisMap[perfil.nomePerfil] = perfil.idPerfil; // Cria o mapa de nomePerfil para idPerfil
+
+        });
+    })
+    .catch(error => {
+        console.error('Erro ao carregar perfis:', error);
+        alert('Não foi possível carregar os perfis.');
+    });
+
 document.getElementById('formUser').addEventListener('submit', function(event) {
     event.preventDefault();  // Impede que o formulário seja submetido de maneira convencional
 
@@ -5,12 +28,15 @@ document.getElementById('formUser').addEventListener('submit', function(event) {
     const senha = document.getElementById('senha').value;
     const email = document.getElementById('email').value;
     const matricula = document.getElementById('matricula').value;
+    const nomePerfil = document.getElementById('perfilSelect').value;
+    const idPerfil = perfisMap[nomePerfil];
 
     const registerData = {
         nomeusuario: nomeusuario,
         senha: senha,
         email: email,
-        matricula: matricula
+        matricula: matricula,
+        idPerfil: idPerfil
     };
 
     console.log('Dados do registro:', registerData);  // Loga os dados do registro no console para verificação

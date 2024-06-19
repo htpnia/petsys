@@ -1,5 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db'); // Ajuste o caminho conforme necessário
+const Perfil = require('./profile'); // Verifique se o caminho está correto
+
 
 // Define o modelo 'Usuario'
 const Usuario = sequelize.define('usuario', {
@@ -33,13 +35,26 @@ const Usuario = sequelize.define('usuario', {
         type: DataTypes.STRING,
         allowNull: false,
         field: 'senha'
+    },
+
+    idPerfil: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'perfil',
+            key: 'id_perfil'
+        },
+        field: 'id_perfil'
     }
     
 }, {
     // Opções do modelo
     tableName: 'usuario',
-    timestamps: false // Sequelize adiciona automaticamente os campos createdAt e updatedAt
+    timestamps: false, // Sequelize adiciona automaticamente os campos createdAt e updatedAt
+    
 });
+
+Usuario.belongsTo(Perfil, { foreignKey: 'idPerfil' });
 
 // Exporta o modelo
 module.exports = Usuario;
