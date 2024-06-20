@@ -66,12 +66,12 @@ app.get('/dashboard', authenticate, (req, res) => {
 
 
 // Rota GET para servir o arquivo 'regUser.html'
-app.get('/users', authenticate, (req, res) => {
+app.get('/users', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'User/users.html'));
 });
 
 // Rota GET para servir o arquivo 'regProfile.html' para cadastro de perfil
-app.get('/perfis', authenticate, (req, res) => {
+app.get('/perfis', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'profile/profiles.html'));
 });
 
@@ -234,16 +234,17 @@ app.put('/api/usuarios/:id', async (req, res) => {
     try {
         const usuario = await Usuario.findByPk(id);
         if (!usuario) {
-            return res.status(404).json({ success: false, message: 'Módulo não encontrado' });
+            return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
         }
         usuario.nome_usuario = nomeUsuario;
         usuario.email_usuario = email;
         usuario.matricula_usuario = matricula;
-        await modulo.save();
-        res.json({ success: true, modulo });
+        usuario.senha_usuario = senha;
+        await usuario.save();
+        res.json({ success: true, usuario });
     } catch (error) {
-        console.error('Erro ao atualizar módulo:', error);
-        res.status(500).json({ success: false, message: 'Erro ao atualizar módulo' });
+        console.error('Erro ao atualizar usuario:', error);
+        res.status(500).json({ success: false, message: 'Erro ao atualizar usuário' });
     }
 });
 // Atualizar um perfil

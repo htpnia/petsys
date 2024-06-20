@@ -5,13 +5,13 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(data => {
         const userList = document.getElementById('userList');
         data.forEach(user => {
-            const userDiv = document.createElement('div');
-            userDiv.innerHTML = `
+            const userLi = document.createElement('li');
+            userLi.innerHTML = `
                 Nome: ${user.nomeusuario}, Email: ${user.email}
                 <button onclick="editUser(${user.idUsuario})">Editar</button>
                 <button onclick="deleteUser(${user.idUsuario})">Excluir</button>
             `;
-            userList.appendChild(userDiv);
+            userList.appendChild(userLi);
         });
     })
     .catch(error => {
@@ -50,13 +50,11 @@ function deleteUser(id) {
             method: 'DELETE'
         })
         .then(response => {
-            if (response.status === 204) {
+            if (response === null) {
                 alert('Usuário excluído com sucesso!');
                 location.reload(); // Recarregar a página para remover o usuário excluído
             } else {
-                return response.json().then(data => {
-                    alert('Falha ao excluir usuário: ' + data.message);
-                });
+                alert('Falha ao excluir usuário: ' + response.message);
             }
         })
         .catch(error => {
