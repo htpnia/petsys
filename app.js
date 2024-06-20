@@ -8,6 +8,8 @@ const Modulo = require('./model/module');
 const Transacao = require('./model/transaction');
 const Funcao = require('./model/function');
 const ModuloTransacao = require('./model/moduleTransaction');
+const ModuloFuncao = require('./model/moduleFunction');
+const PerfilModulo = require('./model/profileModule');
 const authenticate = require('./middleware/auth');
 
 
