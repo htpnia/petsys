@@ -11,18 +11,18 @@ document.getElementById('formProfile').addEventListener('submit', function(event
 
     console.log('Dados do registro de perfil:', perfilData);  // Loga os dados do registro no console para verificação
 
-    fetch('/cadperfil', {  // Atualizado para a rota correta
+    authFetch('/cadperfil', {  // Atualizado para a rota correta
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(perfilData)
     })
-    .then(response => {
+    .then(({ data, response }) => {
         if (!response.ok) {
             throw new Error('Falha na requisição: ' + response.statusText);  // Lança um erro se a resposta não for OK
         }
-        return response.json();
+        return data;
     })
     .then(data => {
         if (data.success) {

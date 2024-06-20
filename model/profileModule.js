@@ -1,33 +1,33 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db'); // Verifique se o caminho está correto
 
-const ModuloTransacao = sequelize.define('ModuloTransacao', {
+const PerfilModulo = sequelize.define('PerfilModulo', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
+    idPerfil: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'perfil', // Nome da tabela de módulos
+            key: 'id_perfil'
+        },
+        field: 'id_perfil'
+    },
     idModulo: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'modulos', // Nome da tabela de módulos
+            model: 'modulo', // Nome da tabela de transações
             key: 'id_modulo'
         },
         field: 'id_modulo'
-    },
-    idTransacao: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'transacao', // Nome da tabela de transações
-            key: 'id_transacao'
-        },
-        field: 'id_transacao'
     }
 }, {
-    tableName: 'modulotransacao',
+    tableName: 'perfilmodulo',
     timestamps: false
 });
 
-module.exports = ModuloTransacao;
+module.exports = PerfilModulo;

@@ -7,7 +7,6 @@ const Perfil = require('./model/profile'); // Corrigido para importar corretamen
 const Modulo = require('./model/module');
 const Transacao = require('./model/transaction');
 const Funcao = require('./model/function');
-const UsuarioPerfil = require('./model/userProfile');
 const ModuloTransacao = require('./model/moduleTransaction');
 const authenticate = require('./middleware/auth');
 
@@ -112,6 +111,16 @@ app.get('/cadtransacao', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'FunctionTransaction/regTransaction.html'));
 });
 
+// Rota GET para servir o arquivo 'editUser.html' para edição de usuários
+app.get('/editUser', (req, res) => {
+    res.sendFile(path.join(__dirname, 'view', 'User/editUser.html'));
+});
+
+// Rota GET para servir o arquivo 'editUser.html' para edição de usuários
+app.get('/editProfile', (req, res) => {
+    res.sendFile(path.join(__dirname, 'view', 'Profile/editProfile.html'));
+});
+
 
 
 // Rota POST para criar um novo usuário
@@ -185,6 +194,50 @@ app.get('/api/usuarios', async (req, res) => {
     }
 });
 
+app.get('/api/usuarios/:id', async (req, res) => {
+    try {
+        const usuario = await Usuario.findByPk(req.params.id);
+        if (!usuario) {
+            return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
+        }
+        res.json(usuario);
+    } catch (error) {
+        console.error('Erro ao buscar usuário:', error);
+        res.status(500).json({ success: false, message: 'Erro ao buscar usuário' });
+    }
+});
+
+app.get('/api/perfis/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const perfil = await Perfil.findByPk(id, {
+            include: [
+                {
+                    model: Modulo,
+                    through: { attributes: [] }, // Exclui os atributos da tabela de junção
+                    include: [
+                        {
+                            model: Funcao,
+                            through: { attributes: [] } // Exclui os atributos da tabela de junção
+                        },
+                        {
+                            model: Transacao,
+                            through: { attributes: [] } // Exclui os atributos da tabela de junção
+                        }
+                    ]
+                }
+            ]
+        });
+        if (!perfil) {
+            return res.status(404).json({ success: false, message: 'Perfil não encontrado' });
+        }
+        res.json({ success: true, perfil });
+    } catch (error) {
+        console.error('Erro ao carregar dados do perfil:', error);
+        res.status(500).json({ success: false, message: 'Erro ao carregar dados do perfil' });
+    }
+});
+
 // API rotas para fornecer dados de perfis
 app.get('/api/perfis', async (req, res) => {
     try {
@@ -227,26 +280,28 @@ app.get('/api/transacoes', async (req, res) => {
     }
 });
 
+
 // Atualizar um usuário
 app.put('/api/usuarios/:id', async (req, res) => {
-    const { id } = req.params;
-    const { nomeUsuario, email, matricula, senha } = req.body;
-    try {
-        const usuario = await Usuario.findByPk(id);
-        if (!usuario) {
-            return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
+        const { id } = req.params;
+        const { nomeusuario, email, matricula, senha, idPerfil } = req.body;
+        try {
+            const usuario = await Usuario.findByPk(id);
+            if (!usuario) {
+                return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
+            }
+            usuario.nomeusuario = nomeusuario;
+            usuario.email = email;
+            usuario.matricula = matricula;
+            usuario.senha = senha;
+            usuario.idPerfil = idPerfil;
+            await usuario.save();
+            res.json({ success: true, usuario });
+        } catch (error) {
+            console.error('Erro ao atualizar usuário:', error);
+            res.status(500).json({ success: false, message: 'Erro ao atualizar usuário' });
         }
-        usuario.nome_usuario = nomeUsuario;
-        usuario.email_usuario = email;
-        usuario.matricula_usuario = matricula;
-        usuario.senha_usuario = senha;
-        await usuario.save();
-        res.json({ success: true, usuario });
-    } catch (error) {
-        console.error('Erro ao atualizar usuario:', error);
-        res.status(500).json({ success: false, message: 'Erro ao atualizar usuário' });
-    }
-});
+    });
 // Atualizar um perfil
 app.put('/api/perfis/:id', async (req, res) => {
     const { id } = req.params;

@@ -1,4 +1,3 @@
-<!-- editUser.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,16 +10,16 @@
     <form id="editUserForm">
         <input type="hidden" id="userId">
         <label for="nomeusuario">Nome:</label>
-        <input type="text" id="nomeusuario" name="nomeusuario" required>
+        <input type="text" id="nomeusuario" name="nomeusuario" placeholder="Nome do usuário" required>
         <br>
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" placeholder="Email do usuário" required>
         <br>
         <label for="matricula">Matrícula:</label>
-        <input type="text" id="matricula" name="matricula" required>
+        <input type="text" id="matricula" name="matricula" placeholder="Matrícula do usuário" required>
         <br>
         <label for="senha">Senha:</label>
-        <input type="password" id="senha" name="senha">
+        <input type="password" id="senha" name="senha" placeholder="Senha do usuário">
         <br>
         <label for="idPerfil">Perfil:</label>
         <select id="idPerfil" name="idPerfil" required></select>
@@ -28,6 +27,9 @@
         <button type="submit">Atualizar Usuário</button>
     </form>
 
-    <script src="carregarUsers.js"></script>
+    <script src="/public/js/authFetch.js"></script>
+    <script src="/public/js/editUser.js"></script>
+    
+
 </body>
 </html>

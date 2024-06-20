@@ -10,20 +10,22 @@ function authFetch(url, options = {}) {
         headers
     })
     .then(response => {
+        console.log('Resposta do servidor:', response);
+        
         // Verificar se a resposta tem conteúdo antes de tentar parsear
         if (response.status === 204 || response.status === 205) {
-            return null; // Respostas sem conteúdo
+            return { data: null, response }; // Respostas sem conteúdo
         }
         
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
-            return response.json();
+            return response.json().then(data => ({ data, response }));
         } else {
             return response.text().then(text => {
                 try {
-                    return JSON.parse(text);
+                    return { data: JSON.parse(text), response };
                 } catch (error) {
-                    return text;
+                    return { data: text, response };
                 }
             });
         }

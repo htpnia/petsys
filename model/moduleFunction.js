@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db'); // Verifique se o caminho está correto
 
-const ModuloTransacao = sequelize.define('ModuloTransacao', {
+const ModuloFuncao = sequelize.define('ModuloTransacao', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -16,18 +16,18 @@ const ModuloTransacao = sequelize.define('ModuloTransacao', {
         },
         field: 'id_modulo'
     },
-    idTransacao: {
+    idFuncao: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'transacao', // Nome da tabela de transações
-            key: 'id_transacao'
+            model: 'funcao', // Nome da tabela de transações
+            key: 'id_funcao'
         },
-        field: 'id_transacao'
+        field: 'id_funcao'
     }
 }, {
-    tableName: 'modulotransacao',
+    tableName: 'modulofuncao',
     timestamps: false
 });
 
-module.exports = ModuloTransacao;
+module.exports = ModuloFuncao;
