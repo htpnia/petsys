@@ -24,7 +24,7 @@ fetch('/api/perfis')
 document.getElementById('formUser').addEventListener('submit', function(event) {
     event.preventDefault();  // Impede que o formulário seja submetido de maneira convencional
 
-    const nomeusuario = document.getElementById('nomeusuario').value;
+    const nomeUsuario = document.getElementById('nomeUsuario').value;
     const senha = document.getElementById('senha').value;
     const email = document.getElementById('email').value;
     const matricula = document.getElementById('matricula').value;
@@ -32,7 +32,7 @@ document.getElementById('formUser').addEventListener('submit', function(event) {
     const idPerfil = perfisMap[nomePerfil];
 
     const registerData = {
-        nomeusuario: nomeusuario,
+        nomeUsuario: nomeUsuario,
         senha: senha,
         email: email,
         matricula: matricula,

@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    authFetch('/api/dashboard-data', {
+    authFetch('/api/dashboard', {
         method: 'GET'
     })
     .then(data => {

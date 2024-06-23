@@ -8,6 +8,10 @@
     justify-content: center;
 }
 
+button {
+    cursor: pointer;
+}
+
 .loginContainer {
     display: flex;
     border-radius: 30px;

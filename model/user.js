@@ -13,7 +13,7 @@ const Usuario = sequelize.define('usuario', {
         field: 'id_usuario' // Mapeia este campo para a coluna 'id_perfil' no banco de dados
     }, 
 
-    nomeusuario: {
+    nomeUsuario: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,

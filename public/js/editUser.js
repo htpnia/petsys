@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Preencher os campos do formulário com placeholders
         document.getElementById('userId').value = user.idUsuario;
-        document.getElementById('nomeusuario').value = '';
-        document.getElementById('nomeusuario').placeholder = user.nomeusuario;
+        document.getElementById('nomeUsuario').value = '';
+        document.getElementById('nomeUsuario').placeholder = user.nomeUsuario;
         document.getElementById('email').value = '';
         document.getElementById('email').placeholder = user.email;
         document.getElementById('matricula').value = '';
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
 
         const id = document.getElementById('userId').value;
-        const nomeusuario = document.getElementById('nomeusuario').value || document.getElementById('nomeusuario').placeholder;
+        const nomeUsuario = document.getElementById('nomeUsuario').value || document.getElementById('nomeUsuario').placeholder;
         const email = document.getElementById('email').value || document.getElementById('email').placeholder;
         const matricula = document.getElementById('matricula').value || document.getElementById('matricula').placeholder;
         const senha = document.getElementById('senha').value;
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ nomeusuario, email, matricula, senha, idPerfil })
+            body: JSON.stringify({ nomeUsuario, email, matricula, senha, idPerfil })
         })
         .then(({ data, response }) => {
             if (!response.ok) {

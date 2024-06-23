@@ -5,6 +5,10 @@
 
 }
 
+button { 
+  cursor: pointer;
+}
+
 .container {
     display: flex;
     flex-direction: row;
@@ -127,9 +131,13 @@ button img {
 }
 
 .dataHeaderInfo span {
-  margin: 0px 80px 0px 80px;
+  margin: 0px 80px 0px 60px;
   font-size: 15px;
 
+}
+
+.emailSpan {
+  padding-left: 40px;
 }
 
 .dataHeaderButtons span {
@@ -272,6 +280,108 @@ li {
   padding: 10px;
   color: #606060
 }
+
+ul li:hover {
+  filter: drop-shadow(1px 1px 1px #9e9e9e);
+}
+
+ul li .editBtn {
+  border: 2px solid #d4d4d4;
+  background-color: #e9e9e9;
+  border-radius: 18px;
+  padding: 8px;
+  margin: 0px 3.7vw 0px 0vw;;
+}
+
+ul li .editBtn:hover {
+  border: 2px solid #e6e6e6;
+  background-color: #f6f6f6;
+  filter: brightness(1.0);
+}
+
+
+ul li .deleteBtn {
+  border: 2px solid #da7575;
+  background-color: #ffcfcf;
+  border-radius: 18px;
+  padding: 8px;
+  margin: 0px 0.6vw 0px 0px;
+}
+
+ul li .deleteBtn:hover {
+  background-color: #ffabab;
+  border: 2px solid #c06666;
+  filter: brightness(1.0);
+}
+
+ul.list-group li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin: 5px 5px;
+  background-color: #ffff;
+  border: 1px solid #ddd;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Efeito de hover para os itens da lista */
+ul.list-group li:hover {
+  background-color: #ffff;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+ul .list-group {
+  display: flex;
+  flex-direction: row;
+  
+}
+.list-group-item span {
+  background-color: #ffff;
+  padding-left: 30px;
+}
+
+
+
+
+
+/* Estilos Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+  padding-top: 60px;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
     
       .sideBar {

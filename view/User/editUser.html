@@ -3,33 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Usuário</title>
+    <title>QQ Tech - BaB Usuários</title>
+
+    <!---Normalize CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Styles -->
+    
+    <link rel="stylesheet" href="../../public/styles/users.css"/>
+    
+    <!--- Fonte Open Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
 </head>
 <body>
-    <h1>Editar Usuário</h1>
-    <form id="editUserForm">
+<div class="container">
+   
+    <!--- Side Bar -->
+    <div class="sideBar">
+        <div class="userInfo">            
+        </div>
+        <div class="sideBarButtons">
+            <button class="btnDashboard" onclick="navigateToPage(this)"><img src="/public/images/dashboard.svg"/>Dashboard</button>
+            <button class="btnUser" onclick="navigateToPage(this)"><img src="/public/images/usuario.svg"/>Usuários</button>
+            <button class="btnProfile" onclick="navigateToPage(this)"><img src="/public/images/perfis.svg"/>Perfis</button>
+            <button class="btnModule" onclick="navigateToPage(this)"><img src="/public/images/modulos.svg"/>Módulos</button>
+            <button class="btnFT" onclick="navigateToPage(this)"><img src="/public/images/ft.svg"/>Funções&Transações</button>
+        </div>
+    </div>
+    <div class="pageContent">
+        <!--- Header Bar -->
+        <div class="headerBar">
+            <p>Usuários</p>
+        </div>
+
+        <!-- Data Content -->
+    <div class="userRegisterData">
+        <h2>Edição de Usuário</h2>
+        <form id="editUserForm">
         <input type="hidden" id="userId">
-        <label for="nomeusuario">Nome:</label>
-        <input type="text" id="nomeusuario" name="nomeusuario" placeholder="Nome do usuário" required>
-        <br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Email do usuário" required>
-        <br>
-        <label for="matricula">Matrícula:</label>
-        <input type="text" id="matricula" name="matricula" placeholder="Matrícula do usuário" required>
-        <br>
-        <label for="senha">Senha:</label>
-        <input type="password" id="senha" name="senha" placeholder="Senha do usuário">
-        <br>
-        <label for="idPerfil">Perfil:</label>
-        <select id="idPerfil" name="idPerfil" required></select>
-        <br>
-        <button type="submit">Atualizar Usuário</button>
+        <div class="form-group">
+            <label for="nomeUsuario">Nome:</label>
+            <br>
+            <input type="text" id="nomeUsuario" name="nomeUsuario" placeholder="Nome do usuário" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <br>
+            <input type="email" id="email" name="email" placeholder="Email do usuário" required>
+        </div>
+
+        <div class="form-group">
+            <label for="matricula">Matrícula:</label>
+            <br>
+            <input type="text" id="matricula" name="matricula" placeholder="Matrícula do usuário" required>
+        </div>
+        <div class="form-group">
+            <label for="senha">Senha:</label>
+            <br>
+            <input type="password" id="senha" name="senha" placeholder="Senha do usuário">
+        </div>      
+        <div class="form-group">
+            <label for="idPerfil">Perfil:</label>
+            <br>
+            <select id="idPerfil" name="idPerfil" required></select>
+        </div>
+        <button class="create" type="submit">Atualizar Usuário</button>
     </form>
+    </div>
+    </div>
 
     <script src="/public/js/authFetch.js"></script>
+    <script src="/public/js/menu.js"></script>
     <script src="/public/js/editUser.js"></script>
     
 
 </body>
 </html>
+

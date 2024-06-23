@@ -47,7 +47,7 @@
                 <div class="dataHeaderInfo">
                 <span>Usuário</span>
                 <span>Matrícula</span>
-                <span>Email</span>
+                <span class="emailSpan">Email</span>
                 </div>
                 <div class="dataHeaderButtons">
                 <span>Editar</span>
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="userListContainer">
-            <ul id="userList">
+            <ul id="userList" class="list-group">
             </ul>
             </div>
         </div>
@@ -66,6 +66,16 @@
 
         
     </div>
+
+    <!-- Modal -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Detalhes</h2>
+            <p id="modalBody"></p>
+        </div>
+    </div>
+
 
 </body>
 

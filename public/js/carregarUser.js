@@ -1,36 +1,42 @@
-document.addEventListener('DOMContentLoaded', function() {
-    authFetch('/api/usuarios', {
-        method: 'GET'
-    })
-    .then(({ data, response }) => {
-        if (!response.ok) {
-            console.error('Erro na resposta do servidor:', response.statusText);
-            throw new Error('Falha ao carregar usuários');
-        }
+document.addEventListener('DOMContentLoaded', loadUsers);
 
-        console.log('Dados dos usuários:', data);
-        
-        if (!Array.isArray(data)) {
-            console.error('Resposta não é um array:', data);
-            throw new Error('Dados de usuários inválidos');
-        }
-
-        const userList = document.getElementById('userList');
-        userList.innerHTML = '';
-        data.forEach(user => {
-            const userLi = document.createElement('li');
-            userLi.innerHTML = `
-                Nome: ${user.nomeusuario}, Email: ${user.email}
-                <button onclick="location.href='/editUser?id=${user.idUsuario}'">Editar</button>
-                <button onclick="deleteUser(${user.idUsuario})">Excluir</button>
-            `;
-            userList.appendChild(userLi);
+function loadUsers() {
+    authFetch('/api/usuarios')
+        .then(({ data, response }) => {
+            if (!response.ok) {
+                console.error('Erro na resposta do servidor:', response.statusText);
+                throw new Error('Falha ao carregar usuários');
+            }
+            return data; // Acesse o array de usuários corretamente
+        })
+        .then(usuarios => {
+            console.log('Usuários carregados:', usuarios);
+            const list = document.getElementById('userList');
+            list.innerHTML = '';
+            if (Array.isArray(usuarios)) {
+                usuarios.forEach(usuario => {
+                    const item = document.createElement('li');
+                    item.classList.add('list-group-item');
+                    item.innerHTML = `
+                        <span class="user-info">${usuario.nomeUsuario}</span>
+                        <span class="user-info">${usuario.matricula}</span>
+                        <span class="user-info">${usuario.email}</span>
+                        <span class="user-buttons">
+                            <button class="editBtn" onclick="location.href='/editUser?id=${usuario.idUsuario}'">✒️</button>
+                            <button class="deleteBtn" onclick="deleteUser(${usuario.idUsuario})">❌</button>
+                        </span>
+                    `;
+                    item.addEventListener('click', () => showModal(usuario.nomeUsuario, usuario.email));
+                    list.appendChild(item);
+                });
+            } else {
+                console.error('Resposta não é um array:', usuarios);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-    });
-});
+}
 
 function deleteUser(id) {
     if (confirm("Tem certeza que deseja excluir este usuário?")) {
@@ -53,5 +59,24 @@ function deleteUser(id) {
             console.error('Erro:', error);
             alert('Erro ao excluir usuário: ' + error.message);
         });
+    }
+}
+
+function showModal(title, body) {
+    const modal = document.getElementById('infoModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    modalTitle.innerText = title;
+    modalBody.innerText = body;
+    modal.style.display = "block";
+
+    const span = document.getElementsByClassName('close')[0];
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     }
 }

@@ -52,11 +52,20 @@
                 <span>Excluir</span>
                 </div>
             </div>
-            <ul id="profileList"></ul>
+            <ul id="profileList" class="list-group"></ul>
         </div>
 
         <div class="btnCreateContainer">
           <button class="createProfileBtn" onclick="window.location.href='/cadperfil'">Criar perfil</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Detalhes</h2>
+            <p id="modalBody"></p>
         </div>
     </div>
 

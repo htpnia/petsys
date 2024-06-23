@@ -1,34 +1,34 @@
-document.addEventListener('DOMContentLoaded', loadProfiles);
+document.addEventListener('DOMContentLoaded', loadFunctions);
 
-function loadProfiles() {
-    authFetch('/api/perfis')
+function loadFunctions() {
+    authFetch('/api/funcoes')
         .then(({ data, response }) => {
             if (!response.ok) {
                 console.error('Erro na resposta do servidor:', response.statusText);
-                throw new Error('Falha ao carregar perfis');
+                throw new Error('Falha ao carregar funções');
             }
-            return data;
+            return data.funcoes; // Acesse o array de funções corretamente
         })
-        .then(profiles => {
-            console.log('Perfis carregados:', profiles);
-            const list = document.getElementById('profileList');
+        .then(funcoes => {
+            console.log('Funções carregadas:', funcoes);
+            const list = document.getElementById('functionList');
             list.innerHTML = '';
-            if (Array.isArray(profiles)) {
-                profiles.forEach(profile => {
+            if (Array.isArray(funcoes)) {
+                funcoes.forEach(funcao => {
                     const item = document.createElement('li');
                     item.classList.add('list-group-item');
                     item.innerHTML = `
-                        <span class="profile-info">${profile.nomePerfil} - ${profile.descricao}</span>
-                        <span class="profile-buttons">
-                            <button class="editBtn" onclick="location.href='/editProfile?id=${profile.idPerfil}'">✒️</button>
-                            <button class="deleteBtn" onclick="deleteProfile(${profile.idPerfil})">❌</button>
+                        <span class="function-info">${funcao.nomeFuncao} - ${funcao.descricao}</span>
+                        <span class="function-buttons">
+                            <button class="editBtn" onclick="location.href='/editFunction?id=${funcao.idFuncao}'">✒️</button>
+                            <button class="deleteBtn" onclick="deleteFunction(${funcao.idFuncao})">❌</button>
                         </span>
                     `;
-                    item.addEventListener('click', () => showModal(profile.nomePerfil, profile.descricao));
+                    item.addEventListener('click', () => showModal(funcao.nomeFuncao, funcao.descricao));
                     list.appendChild(item);
                 });
             } else {
-                console.error('Resposta não é um array:', profiles);
+                console.error('Resposta não é um array:', funcoes);
             }
         })
         .catch(error => {
@@ -36,26 +36,26 @@ function loadProfiles() {
         });
 }
 
-function deleteProfile(id) {
-    if (confirm("Tem certeza que deseja excluir este perfil?")) {
-        authFetch(`/api/perfis/${id}`, {
+function deleteFunction(id) {
+    if (confirm("Tem certeza que deseja excluir esta função?")) {
+        authFetch(`/api/funcoes/${id}`, {
             method: 'DELETE'
         })
         .then(({ data, response }) => {
             if (response === null || response.status === 204) {
-                alert('Perfil excluído com sucesso!');
-                location.reload(); // Recarregar a página para remover o perfil excluído
+                alert('Função excluída com sucesso!');
+                location.reload();
             } else {
                 response.json().then(data => {
-                    alert('Falha ao excluir perfil: ' + data.message);
+                    alert('Falha ao excluir função: ' + data.message);
                 }).catch(error => {
-                    alert('Falha ao excluir perfil: ' + error.message);
+                    alert('Falha ao excluir função: ' + error.message);
                 });
             }
         })
         .catch(error => {
             console.error('Erro:', error);
-            alert('Erro ao excluir perfil: ' + error.message);
+            alert('Erro ao excluir função: ' + error.message);
         });
     }
 }

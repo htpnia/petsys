@@ -11,11 +11,19 @@ const ModuloTransacao = require('./model/moduleTransaction');
 const ModuloFuncao = require('./model/moduleFunction');
 const PerfilModulo = require('./model/profileModule');
 const authenticate = require('./middleware/auth');
+const cors = require('cors'); 
 
 
 
 const app = express();
 const PORT = 3000;
+
+app.use(cors({
+    origin: 'http://127.0.0.1:3000', // Altere para a origem que você quer permitir
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    exposedHeaders: ['Authorization']
+}));
 
 // Middleware para parsear o corpo das requisições em JSON
 app.use(bodyParser.json());
@@ -128,8 +136,8 @@ app.get('/editProfile', (req, res) => {
 // Rota POST para criar um novo usuário
 app.post('/caduser', async (req, res) => {
     try {
-        const { nomeusuario, email, matricula, senha, idPerfil } = req.body;
-        const novoUsuario = await Usuario.create({ nomeusuario, email, matricula, senha, idPerfil });
+        const { nomeUsuario, email, matricula, senha, idPerfil } = req.body;
+        const novoUsuario = await Usuario.create({ nomeUsuario, email, matricula, senha, idPerfil });
         res.status(201).json({ success: true, usuario: novoUsuario });
     } catch (error) {
         console.error('Erro ao criar usuário:', error);
@@ -182,17 +190,6 @@ app.post('/cadtransacao', async (req, res) => {
     } catch (error) {
         console.error('Erro ao criar transacao:', error);
         res.status(500).json({ success: false, message: 'Erro ao criar transacao' });
-    }
-});
-
-// API rotas para fornecer dados de usuários
-app.get('/api/usuarios', async (req, res) => {
-    try {
-        const usuarios = await Usuario.findAll();
-        res.json(usuarios);
-    } catch (error) {
-        console.error('Erro ao buscar usuários:', error);
-        res.status(500).json({ error: 'Erro ao buscar usuários' });
     }
 });
 
@@ -251,6 +248,18 @@ app.get('/api/perfis', async (req, res) => {
     }
 });
 
+//API rotas para fornecer dados de usuários
+app.get('/api/usuarios', async (req, res) => {
+    try {
+        const usuarios = await Usuario.findAll();
+        res.json(usuarios);
+    } catch (error) {
+        console.error('Erro ao buscar usuários:', error);
+        res.status(500).json({ error: 'Erro ao buscar usuários' });
+    }
+});
+
+
 // API rotas para fornecer dados de módulos
 app.get('/api/modulos', async (req, res) => {
     try {
@@ -265,20 +274,20 @@ app.get('/api/modulos', async (req, res) => {
 app.get('/api/funcoes', async (req, res) => {
     try {
         const funcoes = await Funcao.findAll();
-        res.json(funcoes);
+        res.json({ success: true, funcoes });
     } catch (error) {
         console.error('Erro ao buscar funções:', error);
-        res.status(500).json({ error: 'Erro ao buscar funções' });
+        res.status(500).json({ success: false, message: 'Erro ao buscar funções' });
     }
 });
 // API rotas para fornecer dados de transações
 app.get('/api/transacoes', async (req, res) => {
     try {
         const transacoes = await Transacao.findAll();
-        res.json(transacoes);
+        res.json({ success: true, transacoes });
     } catch (error) {
         console.error('Erro ao buscar transações:', error);
-        res.status(500).json({ error: 'Erro ao buscar transações' });
+        res.status(500).json({ success: false, message: 'Erro ao buscar transações' });
     }
 });
 
@@ -286,13 +295,13 @@ app.get('/api/transacoes', async (req, res) => {
 // Atualizar um usuário
 app.put('/api/usuarios/:id', async (req, res) => {
         const { id } = req.params;
-        const { nomeusuario, email, matricula, senha, idPerfil } = req.body;
+        const { nomeUsuario, email, matricula, senha, idPerfil } = req.body;
         try {
             const usuario = await Usuario.findByPk(id);
             if (!usuario) {
                 return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
             }
-            usuario.nomeusuario = nomeusuario;
+            usuario.nomeUsuario = nomeUsuario;
             usuario.email = email;
             usuario.matricula = matricula;
             usuario.senha = senha;
