@@ -178,7 +178,7 @@
 
   .btnFormContainer {
     background-color: #F6F4F4;
-    margin-top: 17vh;
+    margin-top: 9vh;
     padding-top: 10px;
   }
 
@@ -258,14 +258,19 @@
     background-color: #fff;
     border: 2px solid #D7D7D7;
     border-radius: 5px;
-    height: 6vh;
+    height: 10vh;
     width: 24vw;
     margin-top: 5px;
     padding-left: 1px;
+    overflow: auto;
 }
 
 select[multiple] {
 
+}
+
+.form-group option {
+  background-color: #ffff;
 }
 
   ul, .moduleListContainer {
