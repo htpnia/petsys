@@ -25,6 +25,38 @@ app.use(cors({
     exposedHeaders: ['Authorization']
 }));
 
+//Relacionamentos
+
+Perfil.belongsToMany(Modulo, {
+    through: PerfilModulo,
+    foreignKey: 'idPerfil',
+    otherKey: 'idModulo'
+});
+
+Modulo.belongsToMany(Funcao, {
+    through: ModuloFuncao,
+    foreignKey: 'idModulo',
+    otherKey: 'idFuncao'
+});
+
+Funcao.belongsToMany(Modulo, {
+    through: ModuloFuncao,
+    foreignKey: 'idFuncao',
+    otherKey: 'idModulo'
+});
+
+Modulo.belongsToMany(Transacao, {
+    through: ModuloTransacao,
+    foreignKey: 'idModulo',
+    otherKey: 'idTransacao'
+});
+
+Transacao.belongsToMany(Modulo, {
+    through: ModuloTransacao,
+    foreignKey: 'idTransacao',
+    otherKey: 'idModulo'
+});
+
 // Middleware para parsear o corpo das requisições em JSON
 app.use(bodyParser.json());
 

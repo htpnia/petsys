@@ -38,23 +38,32 @@
     <div class="pageContent">
         <!--- Header Bar -->
         <div class="headerBar">
-            <p>Módulos</p>
+            <p>Cadastro de Módulo</p>
         </div>
 
         <!-- Data Content -->
         <div class="moduleRegisterData">
-            <h2>Cadastro de Módulo</h2>
             <form id="formModule" action="/cadmodulo" method="POST">
-                <div class="form-group">
-                    <label for="nomeModulo">Nome:</label>
+                    <div class="form-group">
+                        <label for="nomeModulo">Nome:</label>
+                        <br>
+                        <input type="text" id="nomeModulo" name="nomeModulo" required>
+                    </div>
+                    <div class="form-group">
+                    <label for="descricaoModulo">Descrição:</label>
                     <br>
-                    <input type="text" id="nomeModulo" name="nomeModulo" required>
+                    <textarea id="descricaoModulo" name="descricaoModulo"></textarea>
+                    </div> 
+                <div class="form-group">
+                    <label for="funcoesModulo">Funções:</label>
+                    <br>
+                    <select id="funcoesModulo" name="funcoesModulo" multiple required></select>
                 </div>
                 <div class="form-group">
-                  <label for="descricaoModulo">Descrição:</label>
-                  <br>
-                  <textarea id="descricaoModulo" name="descricaoModulo"></textarea>
-                </div>  
+                    <label for="transacoesModulo">Transações:</label>
+                    <br>
+                    <select id="transacoesModulo" name="transacoesModulo" multiple required></select>
+                </div>
                 <input type="hidden" id="idModulo">     
                 <div class="btnFormContainer">
                     <button class="cancel" onclick="window.location.href='/modulos'">Cancelar</button>
