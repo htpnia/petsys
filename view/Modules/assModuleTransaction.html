@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QQTech - BaB Perfis</title>
+    <title>QQTech - BaB Módulos</title>
 
     <!-- Normalize CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Styles -->
-    <link rel="stylesheet" href="../../public/styles/profiles.css"/>
+    <link rel="stylesheet" href="../../public/styles/modules.css"/>
     
     <!-- Fonte Open Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,7 +18,7 @@
 
 </head>
 <body>
-    <div class="container">
+    <div class="container">   
         <!-- Side Bar -->
         <div class="sideBar">
             <div class="userInfo">
@@ -32,27 +32,28 @@
                 <button class="btnFT" onclick="navigateToPage(this)"><img src="/public/images/ft.svg"/>Funções&Transações</button>
             </div>
         </div>
-
         <div class="pageContent">
             <!-- Header Bar -->
             <div class="headerBar">
-                <p>Edição de Perfil</p>
+                <p>Associação: Módulos & Transações</p>
             </div>
 
-            <!-- Formulário de Edição de Perfil -->
-            <div class="profileForm">
-                <form id="editProfileForm">
-                    <input type="hidden" id="profileId">
-                    <label for="nomePerfil">Nome do Perfil:</label>
-                    <input type="text" id="nomePerfil" name="nomePerfil" required>
-                    <br>
-                    <label for="descricaoPerfil">Descrição:</label>
-                    <input type="text" id="descricaoPerfil" name="descricaoPerfil" required>
-                    <br>
-                    <div id="modulosContainer">
-                        <!-- Módulos, Funções e Transações serão carregados aqui -->
+            <!-- Formulário de Associação -->
+            <div class="moduleData">
+                <form id="moduleTransactionForm">
+                    <div class="form-group">
+                        <label for="moduleSelect">Selecione o Módulo:</label>
+                        <br>
+                        <select id="moduleSelect" name="moduleSelect" required></select>
                     </div>
-                    <button type="submit">Salvar Alterações</button>
+                    <div class="form-group">
+                        <label for="transactionList">Selecione as Transações:</label>
+                        <div id="transactionList" class="checkbox-list"></div>
+                    </div>
+                    <div class="btnFormContainer">
+                        <button class="associateModuleFBtn" type="submit">Associar</button>
+                        <button class="cancel" type="button" onclick="window.location.href='/modulos'">Cancelar</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -61,7 +62,8 @@
     <!-- Script JS -->
     <script src="../../public/js/authFetch.js"></script>
     <script src="../../public/js/menu.js"></script>
-    <script src="../../public/js/editProfile.js"></script>
+    <script src="../../public/js/associarModuloTransacao.js"></script>
+
     <!-- Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

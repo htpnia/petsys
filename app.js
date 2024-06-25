@@ -2,8 +2,8 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-const Usuario = require('./model/user'); // Corrigido para importar corretamente
-const Perfil = require('./model/profile'); // Corrigido para importar corretamente
+const Usuario = require('./model/user'); 
+const Perfil = require('./model/profile');
 const Modulo = require('./model/module');
 const Transacao = require('./model/transaction');
 const Funcao = require('./model/function');
@@ -63,6 +63,7 @@ app.use(bodyParser.json());
 // Middleware para servir arquivos estáticos.
 app.use(express.static(path.join(__dirname, '/')));
 
+
 const SECRET_KEY = 'chave';
 
 // Rota raiz para direcionar para a página de login
@@ -101,7 +102,7 @@ app.post('/login', async (req, res) => {
 
 
 // Rota GET para servir o arquivo 'regUser.html'
-app.get('/dashboard', authenticate, (req, res) => {
+app.get('/dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'Dashboard/dashboard.html'));
 });
 
@@ -158,12 +159,65 @@ app.get('/editUser', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'User/editUser.html'));
 });
 
-// Rota GET para servir o arquivo 'editUser.html' para edição de usuários
+// Rota GET para servir o arquivo 'editProfile.html' para edição de perfis
 app.get('/editProfile', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'Profile/editProfile.html'));
 });
 
+// Rota GET para servir o arquivo 'editModule.html' para edição de módulos
+app.get('/editModule', (req, res) => {
+    res.sendFile(path.join(__dirname, 'view', 'Modules/editModule.html'));
+});
 
+// Rota GET para servir o arquivo 'editFunction.html' para edição de funções
+app.get('/editFunction', (req, res) => {
+    res.sendFile(path.join(__dirname, 'view', 'FunctionTransaction/editFunction.html'));
+});
+
+// Rota GET para servir o arquivo 'editTransaction.html' para edição de transações
+app.get('/editTransaction', (req, res) => {
+    res.sendFile(path.join(__dirname, 'view', 'FunctionTransaction/editTransaction.html'));
+});
+
+// Rota GET para servir o arquivo 'assModuleFunction.html' para associação de módulos a funções
+app.get('/associateModuleFunction', (req, res) => {
+    res.sendFile(path.join(__dirname, 'view', 'Modules/assModuleFunction.html'));
+});
+
+// Rota GET para servir o arquivo 'assModuleFunction.html' para associação de módulos a transações
+app.get('/associateModuleTransaction', (req, res) => {
+    res.sendFile(path.join(__dirname, 'view', 'Modules/assModuleTransaction.html'));
+});
+
+app.post('/api/modulosTransacoes/associar', async (req, res) => {
+    const { idModulo, idTransacoes } = req.body;
+    console.log('Recebido POST para /api/modulosTransacoes/associar');
+    console.log('Dados recebidos:', req.body);
+
+    if (!idModulo || !idTransacoes || !Array.isArray(idTransacoes)) {
+        return res.status(400).json({ success: false, message: 'Dados insuficientes ou formato incorreto' });
+    }
+
+    try {
+        console.log('Tentando destruir associações anteriores...');
+        await ModuloTransacao.destroy({ where: { idModulo } });
+        console.log('Associações anteriores destruídas com sucesso.');
+
+        console.log('Tentando criar novas associações...');
+        const associations = idTransacoes.map(idTransacao => ({
+            idModulo,
+            idTransacao
+        }));
+        
+        const createdAssociations = await ModuloTransacao.bulkCreate(associations);
+        console.log('Novas associações criadas com sucesso:', createdAssociations);
+
+        res.status(200).json({ success: true, message: 'Associação realizada com sucesso' });
+    } catch (error) {
+        console.error('Erro ao associar transações ao módulo:', error);
+        res.status(500).json({ success: false, message: 'Erro ao associar transações ao módulo', details: error.message });
+    }
+});
 
 // Rota POST para criar um novo usuário
 app.post('/caduser', async (req, res) => {
