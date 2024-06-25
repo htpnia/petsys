@@ -192,6 +192,7 @@ app.post('/cadperfil', async (req, res) => {
 // Rota POST para criar um novo modulo
 app.post('/cadmodulo', async (req, res) => {
     try {
+        console.log('Recebendo dados do módulo:', req.body);
         const { nomeModulo, descricao } = req.body;
         const novoModulo = await Modulo.create({ nomeModulo, descricao });
         res.status(201).json({ success: true, modulo: novoModulo });

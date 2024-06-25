@@ -2,19 +2,19 @@ document.addEventListener('DOMContentLoaded', loadTransactions);
 
 function loadTransactions() {
     authFetch('/api/transacoes')
-        .then(({ data, response }) => {
+        .then(response => {
             if (!response.ok) {
                 console.error('Erro na resposta do servidor:', response.statusText);
                 throw new Error('Falha ao carregar transações');
             }
-            return data.transacoes; // Acesse o array de transações corretamente
+            return response.json(); // Converta a resposta para JSON
         })
-        .then(transacoes => {
-            console.log('Transações carregadas:', transacoes);
+        .then(data => {
+            console.log('Transações carregadas:', data);
             const list = document.getElementById('transactionList');
             list.innerHTML = '';
-            if (Array.isArray(transacoes)) {
-                transacoes.forEach(transacao => {
+            if (Array.isArray(data.transacoes)) {
+                data.transacoes.forEach(transacao => {
                     const item = document.createElement('li');
                     item.classList.add('list-group-item');
                     item.innerHTML = `
@@ -28,7 +28,7 @@ function loadTransactions() {
                     list.appendChild(item);
                 });
             } else {
-                console.error('Resposta não é um array:', transacoes);
+                console.error('Resposta não é um array:', data.transacoes);
             }
         })
         .catch(error => {
@@ -41,7 +41,7 @@ function deleteTransaction(id) {
         authFetch(`/api/transacoes/${id}`, {
             method: 'DELETE'
         })
-        .then(({ data, response }) => {
+        .then(response => {
             if (response === null || response.status === 204) {
                 alert('Transação excluída com sucesso!');
                 location.reload();

@@ -2,19 +2,19 @@ document.addEventListener('DOMContentLoaded', loadProfiles);
 
 function loadProfiles() {
     authFetch('/api/perfis')
-        .then(({ data, response }) => {
+        .then(response => {
             if (!response.ok) {
                 console.error('Erro na resposta do servidor:', response.statusText);
                 throw new Error('Falha ao carregar perfis');
             }
-            return data;
+            return response.json(); // Converta a resposta para JSON
         })
-        .then(profiles => {
-            console.log('Perfis carregados:', profiles);
+        .then(data => {
+            console.log('Perfis carregados:', data);
             const list = document.getElementById('profileList');
             list.innerHTML = '';
-            if (Array.isArray(profiles)) {
-                profiles.forEach(profile => {
+            if (Array.isArray(data)) {
+                data.forEach(profile => {
                     const item = document.createElement('li');
                     item.classList.add('list-group-item');
                     item.innerHTML = `
@@ -28,7 +28,7 @@ function loadProfiles() {
                     list.appendChild(item);
                 });
             } else {
-                console.error('Resposta não é um array:', profiles);
+                console.error('Resposta não é um array:', data);
             }
         })
         .catch(error => {
@@ -36,12 +36,13 @@ function loadProfiles() {
         });
 }
 
+
 function deleteProfile(id) {
     if (confirm("Tem certeza que deseja excluir este perfil?")) {
         authFetch(`/api/perfis/${id}`, {
             method: 'DELETE'
         })
-        .then(({ data, response }) => {
+        .then(response => {
             if (response === null || response.status === 204) {
                 alert('Perfil excluído com sucesso!');
                 location.reload(); // Recarregar a página para remover o perfil excluído

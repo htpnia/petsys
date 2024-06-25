@@ -2,19 +2,19 @@ document.addEventListener('DOMContentLoaded', loadFunctions);
 
 function loadFunctions() {
     authFetch('/api/funcoes')
-        .then(({ data, response }) => {
+        .then(response => {
             if (!response.ok) {
                 console.error('Erro na resposta do servidor:', response.statusText);
                 throw new Error('Falha ao carregar funções');
             }
-            return data.funcoes; // Acesse o array de funções corretamente
+            return response.json(); // Converta a resposta para JSON
         })
-        .then(funcoes => {
-            console.log('Funções carregadas:', funcoes);
+        .then(data => {
+            console.log('Funções carregadas:', data);
             const list = document.getElementById('functionList');
             list.innerHTML = '';
-            if (Array.isArray(funcoes)) {
-                funcoes.forEach(funcao => {
+            if (Array.isArray(data.funcoes)) {
+                data.funcoes.forEach(funcao => {
                     const item = document.createElement('li');
                     item.classList.add('list-group-item');
                     item.innerHTML = `
@@ -28,7 +28,7 @@ function loadFunctions() {
                     list.appendChild(item);
                 });
             } else {
-                console.error('Resposta não é um array:', funcoes);
+                console.error('Resposta não é um array:', data.funcoes);
             }
         })
         .catch(error => {
@@ -41,7 +41,7 @@ function deleteFunction(id) {
         authFetch(`/api/funcoes/${id}`, {
             method: 'DELETE'
         })
-        .then(({ data, response }) => {
+        .then(response => {
             if (response === null || response.status === 204) {
                 alert('Função excluída com sucesso!');
                 location.reload();
