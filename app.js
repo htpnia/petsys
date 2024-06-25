@@ -192,7 +192,6 @@ app.post('/cadperfil', async (req, res) => {
 // Rota POST para criar um novo modulo
 app.post('/cadmodulo', async (req, res) => {
     try {
-        console.log('Recebendo dados do módulo:', req.body);
         const { nomeModulo, descricao } = req.body;
         const novoModulo = await Modulo.create({ nomeModulo, descricao });
         res.status(201).json({ success: true, modulo: novoModulo });
@@ -223,50 +222,6 @@ app.post('/cadtransacao', async (req, res) => {
     } catch (error) {
         console.error('Erro ao criar transacao:', error);
         res.status(500).json({ success: false, message: 'Erro ao criar transacao' });
-    }
-});
-
-app.get('/api/usuarios/:id', async (req, res) => {
-    try {
-        const usuario = await Usuario.findByPk(req.params.id);
-        if (!usuario) {
-            return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
-        }
-        res.json(usuario);
-    } catch (error) {
-        console.error('Erro ao buscar usuário:', error);
-        res.status(500).json({ success: false, message: 'Erro ao buscar usuário' });
-    }
-});
-
-app.get('/api/perfis/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const perfil = await Perfil.findByPk(id, {
-            include: [
-                {
-                    model: Modulo,
-                    through: { attributes: [] }, // Exclui os atributos da tabela de junção
-                    include: [
-                        {
-                            model: Funcao,
-                            through: { attributes: [] } // Exclui os atributos da tabela de junção
-                        },
-                        {
-                            model: Transacao,
-                            through: { attributes: [] } // Exclui os atributos da tabela de junção
-                        }
-                    ]
-                }
-            ]
-        });
-        if (!perfil) {
-            return res.status(404).json({ success: false, message: 'Perfil não encontrado' });
-        }
-        res.json({ success: true, perfil });
-    } catch (error) {
-        console.error('Erro ao carregar dados do perfil:', error);
-        res.status(500).json({ success: false, message: 'Erro ao carregar dados do perfil' });
     }
 });
 
@@ -325,6 +280,37 @@ app.get('/api/transacoes', async (req, res) => {
 });
 
 
+//API rota para fornecer usuário específico
+app.get('/api/usuarios/:id', async (req, res) => {
+    try {
+        const usuario = await Usuario.findByPk(req.params.id);
+        if (!usuario) {
+            return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
+        }
+        res.json(usuario);
+    } catch (error) {
+        console.error('Erro ao buscar usuário:', error);
+        res.status(500).json({ success: false, message: 'Erro ao buscar usuário' });
+    }
+});
+
+
+// API rota para fornecer perfil específico
+app.get('/api/perfis/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const perfil = await Perfil.findByPk(id);
+        if (!perfil) {
+            return res.status(404).json({ success: false, message: 'Perfil não encontrado' });
+        }
+        res.json({ success: true, perfil });
+    } catch (error) {
+        console.error('Erro ao carregar perfil:', error);
+        res.status(500).json({ success: false, message: 'Erro ao carregar perfil' });
+    }
+});
+
+
 // Atualizar um usuário
 app.put('/api/usuarios/:id', async (req, res) => {
         const { id } = req.params;
@@ -348,22 +334,35 @@ app.put('/api/usuarios/:id', async (req, res) => {
     });
 // Atualizar um perfil
 app.put('/api/perfis/:id', async (req, res) => {
-    const { id } = req.params;
-    const { nomePerfil, descricao } = req.body;
     try {
+        const { id } = req.params;
+        const { nomePerfil, descricao } = req.body;
+
+        // Validação básica
+        if (!nomePerfil || !descricao) {
+            return res.status(400).json({ success: false, message: 'Nome do perfil e descrição são obrigatórios' });
+        }
+
+        // Encontrar o perfil pelo ID
         const perfil = await Perfil.findByPk(id);
         if (!perfil) {
             return res.status(404).json({ success: false, message: 'Perfil não encontrado' });
         }
-        perfil.nome_perfil = nomePerfil;
+
+        // Atualizar os campos do perfil
+        perfil.nomePerfil = nomePerfil;
         perfil.descricao = descricao;
+
+        // Salvar as mudanças
         await perfil.save();
-        res.json({ success: true, perfil });
+
+        res.json({ success: true, message: 'Perfil atualizado com sucesso', perfil });
     } catch (error) {
         console.error('Erro ao atualizar perfil:', error);
         res.status(500).json({ success: false, message: 'Erro ao atualizar perfil' });
     }
 });
+
 // Atualizar um módulo
 app.put('/api/modulos/:id', async (req, res) => {
     const { id } = req.params;

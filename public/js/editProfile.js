@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
+    console.log('ID do perfil:', profileId); // Adicione um log para verificar o ID do perfil
+
     // Carregar dados do perfil
     authFetch(`/api/perfis/${profileId}`, { method: 'GET' })
         .then(({ data, response }) => {
@@ -14,39 +16,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Erro na resposta do servidor:', response.statusText);
                 throw new Error('Falha ao carregar dados do perfil.');
             }
-            return data;
-        })
-        .then(profile => {
-            // Preencher os campos do formulário com os dados do perfil
-            document.getElementById('profileId').value = profile.idPerfil;
-            document.getElementById('nomePerfil').value = profile.nomePerfil;
-            document.getElementById('descricaoPerfil').value = profile.descricao;
-
-            // Carregar módulos e associar funções e transações
-            const modulosContainer = document.getElementById('modulosContainer');
-            profile.Modulos.forEach(modulo => {
-                const moduloDiv = document.createElement('div');
-                moduloDiv.innerHTML = `
-                    <h3>${modulo.nomeModulo}</h3>
-                    <div>
-                        <h4>Funções</h4>
-                        ${modulo.Funcoes.map(funcao => `
-                            <div>
-                                <input type="checkbox" name="funcoes" value="${funcao.idFuncao}" ${profile.Funcoes.some(f => f.idFuncao === funcao.idFuncao) ? 'checked' : ''}> ${funcao.nomeFuncao}
-                            </div>
-                        `).join('')}
-                    </div>
-                    <div>
-                        <h4>Transações</h4>
-                        ${modulo.Transacoes.map(transacao => `
-                            <div>
-                                <input type="checkbox" name="transacoes" value="${transacao.idTransacao}" ${profile.Transacoes.some(t => t.idTransacao === transacao.idTransacao) ? 'checked' : ''}> ${transacao.nomeTransacao}
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-                modulosContainer.appendChild(moduloDiv);
-            });
+            const profile = data.perfil;
+            console.log('Dados do perfil carregados:', profile);
+            if (profile && profile.idPerfil && profile.nomePerfil && profile.descricao) {
+                document.getElementById('profileId').value = profile.idPerfil;
+                document.getElementById('nomePerfil').value = profile.nomePerfil;
+                document.getElementById('descricaoPerfil').value = profile.descricao;
+            } else {
+                console.error('Dados do perfil incompletos:', profile);
+                alert('Erro ao carregar dados do perfil.');
+            }
         })
         .catch(error => {
             console.error('Erro ao carregar dados:', error);
@@ -61,28 +40,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const nomePerfil = document.getElementById('nomePerfil').value;
         const descricao = document.getElementById('descricaoPerfil').value;
 
-        // Obter funções e transações selecionadas
-        const funcoes = Array.from(document.querySelectorAll('input[name="funcoes"]:checked')).map(input => input.value);
-        const transacoes = Array.from(document.querySelectorAll('input[name="transacoes"]:checked')).map(input => input.value);
+        console.log('Enviando dados para atualizar perfil:', { nomePerfil, descricao });
 
         authFetch(`/api/perfis/${id}`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ nomePerfil, descricao, funcoes, transacoes })
+            body: JSON.stringify({ nomePerfil, descricao })
         })
         .then(({ data, response }) => {
             if (!response.ok) {
                 console.error('Erro na resposta do servidor:', response.statusText);
                 throw new Error('Falha ao atualizar perfil.');
             }
-            return data;
-        })
-        .then(data => {
+            console.log('Resposta da atualização do perfil:', data);
             if (data.success) {
                 alert('Perfil atualizado com sucesso!');
-                window.location.href = '/perfis'; // Redirecionar para a lista de perfis
+                window.location.href = '/perfis';
             } else {
                 alert('Falha ao atualizar perfil: ' + data.message);
             }

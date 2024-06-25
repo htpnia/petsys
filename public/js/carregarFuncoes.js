@@ -1,15 +1,12 @@
 document.addEventListener('DOMContentLoaded', loadFunctions);
 
 function loadFunctions() {
-    authFetch('/api/funcoes')
-        .then(response => {
+    authFetch('/api/funcoes', { method: 'GET' })
+        .then(({ data, response }) => {
             if (!response.ok) {
                 console.error('Erro na resposta do servidor:', response.statusText);
                 throw new Error('Falha ao carregar funções');
             }
-            return response.json(); // Converta a resposta para JSON
-        })
-        .then(data => {
             console.log('Funções carregadas:', data);
             const list = document.getElementById('functionList');
             list.innerHTML = '';
@@ -32,17 +29,15 @@ function loadFunctions() {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Erro:', error);
         });
 }
 
 function deleteFunction(id) {
     if (confirm("Tem certeza que deseja excluir esta função?")) {
-        authFetch(`/api/funcoes/${id}`, {
-            method: 'DELETE'
-        })
-        .then(response => {
-            if (response === null || response.status === 204) {
+        authFetch(`/api/funcoes/${id}`, { method: 'DELETE' })
+        .then(({ response }) => {
+            if (response.status === 204) {
                 alert('Função excluída com sucesso!');
                 location.reload();
             } else {

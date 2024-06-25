@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Dados do usuário:', user);
         console.log('Dados dos perfis:', perfis);
 
-        // Preencher os campos do formulário com placeholders
         document.getElementById('userId').value = user.idUsuario;
         document.getElementById('nomeUsuario').value = '';
         document.getElementById('nomeUsuario').placeholder = user.nomeUsuario;
@@ -37,17 +36,15 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('matricula').value = '';
         document.getElementById('matricula').placeholder = user.matricula;
 
-        // Preencher o select com os perfis
         const perfilSelect = document.getElementById('idPerfil');
         perfilSelect.innerHTML = '';
         perfis.forEach(perfil => {
             const option = document.createElement('option');
-            option.value = perfil.idPerfil; // Certifique-se de que está usando o campo correto
+            option.value = perfil.idPerfil;
             option.textContent = perfil.nomePerfil;
             perfilSelect.appendChild(option);
         });
 
-        // Selecionar o perfil do usuário
         perfilSelect.value = user.idPerfil;
     })
     .catch(error => {
@@ -66,11 +63,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const senha = document.getElementById('senha').value;
         const idPerfil = document.getElementById('idPerfil').value;
 
+        console.log('Dados enviados para atualizar usuário:', { nomeUsuario, email, matricula, senha, idPerfil });
+
         authFetch(`/api/usuarios/${id}`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify({ nomeUsuario, email, matricula, senha, idPerfil })
         })
         .then(({ data, response }) => {
@@ -78,12 +74,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Erro ao atualizar usuário:', response.statusText);
                 throw new Error('Falha ao atualizar usuário.');
             }
-            return data;
-        })
-        .then(data => {
             if (data.success) {
                 alert('Usuário atualizado com sucesso!');
-                location.href = '/users'; // Redirecionar para a lista de usuários
+                location.href = '/users';
             } else {
                 alert('Falha ao atualizar usuário: ' + data.message);
             }

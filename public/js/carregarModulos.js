@@ -1,17 +1,15 @@
 function loadModules() {
-    fetch('/api/modulos')
-        .then(response => {
+    authFetch('/api/modulos', { method: 'GET' })
+        .then(({ data, response }) => {
             if (!response.ok) {
                 throw new Error('Falha ao carregar módulos');
             }
-            return response.json();
-        })
-        .then(modules => {
+            const modules = data;
             const list = document.getElementById('moduleList');
             list.innerHTML = '';
             if (Array.isArray(modules)) {
                 modules.forEach(module => {
-                const item = document.createElement('li');
+                    const item = document.createElement('li');
                     item.classList.add('list-group-item');
                     item.innerHTML = `
                         <span class="module-info">${module.nomeModulo} - ${module.descricao}</span>
@@ -28,8 +26,30 @@ function loadModules() {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Erro:', error);
         });
+}
+
+function deleteModule(id) {
+    if (confirm("Tem certeza que deseja excluir este módulo?")) {
+        authFetch(`/api/modulos/${id}`, { method: 'DELETE' })
+        .then(({ response }) => {
+            if (response.status === 204) {
+                alert('Módulo excluído com sucesso!');
+                location.reload();
+            } else {
+                response.json().then(data => {
+                    alert('Falha ao excluir módulo: ' + data.message);
+                }).catch(error => {
+                    alert('Falha ao excluir módulo: ' + error.message);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao excluir módulo: ' + error.message);
+        });
+    }
 }
 
 function showModal(title, body) {

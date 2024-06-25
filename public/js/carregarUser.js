@@ -1,15 +1,13 @@
 document.addEventListener('DOMContentLoaded', loadUsers);
 
 function loadUsers() {
-    authFetch('/api/usuarios')
-        .then(response => {
+    authFetch('/api/usuarios', { method: 'GET' })
+        .then(({ data, response }) => {
             if (!response.ok) {
                 console.error('Erro na resposta do servidor:', response.statusText);
                 throw new Error('Falha ao carregar usuários');
             }
-            return response.json(); // Converta a resposta para JSON
-        })
-        .then(usuarios => {
+            const usuarios = data;
             console.log('Usuários carregados:', usuarios);
             const list = document.getElementById('userList');
             list.innerHTML = '';
@@ -34,7 +32,7 @@ function loadUsers() {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Erro:', error);
         });
 }
 
@@ -43,10 +41,10 @@ function deleteUser(id) {
         authFetch(`/api/usuarios/${id}`, {
             method: 'DELETE'
         })
-        .then(response => {
+        .then(({ response }) => {
             if (response.status === 204) {
                 alert('Usuário excluído com sucesso!');
-                location.reload(); // Recarregar a página para remover o usuário excluído
+                location.reload();
             } else {
                 response.json().then(data => {
                     alert('Falha ao excluir usuário: ' + data.message);

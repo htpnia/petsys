@@ -1,15 +1,12 @@
 document.addEventListener('DOMContentLoaded', loadTransactions);
 
 function loadTransactions() {
-    authFetch('/api/transacoes')
-        .then(response => {
+    authFetch('/api/transacoes', { method: 'GET' })
+        .then(({ data, response }) => {
             if (!response.ok) {
                 console.error('Erro na resposta do servidor:', response.statusText);
                 throw new Error('Falha ao carregar transações');
             }
-            return response.json(); // Converta a resposta para JSON
-        })
-        .then(data => {
             console.log('Transações carregadas:', data);
             const list = document.getElementById('transactionList');
             list.innerHTML = '';
@@ -32,17 +29,15 @@ function loadTransactions() {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Erro:', error);
         });
 }
 
 function deleteTransaction(id) {
     if (confirm("Tem certeza que deseja excluir esta transação?")) {
-        authFetch(`/api/transacoes/${id}`, {
-            method: 'DELETE'
-        })
-        .then(response => {
-            if (response === null || response.status === 204) {
+        authFetch(`/api/transacoes/${id}`, { method: 'DELETE' })
+        .then(({ response }) => {
+            if (response.status === 204) {
                 alert('Transação excluída com sucesso!');
                 location.reload();
             } else {

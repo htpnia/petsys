@@ -1,51 +1,48 @@
 document.addEventListener('DOMContentLoaded', loadProfiles);
 
 function loadProfiles() {
-    authFetch('/api/perfis')
-        .then(response => {
+    authFetch('/api/perfis', { method: 'GET' })
+        .then(({ data, response }) => {
             if (!response.ok) {
                 console.error('Erro na resposta do servidor:', response.statusText);
                 throw new Error('Falha ao carregar perfis');
             }
-            return response.json(); // Converta a resposta para JSON
-        })
-        .then(data => {
-            console.log('Perfis carregados:', data);
+            const perfis = data;
+            console.log('Perfis carregados:', perfis);
             const list = document.getElementById('profileList');
             list.innerHTML = '';
-            if (Array.isArray(data)) {
-                data.forEach(profile => {
+            if (Array.isArray(perfis)) {
+                perfis.forEach(perfil => {
                     const item = document.createElement('li');
                     item.classList.add('list-group-item');
                     item.innerHTML = `
-                        <span class="profile-info">${profile.nomePerfil} - ${profile.descricao}</span>
+                        <span class="profile-info">${perfil.nomePerfil} - ${perfil.descricao}</span>
                         <span class="profile-buttons">
-                            <button class="editBtn" onclick="location.href='/editProfile?id=${profile.idPerfil}'">✒️</button>
-                            <button class="deleteBtn" onclick="deleteProfile(${profile.idPerfil})">❌</button>
+                            <button class="editBtn" onclick="location.href='/editProfile?id=${perfil.idPerfil}'">✒️</button>
+                            <button class="deleteBtn" onclick="deleteProfile(${perfil.idPerfil})">❌</button>
                         </span>
                     `;
-                    item.addEventListener('click', () => showModal(profile.nomePerfil, profile.descricao));
+                    item.addEventListener('click', () => showModal(perfil.nomePerfil, perfil.descricao));
                     list.appendChild(item);
                 });
             } else {
-                console.error('Resposta não é um array:', data);
+                console.error('Resposta não é um array:', perfis);
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Erro:', error);
         });
 }
-
 
 function deleteProfile(id) {
     if (confirm("Tem certeza que deseja excluir este perfil?")) {
         authFetch(`/api/perfis/${id}`, {
             method: 'DELETE'
         })
-        .then(response => {
-            if (response === null || response.status === 204) {
+        .then(({ response }) => {
+            if (response.status === 204) {
                 alert('Perfil excluído com sucesso!');
-                location.reload(); // Recarregar a página para remover o perfil excluído
+                location.reload();
             } else {
                 response.json().then(data => {
                     alert('Falha ao excluir perfil: ' + data.message);
