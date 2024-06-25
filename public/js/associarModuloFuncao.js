@@ -25,49 +25,49 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Erro ao carregar módulos: ' + error.message);
         });
 
-    // Carregar transações
-    authFetch('/api/transacoes', { method: 'GET' })
+    // Carregar funções
+    authFetch('/api/funcoes', { method: 'GET' })
         .then(({ data, response }) => {
             if (!response.ok) {
-                throw new Error('Falha ao carregar transações');
+                throw new Error('Falha ao carregar funções');
             }
-            const transactionList = document.getElementById('transactionList');
-            let transacoes = data;
+            const functionList = document.getElementById('functionList');
+            let funcoes = data;
             if (data && !Array.isArray(data)) {
-                transacoes = data.transacoes;
+                funcoes = data.funcoes;
             }
-            if (Array.isArray(transacoes)) {
-                transacoes.forEach(transacao => {
+            if (Array.isArray(funcoes)) {
+                funcoes.forEach(funcao => {
                     let checkbox = document.createElement('div');
-                    checkbox.classList.add('transaction-checkbox');
+                    checkbox.classList.add('function-checkbox');
                     checkbox.innerHTML = `
-                        <input type="checkbox" id="transacao-${transacao.idTransacao}" name="transacao" value="${transacao.idTransacao}">
-                        <label for="transacao-${transacao.idTransacao}">${transacao.nomeTransacao}</label>
+                        <input type="checkbox" id="funcao-${funcao.idFuncao}" name="funcao" value="${funcao.idFuncao}">
+                        <label for="funcao-${funcao.idFuncao}">${funcao.nomeFuncao}</label>
                     `;
-                    transactionList.appendChild(checkbox);
+                    functionList.appendChild(checkbox);
                 });
             } else {
                 console.error('Resposta não é um array:', data);
-                alert('Erro ao carregar transações: formato inesperado de dados');
+                alert('Erro ao carregar funções: formato inesperado de dados');
             }
         })
         .catch(error => {
-            console.error('Erro ao carregar transações:', error);
-            alert('Erro ao carregar transações: ' + error.message);
+            console.error('Erro ao carregar funções:', error);
+            alert('Erro ao carregar funções: ' + error.message);
         });
 
-    // Associar módulos a transações
-    document.getElementById('moduleTransactionForm').addEventListener('submit', function(event) {
+    // Associar módulos a funções
+    document.getElementById('moduleFunctionForm').addEventListener('submit', function(event) {
         event.preventDefault();
         const moduleId = document.getElementById('moduleSelect').value;
-        const selectedOptions = document.querySelectorAll('input[name="transacao"]:checked');
-        const transactionIds = Array.from(selectedOptions).map(option => option.value);
+        const selectedOptions = document.querySelectorAll('input[name="funcao"]:checked');
+        const functionIds = Array.from(selectedOptions).map(option => option.value);
 
-        console.log({ moduleId, transactionIds }); // Confirme que os dados estão corretos
+        console.log({ moduleId, functionIds }); // Confirme que os dados estão corretos
 
-        authFetch('/api/modulosTransacoes/associar', {
+        authFetch('/api/modulosFuncoes/associar', {
             method: 'POST',
-            body: JSON.stringify({ idModulo: moduleId, idTransacoes: transactionIds })
+            body: JSON.stringify({ idModulo: moduleId, idFuncoes: functionIds })
         }).then(({ data, response }) => {
             if (!response.ok) {
                 throw new Error('Falha na requisição: ' + response.statusText);

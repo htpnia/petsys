@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const sequelize = require('./config/db')
 const jwt = require('jsonwebtoken');
 const Usuario = require('./model/user'); 
 const Perfil = require('./model/profile');
@@ -187,36 +188,6 @@ app.get('/associateModuleFunction', (req, res) => {
 // Rota GET para servir o arquivo 'assModuleFunction.html' para associação de módulos a transações
 app.get('/associateModuleTransaction', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'Modules/assModuleTransaction.html'));
-});
-
-app.post('/api/modulosTransacoes/associar', async (req, res) => {
-    const { idModulo, idTransacoes } = req.body;
-    console.log('Recebido POST para /api/modulosTransacoes/associar');
-    console.log('Dados recebidos:', req.body);
-
-    if (!idModulo || !idTransacoes || !Array.isArray(idTransacoes)) {
-        return res.status(400).json({ success: false, message: 'Dados insuficientes ou formato incorreto' });
-    }
-
-    try {
-        console.log('Tentando destruir associações anteriores...');
-        await ModuloTransacao.destroy({ where: { idModulo } });
-        console.log('Associações anteriores destruídas com sucesso.');
-
-        console.log('Tentando criar novas associações...');
-        const associations = idTransacoes.map(idTransacao => ({
-            idModulo,
-            idTransacao
-        }));
-        
-        const createdAssociations = await ModuloTransacao.bulkCreate(associations);
-        console.log('Novas associações criadas com sucesso:', createdAssociations);
-
-        res.status(200).json({ success: true, message: 'Associação realizada com sucesso' });
-    } catch (error) {
-        console.error('Erro ao associar transações ao módulo:', error);
-        res.status(500).json({ success: false, message: 'Erro ao associar transações ao módulo', details: error.message });
-    }
 });
 
 // Rota POST para criar um novo usuário
@@ -506,16 +477,32 @@ app.delete('/api/perfis/:id', async (req, res) => {
 // Deletar um módulo
 app.delete('/api/modulos/:id', async (req, res) => {
     const { id } = req.params;
+
+    const transaction = await sequelize.transaction();
+
     try {
+        // Excluir associações de Modulotransacao
+        await ModuloTransacao.destroy({ where: { idModulo: id }, transaction });
+
+        // Excluir associações de Modulofuncao
+        await ModuloFuncao.destroy({ where: { idModulo: id }, transaction });
+
+        // Encontrar e excluir o módulo
         const modulo = await Modulo.findByPk(id);
         if (!modulo) {
+            await transaction.rollback();
             return res.status(404).json({ success: false, message: 'Módulo não encontrado' });
         }
-        await modulo.destroy();
+        
+        await modulo.destroy({ transaction });
+
+        await transaction.commit();
+
         res.status(204).send();
     } catch (error) {
+        await transaction.rollback();
         console.error('Erro ao deletar módulo:', error);
-        res.status(500).json({ success: false, message: 'Erro ao deletar módulo' });
+        res.status(500).json({ success: false, message: 'Erro ao deletar módulo', details: error.message });
     }
 });
 
@@ -550,6 +537,67 @@ app.delete('/api/transacoes/:id', async (req, res) => {
     }
 });
 
+// API rota para associar módulo a transação
+app.post('/api/modulosTransacoes/associar', async (req, res) => {
+    const { idModulo, idTransacoes } = req.body;
+    console.log('Recebido POST para /api/modulosTransacoes/associar');
+    console.log('Dados recebidos:', req.body);
+
+    if (!idModulo || !idTransacoes || !Array.isArray(idTransacoes)) {
+        return res.status(400).json({ success: false, message: 'Dados insuficientes ou formato incorreto' });
+    }
+
+    try {
+        console.log('Tentando destruir associações anteriores...');
+        await ModuloTransacao.destroy({ where: { idModulo } });
+        console.log('Associações anteriores destruídas com sucesso.');
+
+        console.log('Tentando criar novas associações...');
+        const associations = idTransacoes.map(idTransacao => ({
+            idModulo,
+            idTransacao
+        }));
+        
+        const createdAssociations = await ModuloTransacao.bulkCreate(associations);
+        console.log('Novas associações criadas com sucesso:', createdAssociations);
+
+        res.status(200).json({ success: true, message: 'Associação realizada com sucesso' });
+    } catch (error) {
+        console.error('Erro ao associar transações ao módulo:', error);
+        res.status(500).json({ success: false, message: 'Erro ao associar transações ao módulo', details: error.message });
+    }
+});
+
+// API rota para associar módulo a função
+app.post('/api/modulosFuncoes/associar', async (req, res) => {
+    const { idModulo, idFuncoes } = req.body;
+    console.log('Recebido POST para /api/modulosFuncoes/associar');
+    console.log('Dados recebidos:', req.body);
+
+    if (!idModulo || !idFuncoes || !Array.isArray(idFuncoes)) {
+        return res.status(400).json({ success: false, message: 'Dados insuficientes ou formato incorreto' });
+    }
+
+    try {
+        console.log('Tentando destruir associações anteriores...');
+        await ModuloFuncao.destroy({ where: { idModulo } });
+        console.log('Associações anteriores destruídas com sucesso.');
+
+        console.log('Tentando criar novas associações...');
+        const associations = idFuncoes.map(idFuncao => ({
+            idModulo,
+            idFuncao
+        }));
+        
+        const createdAssociations = await ModuloFuncao.bulkCreate(associations);
+        console.log('Novas associações criadas com sucesso:', createdAssociations);
+
+        res.status(200).json({ success: true, message: 'Associação realizada com sucesso' });
+    } catch (error) {
+        console.error('Erro ao associar funções ao módulo:', error);
+        res.status(500).json({ success: false, message: 'Erro ao associar funções ao módulo', details: error.message });
+    }
+});
 
 
 

@@ -31,7 +31,7 @@
                 <button class="btnModule" onclick="navigateToPage(this)"><img src="/public/images/modulos.svg"/>Módulos</button>
                 <button class="btnFT" onclick="navigateToPage(this)"><img src="/public/images/ft.svg"/>Funções&Transações</button>
             </div>
-        </div>
+    </div>
         <div class="pageContent">
             <!-- Header Bar -->
             <div class="headerBar">
@@ -40,21 +40,23 @@
 
             <!-- Formulário de Associação -->
             <div class="moduleData">
+                <div class="formContainer">
                 <form id="moduleTransactionForm">
                     <div class="form-group">
                         <label for="moduleSelect">Selecione o Módulo:</label>
                         <br>
-                        <select id="moduleSelect" name="moduleSelect" required></select>
+                        <select class="moduleSelect" id="moduleSelect" name="moduleSelect" required></select>
                     </div>
                     <div class="form-group">
                         <label for="transactionList">Selecione as Transações:</label>
                         <div id="transactionList" class="checkbox-list"></div>
                     </div>
                     <div class="btnFormContainer">
-                        <button class="associateModuleFBtn" type="submit">Associar</button>
-                        <button class="cancel" type="button" onclick="window.location.href='/modulos'">Cancelar</button>
+                        <button class="create" type="submit">Associar</button>
+                        <button class="cancel" type="button" onclick="window.location.href='/modulos'">Voltar</button>
                     </div>
                 </form>
+                </div>
             </div>
         </div>
     </div>
