@@ -1,3 +1,4 @@
+// authFetch.js
 function authFetch(url, options = {}) {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -5,10 +6,15 @@ function authFetch(url, options = {}) {
     }
 
     const headers = {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`, // Supondo que o token JWT esteja armazenado no localStorage
+        'Authorization': `Bearer ${token}`, 
         'Content-Type': 'application/json',
         ...options.headers
     };
+
+    console.log('URL:', url);
+    console.log('Token sendo enviado:', token);
+    console.log('Headers sendo enviados:', headers);
+
     return fetch(url, {
         ...options,
         headers
@@ -16,9 +22,8 @@ function authFetch(url, options = {}) {
     .then(response => {
         console.log('Resposta do servidor:', response);
 
-        // Verificar se a resposta tem conteúdo antes de tentar parsear
         if (response.status === 204 || response.status === 205) {
-            return { data: null, response }; // Respostas sem conteúdo
+            return { data: null, response }; 
         }
 
         const contentType = response.headers.get('content-type');
@@ -32,7 +37,6 @@ function authFetch(url, options = {}) {
                     return { data: text, response };
                 }
             });
-            return response.text().then(text => ({ data: text, response }));
         }
     });
 }

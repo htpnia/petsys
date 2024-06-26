@@ -360,7 +360,6 @@ ul.list-group li {
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-/* Efeito de hover para os itens da lista */
 ul.list-group li:hover {
   background-color: #ffff;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);

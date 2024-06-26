@@ -11,7 +11,7 @@ const Funcao = require('./model/function');
 const ModuloTransacao = require('./model/moduleTransaction');
 const ModuloFuncao = require('./model/moduleFunction');
 const PerfilModulo = require('./model/profileModule');
-const authenticate = require('./middleware/auth');
+const authenticate = require('./public/js/auth')
 const cors = require('cors'); 
 
 
@@ -89,7 +89,7 @@ app.post('/login', async (req, res) => {
             return res.status(400).json({ success: false, message: 'Senha incorreta' });
         }
 
-        const token = jwt.sign({ id: user.idUsuario }, SECRET_KEY, { expiresIn: '5h' });
+        const token = jwt.sign({ id: user.idUsuario }, SECRET_KEY, { expiresIn: '1h' });
 
         res.json({ success: true, token });
     } catch (error) {
@@ -98,15 +98,15 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// Rota protegida de API dashboard
+app.use('/api/dashboard', (req, res) => {
+    res.json({ success: true, message: 'Bem-vindo ao Dashboard!' });
+});
 
-// Middleware de autenticação aplicado a todas as rotas abaixo
-
-
-// Rota GET para servir o arquivo 'regUser.html'
+// Rota protegida para servir o arquivo de dashboard
 app.get('/dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'Dashboard/dashboard.html'));
 });
-
 
 // Rota GET para servir o arquivo 'regUser.html'
 app.get('/users', (req, res) => {
@@ -335,6 +335,53 @@ app.get('/api/perfis/:id', async (req, res) => {
     }
 });
 
+// API rota para fornecer módulo específico
+app.get('/api/modulos/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const modulo = await Modulo.findByPk(id);
+        if (!modulo) {
+            return res.status(404).json({ success: false, message: 'Módulo não encontrado' });
+        }
+        res.json({ success: true, modulo: { idModulo: modulo.idModulo, nomeModulo: modulo.nomeModulo, descricao: modulo.descricao } });
+    } catch (error) {
+        console.error('Erro ao carregar módulo:', error);
+        res.status(500).json({ success: false, message: 'Erro ao carregar módulo', details: error.message });
+    }
+});
+
+// API rota para fornecer transação específica
+app.get('/api/transacoes/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const transacao = await Transacao.findByPk(id);
+        if (!transacao) {
+            return res.status(404).json({ success: false, message: 'Transação não encontrada' });
+        }
+        res.json({ success: true, transacao: { idTransacao: transacao.idTransacao, nomeTransacao: transacao.nomeTransacao, descricao: transacao.descricao } });
+    } catch (error) {
+        console.error('Erro ao carregar transação:', error);
+        res.status(500).json({ success: false, message: 'Erro ao carregar transação', details: error.message });
+    }
+});
+
+// API rota para fornecer função específica
+app.get('/api/funcoes/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const funcao = await Funcao.findByPk(id);
+        if (!funcao) {
+            return res.status(404).json({ success: false, message: 'Função não encontrada' });
+        }
+        res.json({ success: true, funcao: { idFuncao: funcao.idFuncao, nomeFuncao: funcao.nomeFuncao, descricao: funcao.descricao } });
+    } catch (error) {
+        console.error('Erro ao carregar função:', error);
+        res.status(500).json({ success: false, message: 'Erro ao carregar função', details: error.message });
+    }
+});
 
 // Atualizar um usuário
 app.put('/api/usuarios/:id', async (req, res) => {
@@ -391,19 +438,23 @@ app.put('/api/perfis/:id', async (req, res) => {
 // Atualizar um módulo
 app.put('/api/modulos/:id', async (req, res) => {
     const { id } = req.params;
+    console.log('ID recebido para atualização:', id);
     const { nomeModulo, descricao } = req.body;
+    console.log('Dados recebidos para atualização:', { nomeModulo, descricao });
+
     try {
         const modulo = await Modulo.findByPk(id);
         if (!modulo) {
             return res.status(404).json({ success: false, message: 'Módulo não encontrado' });
         }
-        modulo.nome_modulo = nomeModulo;
+        modulo.nomeModulo = nomeModulo;
         modulo.descricao = descricao;
         await modulo.save();
+        console.log('Módulo atualizado com sucesso:', modulo);
         res.json({ success: true, modulo });
     } catch (error) {
         console.error('Erro ao atualizar módulo:', error);
-        res.status(500).json({ success: false, message: 'Erro ao atualizar módulo' });
+        res.status(500).json({ success: false, message: 'Erro ao atualizar módulo', details: error.message });
     }
 });
 
@@ -416,7 +467,7 @@ app.put('/api/funcoes/:id', async (req, res) => {
         if (!funcao) {
             return res.status(404).json({ success: false, message: 'Função não encontrada' });
         }
-        funcao.nome_funcao = nomeFuncao;
+        funcao.nomeFuncao = nomeFuncao;
         funcao.descricao = descricao;
         await funcao.save();
         res.json({ success: true, funcao });
@@ -434,7 +485,7 @@ app.put('/api/transacoes/:id', async (req, res) => {
         if (!transacao) {
             return res.status(404).json({ success: false, message: 'Transação não encontrada' });
         }
-        transacao.nome_transacao = nomeTransacao;
+        transacao.nomeTransacao = nomeTransacao;
         transacao.descricao = descricao;
         await transacao.save();
         res.json({ success: true, transacao });
