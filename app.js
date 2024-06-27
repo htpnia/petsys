@@ -26,12 +26,18 @@ app.use(cors({
     exposedHeaders: ['Authorization']
 }));
 
-//Relacionamentos
+// Relacionamentos
 
 Perfil.belongsToMany(Modulo, {
     through: PerfilModulo,
     foreignKey: 'idPerfil',
     otherKey: 'idModulo'
+});
+
+Modulo.belongsToMany(Perfil, {
+    through: PerfilModulo,
+    foreignKey: 'idModulo',
+    otherKey: 'idPerfil'
 });
 
 Modulo.belongsToMany(Funcao, {
@@ -188,6 +194,11 @@ app.get('/associateModuleFunction', (req, res) => {
 // Rota GET para servir o arquivo 'assModuleFunction.html' para associação de módulos a transações
 app.get('/associateModuleTransaction', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'Modules/assModuleTransaction.html'));
+});
+
+// Rota GET para servir o arquivo 'assProfileModule.html' para associação de perfis a modulos
+app.get('/associateProfileModule', (req, res) => {
+    res.sendFile(path.join(__dirname, 'view', 'Profile/assProfileModule.html'));
 });
 
 // Rota POST para criar um novo usuário
@@ -383,6 +394,7 @@ app.get('/api/funcoes/:id', async (req, res) => {
     }
 });
 
+
 // Atualizar um usuário
 app.put('/api/usuarios/:id', async (req, res) => {
         const { id } = req.params;
@@ -518,6 +530,10 @@ app.delete('/api/perfis/:id', async (req, res) => {
         if (!perfil) {
             return res.status(404).json({ success: false, message: 'Perfil não encontrado' });
         }
+
+        // Remover associações na tabela PerfilModulo
+        await PerfilModulo.destroy({ where: { idPerfil: id } });
+
         await perfil.destroy();
         res.status(204).send();
     } catch (error) {
@@ -534,7 +550,6 @@ app.delete('/api/modulos/:id', async (req, res) => {
     try {
         // Excluir associações de Modulotransacao
         await ModuloTransacao.destroy({ where: { idModulo: id }, transaction });
-
         // Excluir associações de Modulofuncao
         await ModuloFuncao.destroy({ where: { idModulo: id }, transaction });
 
@@ -565,6 +580,7 @@ app.delete('/api/funcoes/:id', async (req, res) => {
         if (!funcao) {
             return res.status(404).json({ success: false, message: 'Função não encontrada' });
         }
+        await ModuloFuncao.destroy({ where: { idFuncao: id } });
         await funcao.destroy();
         res.status(204).send();
     } catch (error) {
@@ -580,6 +596,7 @@ app.delete('/api/transacoes/:id', async (req, res) => {
         if (!transacao) {
             return res.status(404).json({ success: false, message: 'Transação não encontrada' });
         }
+        await ModuloTransacao.destroy({ where: { idTransacao: id } });
         await transacao.destroy();
         res.status(204).send();
     } catch (error) {
@@ -650,8 +667,70 @@ app.post('/api/modulosFuncoes/associar', async (req, res) => {
     }
 });
 
+// API rota para associar perfil a módulo
+app.post('/api/perfilModulo/associar', async (req, res) => {
+    const { idPerfil, idModulos } = req.body;
+    console.log('Recebido POST para /api/perfilModulo/associar');
+    console.log('Dados recebidos:', req.body);
 
+    if (!idPerfil|| !idModulos || !Array.isArray(idModulos)) {
+        return res.status(400).json({ success: false, message: 'Dados insuficientes ou formato incorreto' });
+    }
 
+    try {
+        console.log('Tentando destruir associações anteriores...');
+        await PerfilModulo.destroy({ where: { idPerfil } });
+        console.log('Associações anteriores destruídas com sucesso.');
+
+        console.log('Tentando criar novas associações...');
+        const associations = idModulos.map(idModulo => ({
+            idPerfil,
+            idModulo
+        }));
+        
+        const createdAssociations = await PerfilModulo.bulkCreate(associations);
+        console.log('Novas associações criadas com sucesso:', createdAssociations);
+
+        res.status(200).json({ success: true, message: 'Associação realizada com sucesso' });
+    } catch (error) {
+        console.error('Erro ao associar módulos ao perfil:', error);
+        res.status(500).json({ success: false, message: 'Erro ao associar módulos ao perfil', details: error.message });
+    }
+});
+
+// Rota para obter funções de um módulo específico
+app.get('/api/modulos/:id/funcoes', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const funcoes = await Funcao.findAll({
+            include: {
+                model: Modulo,
+                where: { idModulo: id }
+            }
+        });
+        res.json(funcoes);
+    } catch (error) {
+        console.error('Erro ao buscar funções:', error);
+        res.status(500).json({ success: false, message: 'Erro ao buscar funções' });
+    }
+});
+
+// Rota para obter transações de um módulo específico
+app.get('/api/modulos/:id/transacoes', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const transacoes = await Transacao.findAll({
+            include: {
+                model: Modulo,
+                where: { idModulo: id }
+            }
+        });
+        res.json(transacoes);
+    } catch (error) {
+        console.error('Erro ao buscar transações:', error);
+        res.status(500).json({ success: false, message: 'Erro ao buscar transações' });
+    }
+});
 
 
 

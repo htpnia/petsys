@@ -2,10 +2,11 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db'); // Verifique se o caminho está correto
 
 const PerfilModulo = sequelize.define('PerfilModulo', {
-    id: {
+    idPerfilModulo: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        field: 'id_perfilmodulo'
     },
     idPerfil: {
         type: DataTypes.INTEGER,

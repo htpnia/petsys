@@ -53,50 +53,49 @@ button {
 }
 
 .sideBarButtons button {
-    display: flex;
-    font-size: 0.85rem;
-    font-weight: bold;
-    font-stretch: condensed;
-    color: #5c5c5c;
-    background-color: #ffff;
-    border: 2px solid #EAEAEA;
-    border-radius: 25px;
-    filter: drop-shadow(1px 1px 1px #B5B5B5);
-    padding: 20px 0px 20px 0px;
-    margin: 0px 10px 10px 5px;
-    align-items: center;
-
+  display: flex;
+  font-size: 100%;
+  font-weight: bold;
+  font-stretch: condensed;
+  color: #5c5c5c;
+  background-color: #ffff;
+  border: 2px solid #EAEAEA;
+  border-radius: 25px;
+  filter: drop-shadow(1px 1px 1px #B5B5B5);
+  padding: 20px 0px 20px 0px;
+  margin: 0px 10px 10px 5px;
+  align-items: center;
+  height: 9vh;
 }
 
 button img {
-    margin: 0px 30px 0px 20px;
-    width: 20px;
-    height: 20px;
-    padding-right: 30px;
-    background-color:#ffff;
-  
+  margin: 0px 30px 0px 20px;
+  width: 35px;
+  height: 35px;
+  padding-right: 30px;
+  background-color:#ffff;
+
 }
 .btnProfile img {
-    margin: 0px 30px 0px 20px;
-    width: 20px;
-    height: 20px;
-    padding-right: 30px;
-    background-color: #00A651;
+  margin: 0px 30px 0px 20px;
+  width: 35px;
+  height: 35px;
+  padding-right: 30px;
+  background-color: #00A651;
 }
 
 .sideBarButtons button:hover {
     border: 2px solid #c1c1c1;
     filter: drop-shadow(1px 2px 4px #9e9e9e) brightness(1.1);
-
 }
 
 .sideBarButtons .btnProfile {
-    font-size: 0.9rem;
-    font-weight: bold;
-    font-stretch: condensed;
-    color: #ffff;
-    background-color: #00A651;
-    border: 2px solid #18CE71;
+  font-size: 120%;
+  font-weight: bold;
+  font-stretch: condensed;
+  color: #ffff;
+  background-color: #00A651;
+  border: 2px solid #18CE71;
 }
 
 .headerBar {
@@ -194,10 +193,63 @@ form, h2, label, input, textarea, .form-group {
 
 .btnFormContainer {
   background-color: #F6F4F4;
-  margin-top: 36vh;
+  margin-top: 20vh;
   padding-top: 10px;
   }
 
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f6f4f4;
+    padding: 30px;
+  }
+
+  .checkbox-list {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #CFCFCF;
+    background-color: #ffff;
+    height: 22vh;
+    margin-top: 5px;
+    padding: 5px;
+    overflow-y: auto;
+  }
+
+
+  .form-group {
+    padding-top: 10px;
+    padding-bottom: 5px;
+  }
+
+  .module-checkbox {
+    display: flex;
+    align-items: center;
+    border: 2px solid #f6f4f4;
+    border-radius: 10px;
+    min-height: 30px;
+    margin: 1px;
+  }
+
+  .module-checkbox:hover {
+    filter: drop-shadow(1px 4px 4px #9e9e9e) brightness(1.1);
+  }
+
+  .module-checkbox input[type="checkbox"] {
+    width: 20px;  
+    height: 20px;
+    margin: 0px 70px 0px 10px;
+    cursor: pointer;
+  }
+
+  .moduleList, .checkbox-list {
+    background-color: #f6f4f4;
+  }
+
+  .module-checkbox, .module-checkbox label {
+    background-color: #ffff;
+
+  }
 .create, .cancel {
     font-size: 1rem;
     font-weight: bold;
