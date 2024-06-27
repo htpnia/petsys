@@ -17,11 +17,29 @@ function loadTransactions() {
                     item.innerHTML = `
                         <span class="transaction-info">${transacao.nomeTransacao} - ${transacao.descricao}</span>
                         <span class="transaction-buttons">
-                            <button class="editBtn" onclick="location.href='/editTransaction?id=${transacao.idTransacao}'">✒️</button>
-                            <button class="deleteBtn" onclick="deleteTransaction(${transacao.idTransacao})">❌</button>
+                            <button class="editBtn">✒️</button>
+                            <button class="deleteBtn">❌</button>
                         </span>
                     `;
-                    item.addEventListener('click', () => showModal(transacao.nomeTransacao, transacao.descricao));
+                    item.addEventListener('click', (event) => {
+                        if (!event.target.classList.contains('editBtn') && !event.target.classList.contains('deleteBtn')) {
+                            showModal(transacao.nomeTransacao, transacao.descricao);
+                        }
+                    });
+
+                    const editBtn = item.querySelector('.editBtn');
+                    const deleteBtn = item.querySelector('.deleteBtn');
+
+                    editBtn.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        location.href = `/editTransaction?id=${transacao.idTransacao}`;
+                    });
+
+                    deleteBtn.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        deleteTransaction(transacao.idTransacao);
+                    });
+
                     list.appendChild(item);
                 });
             } else {

@@ -17,11 +17,29 @@ function loadFunctions() {
                     item.innerHTML = `
                         <span class="function-info">${funcao.nomeFuncao} - ${funcao.descricao}</span>
                         <span class="function-buttons">
-                            <button class="editBtn" onclick="location.href='/editFunction?id=${funcao.idFuncao}'">✒️</button>
-                            <button class="deleteBtn" onclick="deleteFunction(${funcao.idFuncao})">❌</button>
+                            <button class="editBtn">✒️</button>
+                            <button class="deleteBtn">❌</button>
                         </span>
                     `;
-                    item.addEventListener('click', () => showModal(funcao.nomeFuncao, funcao.descricao));
+                    item.addEventListener('click', (event) => {
+                        if (!event.target.classList.contains('editBtn') && !event.target.classList.contains('deleteBtn')) {
+                            showModal(funcao.nomeFuncao, funcao.descricao);
+                        }
+                    });
+                    
+                    const editBtn = item.querySelector('.editBtn');
+                    const deleteBtn = item.querySelector('.deleteBtn');
+
+                    editBtn.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        location.href = `/editFunction?id=${funcao.idFuncao}`;
+                    });
+
+                    deleteBtn.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        deleteFunction(funcao.idFuncao);
+                    });
+
                     list.appendChild(item);
                 });
             } else {

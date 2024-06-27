@@ -209,6 +209,43 @@ form, h2, label, input, textarea, .form-group {
   margin: 0px 10px 13px 10px;
 
 }
+.formCheckbox {
+  display: flex;
+  justify-content: center;
+  background-color: #ffff;
+  color: #5c5c5c;
+  margin-top: 10px;
+  height: 4vh;
+  width: 10vw;
+  margin-left: 7vw;
+  border: 1px solid #D7D7D7;
+  border-radius: 4px;
+  filter: drop-shadow(1px 2px 2px #D1d1d1); 
+}
+
+
+.formCheckbox input{
+  width: 30px;  
+  height: 30px;
+  margin-top: 3px;
+  margin-left: 5px;
+  margin-bottom: 1px;
+
+}
+.formCheckbox span{
+  background-color: #ffff;
+  margin-left: 5px;
+  margin-top: 10px;
+  width: 10vw;
+  border-radius: 5px;
+  font-size: 15px;
+  height: 23px;
+  padding-left: 6px;
+  font-weight: bold;
+  font-stretch: condensed;
+
+
+}
 
 .form-group label {
   color: #575757;
@@ -245,14 +282,16 @@ form, h2, label, input, textarea, .form-group {
 }
 
 .form-group select{
-  border: 2px solid #D7D7D7;
+ border: 2px solid #D7D7D7;
  border-radius: 5px;
- width: 24vw;
+ width: 23.5vw;
  background-color: #ffff;
  margin: 5px 0px 5px 0px;
 }
 
 .btnFormContainer {
+  display: flex;
+  justify-content: center;
   background-color: #F6F4F4;
   padding-top: 35px;
   margin-top: 40px;

@@ -18,11 +18,29 @@ function loadProfiles() {
                     item.innerHTML = `
                         <span class="profile-info">${perfil.nomePerfil} - ${perfil.descricao}</span>
                         <span class="profile-buttons">
-                            <button class="editBtn" onclick="location.href='/editProfile?id=${perfil.idPerfil}'">✒️</button>
-                            <button class="deleteBtn" onclick="deleteProfile(${perfil.idPerfil})">❌</button>
+                            <button class="editBtn">✒️</button>
+                            <button class="deleteBtn">❌</button>
                         </span>
                     `;
-                    item.addEventListener('click', () => showModal(perfil.nomePerfil, perfil.descricao));
+                    item.addEventListener('click', (event) => {
+                        if (!event.target.classList.contains('editBtn') && !event.target.classList.contains('deleteBtn')) {
+                            showModal(perfil.nomePerfil, perfil.descricao);
+                        }
+                    });
+
+                    const editBtn = item.querySelector('.editBtn');
+                    const deleteBtn = item.querySelector('.deleteBtn');
+
+                    editBtn.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        location.href = `/editProfile?id=${perfil.idPerfil}`;
+                    });
+
+                    deleteBtn.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        deleteProfile(perfil.idPerfil);
+                    });
+
                     list.appendChild(item);
                 });
             } else {
@@ -36,9 +54,7 @@ function loadProfiles() {
 
 function deleteProfile(id) {
     if (confirm("Tem certeza que deseja excluir este perfil?")) {
-        authFetch(`/api/perfis/${id}`, {
-            method: 'DELETE'
-        })
+        authFetch(`/api/perfis/${id}`, { method: 'DELETE' })
         .then(({ response }) => {
             if (response.status === 204) {
                 alert('Perfil excluído com sucesso!');

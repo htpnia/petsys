@@ -29,6 +29,7 @@ document.getElementById('formUser').addEventListener('submit', function(event) {
     const email = document.getElementById('email').value;
     const matricula = document.getElementById('matricula').value;
     const nomePerfil = document.getElementById('perfilSelect').value;
+    const acessoSistema = document.getElementById('acessoSistema').checked;
     const idPerfil = perfisMap[nomePerfil];
 
     const registerData = {
@@ -36,6 +37,7 @@ document.getElementById('formUser').addEventListener('submit', function(event) {
         senha: senha,
         email: email,
         matricula: matricula,
+        acessoSistema: acessoSistema,
         idPerfil: idPerfil
     };
 

@@ -95,6 +95,10 @@ app.post('/login', async (req, res) => {
             return res.status(400).json({ success: false, message: 'Senha incorreta' });
         }
 
+        if (!user.acessoSistema) {
+            return res.status(403).json({ success: false, message: 'Usuário não tem acesso ao sistema' });
+        }
+
         const token = jwt.sign({ id: user.idUsuario }, SECRET_KEY, { expiresIn: '1h' });
 
         res.json({ success: true, token });
@@ -103,6 +107,7 @@ app.post('/login', async (req, res) => {
         res.status(500).json({ success: false, message: 'Erro ao fazer login' });
     }
 });
+
 
 // Rota protegida de API dashboard
 app.use('/api/dashboard', (req, res) => {
@@ -204,8 +209,8 @@ app.get('/associateProfileModule', (req, res) => {
 // Rota POST para criar um novo usuário
 app.post('/caduser', async (req, res) => {
     try {
-        const { nomeUsuario, email, matricula, senha, idPerfil } = req.body;
-        const novoUsuario = await Usuario.create({ nomeUsuario, email, matricula, senha, idPerfil });
+        const { nomeUsuario, email, matricula, senha, idPerfil, acessoSistema } = req.body;
+        const novoUsuario = await Usuario.create({ nomeUsuario, email, matricula, senha, idPerfil, acessoSistema });
         res.status(201).json({ success: true, usuario: novoUsuario });
     } catch (error) {
         console.error('Erro ao criar usuário:', error);
@@ -398,7 +403,7 @@ app.get('/api/funcoes/:id', async (req, res) => {
 // Atualizar um usuário
 app.put('/api/usuarios/:id', async (req, res) => {
         const { id } = req.params;
-        const { nomeUsuario, email, matricula, senha, idPerfil } = req.body;
+        const { nomeUsuario, email, matricula, senha, idPerfil, acessoSistema } = req.body;
         try {
             const usuario = await Usuario.findByPk(id);
             if (!usuario) {
@@ -407,8 +412,11 @@ app.put('/api/usuarios/:id', async (req, res) => {
             usuario.nomeUsuario = nomeUsuario;
             usuario.email = email;
             usuario.matricula = matricula;
-            usuario.senha = senha;
+            if (senha) {
+                usuario.senha = senha; // Atualizar a senha somente se for fornecida
+            }
             usuario.idPerfil = idPerfil;
+            usuario.acessoSistema = acessoSistema;
             await usuario.save();
             res.json({ success: true, usuario });
         } catch (error) {

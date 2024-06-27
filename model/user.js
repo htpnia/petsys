@@ -37,6 +37,12 @@ const Usuario = sequelize.define('usuario', {
         field: 'senha'
     },
 
+    acessoSistema: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        field: 'acesso_sistema'
+    },
+
     idPerfil: {
         type: DataTypes.INTEGER,
         allowNull: false,

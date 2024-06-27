@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('email').placeholder = user.email;
         document.getElementById('matricula').value = '';
         document.getElementById('matricula').placeholder = user.matricula;
+        document.getElementById('acessoSistema').checked = user.acessoSistema;
 
         const perfilSelect = document.getElementById('idPerfil');
         perfilSelect.innerHTML = '';
@@ -62,12 +63,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const matricula = document.getElementById('matricula').value || document.getElementById('matricula').placeholder;
         const senha = document.getElementById('senha').value;
         const idPerfil = document.getElementById('idPerfil').value;
+        const acessoSistema = document.getElementById('acessoSistema').checked;
 
-        console.log('Dados enviados para atualizar usuário:', { nomeUsuario, email, matricula, senha, idPerfil });
+        console.log('Dados enviados para atualizar usuário:', { nomeUsuario, email, matricula, senha, idPerfil, acessoSistema });
 
         authFetch(`/api/usuarios/${id}`, {
             method: 'PUT',
-            body: JSON.stringify({ nomeUsuario, email, matricula, senha, idPerfil })
+            body: JSON.stringify({ nomeUsuario, email, matricula, senha, idPerfil, acessoSistema })
         })
         .then(({ data, response }) => {
             if (!response.ok) {
