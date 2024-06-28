@@ -11,20 +11,14 @@ document.getElementById('formTransaction').addEventListener('submit', function(e
 
     console.log('Dados do registro de transacao:', transactionData);  // Loga os dados do registro no console para verificação
 
-    fetch('/cadtransacao', {  // Atualizado para a rota correta
+    authFetch('/cadtransacao', {  // Atualizado para a rota correta
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
         body: JSON.stringify(transactionData)
     })
-    .then(response => {
+    .then(({ data, response }) => {
         if (!response.ok) {
             throw new Error('Falha na requisição: ' + response.statusText);  // Lança um erro se a resposta não for OK
         }
-        return response.json();
-    })
-    .then(data => {
         if (data.success) {
             alert('Transacao cadastrada com sucesso!');
             window.location.href = '/funcoestransacoes'; // Redirecionar para o painel de administração ou outra página relevante após o sucesso

@@ -54,7 +54,7 @@ button {
 
 .sideBarButtons button {
   display: flex;
-  font-size: 100%;
+  font-size: 85%;
   font-weight: bold;
   font-stretch: condensed;
   color: #5c5c5c;
@@ -72,7 +72,7 @@ button img {
   margin: 0px 30px 0px 20px;
   width: 35px;
   height: 35px;
-  padding-right: 30px;
+  padding-right: 10px;
   background-color:#ffff;
 
 }
@@ -80,7 +80,7 @@ button img {
   margin: 0px 30px 0px 20px;
   width: 35px;
   height: 35px;
-  padding-right: 30px;
+  padding-right: 10px;
   background-color: #00A651;
 }
 
@@ -90,7 +90,7 @@ button img {
 }
 
 .sideBarButtons .btnProfile {
-  font-size: 120%;
+  font-size: 100%;
   font-weight: bold;
   font-stretch: condensed;
   color: #ffff;
@@ -193,7 +193,7 @@ form, h2, label, input, textarea, .form-group {
 
 .btnFormContainer {
   background-color: #F6F4F4;
-  margin-top: 20vh;
+  margin-top: 8vh;
   padding-top: 10px;
   }
 
@@ -220,6 +220,18 @@ form, h2, label, input, textarea, .form-group {
   .form-group {
     padding-top: 10px;
     padding-bottom: 5px;
+  }
+
+  .form-group select {
+    background-color: #ffff;
+    border: 2px solid #D7D7D7;
+    border-radius: 5px;
+    height: 5vh;
+    width: 22vw;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding-left: 20px;
+
   }
 
   .module-checkbox {

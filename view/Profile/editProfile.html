@@ -40,19 +40,22 @@
             </div>
 
             <!-- Formulário de Edição de Perfil -->
-            <div class="profileForm">
+            <div class="profileRegisterData">
                 <form id="editProfileForm">
                     <input type="hidden" id="profileId">
+                    <div class="form-group">
                     <label for="nomePerfil">Nome do Perfil:</label>
+                    <br>
                     <input type="text" id="nomePerfil" name="nomePerfil" required>
-                    <br>
-                    <label for="descricaoPerfil">Descrição:</label>
-                    <input type="text" id="descricaoPerfil" name="descricaoPerfil" required>
-                    <br>
-                    <div id="modulosContainer">
-                        <!-- Módulos, Funções e Transações serão carregados aqui -->
                     </div>
-                    <button type="submit">Salvar Alterações</button>
+                    <div class="form-group">
+                    <label for="descricaoPerfil">Descrição:</label>
+                    <br>
+                    <textarea type="text" id="descricaoPerfil" name="descricaoPerfil" required></textarea>
+                    </div>
+                    <div class="btnFormContainer">
+                    <button class="create" type="submit">Confirmar</button>
+                    </div>
                 </form>
             </div>
         </div>

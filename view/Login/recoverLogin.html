@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be-a-Bá: Recuperar</title>
+    <!---Normalize CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../public/styles/login.css"/>
+    
+    <!--- Fonte Open Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container">
+    <div class="loginContainer">
+        <div class="returnBtnContainer">
+        <button onclick="window.location.href='/'">≪</button>
+        </div>
+        <div class="loginImgContainer">
+            
+            <img src="../../public/images/qqlogo.png" class="imgRecover">
+        </div>
+        <div class="loginFormContainer">
+            <form class="loginForm" id="loginForm">
+        
+                <label for="email">E-mail:</label>
+                <br>
+                <input type="text" placeholder="Digite seu e-mail" id="email" name="email" required><br>
+        
+                <button class="loginButton" type="submit">Recuperar</button>
+
+
+
+            </form>
+        </div>
+    </div>
+    </div>
+    
+
+
+<!--- Script JS -->
+<script src="../../public/js/authFetch.js"></script>
+<script src="../../public/js/recuperarSenha.js"></script>
+<script src="../../public/js/menu.js"></script>
+
+<!--- Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

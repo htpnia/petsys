@@ -55,7 +55,7 @@ button {
 
 .sideBarButtons button {
   display: flex;
-  font-size: 100%;
+  font-size: 85%;
   font-weight: bold;
   font-stretch: condensed;
   color: #5c5c5c;
@@ -73,7 +73,7 @@ button img {
   margin: 0px 30px 0px 20px;
   width: 35px;
   height: 35px;
-  padding-right: 30px;
+  padding-right: 10px;
   background-color:#ffff;
 
 }
@@ -81,7 +81,7 @@ button img {
   margin: 0px 30px 0px 20px;
   width: 35px;
   height: 35px;
-  padding-right: 30px;
+  padding-right: 10px;
   background-color: #00A651;
 }
 
@@ -91,7 +91,7 @@ button img {
 }
 
 .sideBarButtons .btnUser {
-  font-size: 120%;
+  font-size: 100%;
   font-weight: bold;
   font-stretch: condensed;
   color: #ffff;
@@ -211,13 +211,13 @@ form, h2, label, input, textarea, .form-group {
 }
 .formCheckbox {
   display: flex;
-  justify-content: center;
   background-color: #ffff;
   color: #5c5c5c;
-  margin-top: 10px;
-  height: 4vh;
-  width: 10vw;
-  margin-left: 7vw;
+  margin-top: 8px;
+  padding: 2px 0px 2px 0px;
+  height: 6vh;
+  width: 15vw;
+  margin-left: 8vw;
   border: 1px solid #D7D7D7;
   border-radius: 4px;
   filter: drop-shadow(1px 2px 2px #D1d1d1); 
@@ -227,20 +227,20 @@ form, h2, label, input, textarea, .form-group {
 .formCheckbox input{
   width: 30px;  
   height: 30px;
+  margin-left: 8px;
   margin-top: 3px;
-  margin-left: 5px;
   margin-bottom: 1px;
 
 }
 .formCheckbox span{
   background-color: #ffff;
-  margin-left: 5px;
+  margin-left: 15px;
   margin-top: 10px;
   width: 10vw;
   border-radius: 5px;
-  font-size: 15px;
+  font-size: 14px;
   height: 23px;
-  padding-left: 6px;
+  padding-left: 3px;
   font-weight: bold;
   font-stretch: condensed;
 
@@ -293,8 +293,8 @@ form, h2, label, input, textarea, .form-group {
   display: flex;
   justify-content: center;
   background-color: #F6F4F4;
-  padding-top: 35px;
-  margin-top: 40px;
+  padding-top: 10px;
+  margin-top: 10px;
 }
 
 .create {

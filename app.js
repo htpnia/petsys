@@ -139,6 +139,10 @@ app.get('/funcoestransacoes', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'FunctionTransaction/functiontransaction.html'));
 });
 
+app.get('/recuperarsenha', (req, res) => {
+    res.sendFile(path.join(__dirname, 'view', 'Login/recoverLogin.html'));
+})
+
 
 
 // Rota GET para servir o arquivo 'regUser.html'
