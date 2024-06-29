@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const sequelize = require('./config/db')
 const jwt = require('jsonwebtoken');
+const { exec } = require('child_process');
 const Usuario = require('./model/user'); 
 const Perfil = require('./model/profile');
 const Modulo = require('./model/module');
@@ -108,13 +109,75 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// Enviar email de recuperação de senha
+app.post('/api/recover', async (req, res) => {
+    const { email } = req.body;
 
-// Rota protegida de API dashboard
+    try {
+        const user = await Usuario.findOne({ where: { email } });
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'E-mail não cadastrado.' });
+        }
+
+        const token = jwt.sign({ id: user.idUsuario }, SECRET_KEY, { expiresIn: '1h' });
+
+        const mailOptions = {
+            to_email: user.email,
+            subject: 'Recuperação de Senha - QQTech Bê-a-Bá',
+            body: `Clique no link para redefinir sua senha: http://localhost:3000/reset-password?token=${token}`
+        };
+
+        const scriptPath = path.join(__dirname, 'scripts', 'send_email.py');
+        const command = `python ${scriptPath} ${mailOptions.to_email} "${mailOptions.subject}" "${mailOptions.body}"`;
+
+        console.log('Executando comando:', command);
+
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                console.error('Erro ao enviar e-mail:', error);
+                console.error('stderr:', stderr);
+                return res.status(500).json({ success: false, message: 'Erro ao enviar e-mail' });
+            }
+            console.log('stdout:', stdout);
+            console.log('stderr:', stderr);
+            res.status(200).json({ success: true, message: 'E-mail de recuperação enviado com sucesso.' });
+        });
+    } catch (error) {
+        console.error('Erro ao processar recuperação de senha:', error);
+        res.status(500).json({ success: false, message: 'Erro ao processar recuperação de senha.' });
+    }
+});
+
+// Redefinir a senha
+app.post('/reset-password', async (req, res) => {
+    const { token, newPassword } = req.body;
+
+    try {
+        const decoded = jwt.verify(token, SECRET_KEY);
+        const userId = decoded.id;
+
+        const usuario = await Usuario.findByPk(userId);
+        if (!usuario) {
+            return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
+        }
+
+        // Atualizar a senha do usuário
+        usuario.senha = newPassword;
+        await usuario.save();
+
+        res.json({ success: true, message: 'Senha redefinida com sucesso' });
+    } catch (error) {
+        console.error('Erro ao redefinir senha:', error);
+        res.status(500).json({ success: false, message: 'Erro ao redefinir senha' });
+    }
+});
+
+// Rota de API dashboard
 app.use('/api/dashboard', (req, res) => {
     res.json({ success: true, message: 'Bem-vindo ao Dashboard!' });
 });
 
-// Rota protegida para servir o arquivo de dashboard
+// Rota GET para servir o arquivo de dashboard
 app.get('/dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'Dashboard/dashboard.html'));
 });
@@ -139,11 +202,15 @@ app.get('/funcoestransacoes', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'FunctionTransaction/functiontransaction.html'));
 });
 
+// Rota GET para servir o arquivo "recoverLogin.html"
 app.get('/recuperarsenha', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'Login/recoverLogin.html'));
 })
 
-
+// Rota GET para servir o arquivo "resetPassword.html"
+app.get('/reset-password', (req, res) => {
+    res.sendFile(path.join(__dirname, 'view', 'Login/resetPassword.html'));
+});
 
 // Rota GET para servir o arquivo 'regUser.html'
 app.get('/caduser', (req, res) => {
