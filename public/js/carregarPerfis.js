@@ -24,7 +24,7 @@ function loadProfiles() {
                     `;
                     item.addEventListener('click', (event) => {
                         if (!event.target.classList.contains('editBtn') && !event.target.classList.contains('deleteBtn')) {
-                            showModal(perfil.nomePerfil, perfil.descricao);
+                            showModal(perfil);
                         }
                     });
 
@@ -74,21 +74,45 @@ function deleteProfile(id) {
     }
 }
 
-function showModal(title, body) {
-    const modal = document.getElementById('infoModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalBody = document.getElementById('modalBody');
-    modalTitle.innerText = title;
-    modalBody.innerText = body;
-    modal.style.display = "block";
+function fetchModulesByProfile(idPerfil) {
+    return authFetch(`/api/perfis/${idPerfil}/modulos`, { method: 'GET' })
+        .then(({ data, response }) => {
+            if (!response.ok) {
+                console.error('Erro na resposta do servidor:', response.statusText);
+                throw new Error('Falha ao carregar módulos');
+            }
+            return data;
+        })
+        .catch(error => {
+            console.error('Erro ao carregar módulos:', error);
+            return [];
+        });
+}
 
-    const span = document.getElementsByClassName('close')[0];
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-    window.onclick = function(event) {
-        if (event.target == modal) {
+function showModal(perfil) {
+    fetchModulesByProfile(perfil.idPerfil).then(modulos => {
+        const modal = document.getElementById('infoModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+
+        const modulosList = modulos.map(modulo => `<li>${modulo.nomeModulo}</li>`).join('');
+
+        modalTitle.innerText = perfil.nomePerfil;
+        modalBody.innerHTML = `
+            <p>${perfil.descricao}</p>
+            <h3>Módulos Associados</h3>
+            <ul>${modulosList}</ul>
+        `;
+        modal.style.display = "block";
+
+        const span = document.getElementsByClassName('close')[0];
+        span.onclick = function() {
             modal.style.display = "none";
         }
-    }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    });
 }

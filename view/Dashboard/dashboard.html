@@ -20,44 +20,89 @@
 </head>
 <body>
     <div class="container">   
-    <!--- Side Bar -->
-    <div class="sideBar">
-        <div class="userInfo">
-            <img src="/public/images/qqlogo.png">            
+        <!--- Side Bar -->
+        <div class="sideBar">
+            <div class="userInfo">
+                <img src="/public/images/qqlogo.png">            
+            </div>
+            <div class="sideBarButtons">
+                <button class="btnDashboard" onclick="navigateToPage(this)"><img src="/public/images/dashboard.svg"/>Dashboard</button>
+                <button class="btnUser" onclick="navigateToPage(this)"><img src="/public/images/usuario.svg"/>Usuários</button>
+                <button class="btnProfile" onclick="navigateToPage(this)"><img src="/public/images/perfis.svg"/>Perfis</button>
+                <button class="btnModule" onclick="navigateToPage(this)"><img src="/public/images/modulos.svg"/>Módulos</button>
+                <button class="btnFT" onclick="navigateToPage(this)"><img src="/public/images/ft.svg"/>Funções&Transações</button>
+            </div>
         </div>
-        <div class="sideBarButtons">
-            <button class="btnDashboard" onclick="navigateToPage(this)"><img src="/public/images/dashboard.svg"/>Dashboard</button>
-            <button class="btnUser" onclick="navigateToPage(this)"><img src="/public/images/usuario.svg"/>Usuários</button>
-            <button class="btnProfile" onclick="navigateToPage(this)"><img src="/public/images/perfis.svg"/>Perfis</button>
-            <button class="btnModule" onclick="navigateToPage(this)"><img src="/public/images/modulos.svg"/>Módulos</button>
-            <button class="btnFT" onclick="navigateToPage(this)"><img src="/public/images/ft.svg"/>Funções&Transações</button>
+        <div class="pageContent">
+            <!--- Header Bar -->
+            <div class="headerBar">
+                <p>QQTech - Bê a Bá</p>
+            </div>
+
+            <!-- Data Content -->
+            <div class="dashboardData">
+                <div class="dashboard-card" id="usersCard" onclick="downloadReport('usuarios')">
+                    <div class="img-container">
+                        <img src="../../public/images/usuario.svg"/>
+                    </div>
+                    <div class="card-info">
+                    <h3>Usuários</h3>
+                    <img src="../../public/images/download.svg"/>
+                    <p id="usuariosCount">Carregando</p>
+                    </div>
+                </div>
+                <div class="dashboard-card" id="profilesCard" onclick="downloadReport('perfis')">
+                    <div class="img-container">
+                        <img src="../../public/images/perfis.svg"/>
+                    </div>
+                    <div class="card-info">
+                    <h3>Perfis</h3>
+                    <img src="../../public/images/download.svg"/>
+                    <p id="perfisCount">Carregando</p>
+                    </div>
+                </div>
+                <div class="dashboard-card" id="modulesCard" onclick="downloadReport('modulos')">
+                    <div class="img-container">
+                        <img src="../../public/images/modulos.svg"/>
+                    </div>
+                    <div class="card-info">
+                    <h3>Módulos</h3>
+                    <img src="../../public/images/download.svg"/>
+                    <p id="modulosCount">Carregando</p>
+                    </div>
+                </div>
+                <div class="dashboard-card" id="functionsCard" onclick="downloadReport('funcoes')">
+                    <div class="img-container">
+                        <img src="../../public/images/ft.svg"/>
+                    </div>
+                    <div class="card-info">
+                    <h3>Funções</h3>
+                    <img src="../../public/images/download.svg"/>
+                    <p id="funcoesCount">Carregando</p>
+                    </div>
+                </div>
+                <div class="dashboard-card" id="transactionsCard" onclick="downloadReport('transacoes')">
+                    <div class="img-container">
+                        <img src="../../public/images/ft.svg"/>
+                    </div>
+                    <div class="card-info">
+                    <h3>Transações</h3>
+                    <img src="../../public/images/download.svg"/>
+                    <p id="transacoesCount">Carregando</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="pageContent">
-        <!--- Header Bar -->
-        <div class="headerBar">
-            <p>QQTech - Bê a Bá</p>
-        </div>
-
-        <!-- Data Content -->
-        <div class="dashboardData">
-        </div>
-
-
-    </div>
-</div>
    
+    <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-<!-- Bootstrap -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-<!-- Script JS -->
-<script src="../../public/js/authFetch.js"></script>
-<script src="../../public/js/dashboard.js"></script>
-<script src="../../public/js/menu.js"></script>
-
-
+    <!-- Script JS -->
+    <script src="../../public/js/authFetch.js"></script>
+    <script src="../../public/js/dashboard.js"></script>
+    <script src="../../public/js/menu.js"></script>
 </body>
 </html>

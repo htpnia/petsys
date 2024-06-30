@@ -13,19 +13,23 @@ function loadUsers() {
             list.innerHTML = '';
             if (Array.isArray(usuarios)) {
                 usuarios.forEach(usuario => {
-                    const item = document.createElement('li');
-                    item.classList.add('list-group-item');
-                    item.innerHTML = `
-                        <span class="user-info">${usuario.nomeUsuario}</span>
-                        <span class="user-info">${usuario.matricula}</span>
-                        <span class="user-info">${usuario.email}</span>
-                        <span class="user-buttons">
-                            <button class="editBtn" onclick="location.href='/editUser?id=${usuario.idUsuario}'">✒️</button>
-                            <button class="deleteBtn" onclick="deleteUser(${usuario.idUsuario})">❌</button>
-                        </span>
-                    `;
-                    item.addEventListener('click', () => showModal(usuario.nomeUsuario, usuario.email));
-                    list.appendChild(item);
+                    fetchProfileName(usuario.idPerfil).then(nomePerfil => {
+                        const item = document.createElement('li');
+                        item.classList.add('list-group-item');
+                        item.innerHTML = `
+                            <span class="user-info">${usuario.nomeUsuario}</span>
+                            <span class="user-info">${usuario.matricula}</span>
+                            <span class="user-info">${nomePerfil}</span>
+                            <span class="user-buttons">
+                                <button class="editBtn" onclick="location.href='/editUser?id=${usuario.idUsuario}'; event.stopPropagation();">✒️</button>
+                                <button class="deleteBtn" onclick="deleteUser(${usuario.idUsuario}); event.stopPropagation();">❌</button>
+                            </span>
+                        `;
+                        item.addEventListener('click', () => showModal(usuario, nomePerfil));
+                        list.appendChild(item);
+                    }).catch(error => {
+                        console.error('Erro ao carregar perfil:', error);
+                    });
                 });
             } else {
                 console.error('Resposta não é um array:', usuarios);
@@ -33,6 +37,21 @@ function loadUsers() {
         })
         .catch(error => {
             console.error('Erro:', error);
+        });
+}
+
+function fetchProfileName(idPerfil) {
+    return authFetch(`/api/perfis/${idPerfil}`, { method: 'GET' })
+        .then(({ data, response }) => {
+            if (!response.ok) {
+                console.error('Erro na resposta do servidor:', response.statusText);
+                throw new Error('Falha ao carregar perfil');
+            }
+            return data.perfil.nomePerfil;
+        })
+        .catch(error => {
+            console.error('Erro ao carregar perfil:', error);
+            return 'Perfil não encontrado';
         });
 }
 
@@ -60,12 +79,18 @@ function deleteUser(id) {
     }
 }
 
-function showModal(title, body) {
+function showModal(usuario, nomePerfil) {
     const modal = document.getElementById('infoModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalBody = document.getElementById('modalBody');
-    modalTitle.innerText = title;
-    modalBody.innerText = body;
+    modalTitle.innerText = `Detalhes de ${usuario.nomeUsuario}`;
+    modalBody.innerHTML = `
+        <p><strong>Nome:</strong> ${usuario.nomeUsuario}</p>
+        <p><strong>Matrícula:</strong> ${usuario.matricula}</p>
+        <p><strong>Email:</strong> ${usuario.email}</p>
+        <p><strong>Perfil:</strong> ${nomePerfil}</p>
+        <p><strong>Acesso ao Sistema:</strong> ${usuario.acessoSistema ? 'Sim' : 'Não'}</p>
+    `;
     modal.style.display = "block";
 
     const span = document.getElementsByClassName('close')[0];

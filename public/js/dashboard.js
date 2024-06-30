@@ -1,22 +1,49 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        alert('Acesso negado. Você precisa estar logado para acessar esta página.');
-        window.location.href = '/'; // Redirecionar para a página de login
-        return;
+    // Função para atualizar os contadores de cada card
+    function updateCount(elementId, count) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.innerText = count;
+        } else {
+            console.error(`Elemento com ID ${elementId} não encontrado.`);
+        }
     }
 
-    authFetch('/api/dashboard', {
-        method: 'GET'
-    })
-    .then(data => {
-        console.log('Usuário autenticado:', data);
-        alert("Usuário autenticado!");
-        // Carregar a página ou executar ações adicionais
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-        alert('Acesso negado. Você precisa estar logado para acessar esta página.');
-        window.location.href = '/'; // Redirecionar para a página de login
+    // Função para carregar a contagem de um tipo específico
+    function loadCount(type) {
+        authFetch(`/api/count/${type}`)
+            .then(({ data, response }) => {
+                if (!response.ok) {
+                    throw new Error(`Erro ao carregar contagem de ${type}: ${response.statusText}`);
+                }
+                return data.count;
+            })
+            .then(count => {
+                updateCount(`${type}Count`, count);
+            })
+            .catch(error => {
+                console.error(`Erro ao carregar contagem de ${type}:`, error);
+            });
+    }
+
+    // Carregar as contagens para todos os tipos
+    ['usuarios', 'perfis', 'modulos', 'funcoes', 'transacoes'].forEach(type => {
+        loadCount(type);
     });
 });
+
+function downloadReport(type) {
+    const urls = {
+        usuarios: '/api/reports/usuarios',
+        perfis: '/api/reports/perfis',
+        modulos: '/api/reports/modulos',
+        funcoes: '/api/reports/funcoes',
+        transacoes: '/api/reports/transacoes'
+    };
+
+    if (urls[type]) {
+        window.location.href = urls[type];
+    } else {
+        console.error('Tipo de relatório desconhecido:', type);
+    }
+}

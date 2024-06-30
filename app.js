@@ -14,6 +14,7 @@ const ModuloFuncao = require('./model/moduleFunction');
 const PerfilModulo = require('./model/profileModule');
 const authenticate = require('./public/js/auth')
 const cors = require('cors'); 
+const { Parser } = require('json2csv');
 
 
 
@@ -631,7 +632,8 @@ app.delete('/api/modulos/:id', async (req, res) => {
         await ModuloTransacao.destroy({ where: { idModulo: id }, transaction });
         // Excluir associações de Modulofuncao
         await ModuloFuncao.destroy({ where: { idModulo: id }, transaction });
-
+        // Excluir associações de PerfilModulo
+        await PerfilModulo.destroy({ where: { idModulo: id }, transaction })
         // Encontrar e excluir o módulo
         const modulo = await Modulo.findByPk(id);
         if (!modulo) {
@@ -811,12 +813,129 @@ app.get('/api/modulos/:id/transacoes', async (req, res) => {
     }
 });
 
+// Rota para obter módulos de um perfil específico
+app.get('/api/perfis/:id/modulos', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const perfil = await Perfil.findByPk(id, {
+            include: [{
+                model: Modulo,
+                through: { attributes: [] } // Excluir atributos da tabela associativa
+            }]
+        });
 
+        if (!perfil) {
+            return res.status(404).json({ success: false, message: 'Perfil não encontrado' });
+        }
 
-// Rota raiz para direcionar para a página de registro
-app.get('/', (req, res) => {
-    res.redirect('/dashboard');
+        const modulos = perfil.Modulos; // 'Modulos' deve corresponder ao nome da relação definida no modelo
+        res.json(modulos);
+    } catch (error) {
+        console.error('Erro ao carregar módulos do perfil:', error);
+        res.status(500).json({ success: false, message: 'Erro ao carregar módulos do perfil' });
+    }
 });
+
+// ROTAS DASHBOARD
+// Rotas para obter contagens
+app.get('/api/count/usuarios', async (req, res) => {
+    try {
+        const count = await Usuario.count();
+        res.json({ count });
+    } catch (error) {
+        console.error('Erro ao contar usuários:', error);
+        res.status(500).json({ success: false, message: 'Erro ao contar usuários' });
+    }
+});
+
+app.get('/api/count/perfis', async (req, res) => {
+    try {
+        const count = await Perfil.count();
+        res.json({ count });
+    } catch (error) {
+        console.error('Erro ao contar perfis:', error);
+        res.status(500).json({ success: false, message: 'Erro ao contar perfis' });
+    }
+});
+
+app.get('/api/count/modulos', async (req, res) => {
+    try {
+        const count = await Modulo.count();
+        res.json({ count });
+    } catch (error) {
+        console.error('Erro ao contar módulos:', error);
+        res.status(500).json({ success: false, message: 'Erro ao contar módulos' });
+    }
+});
+
+app.get('/api/count/funcoes', async (req, res) => {
+    try {
+        const count = await Funcao.count();
+        res.json({ count });
+    } catch (error) {
+        console.error('Erro ao contar funções:', error);
+        res.status(500).json({ success: false, message: 'Erro ao contar funções' });
+    }
+});
+
+app.get('/api/count/transacoes', async (req, res) => {
+    try {
+        const count = await Transacao.count();
+        res.json({ count });
+    } catch (error) {
+        console.error('Erro ao contar transações:', error);
+        res.status(500).json({ success: false, message: 'Erro ao contar transações' });
+    }
+});
+
+// Rotas para gerar relatórios
+app.get('/api/reports/:type', async (req, res) => {
+    const { type } = req.params;
+    let data, fields, filename;
+
+    try {
+        switch (type) {
+            case 'usuarios':
+                data = await Usuario.findAll();
+                fields = ['idUsuario', 'nomeUsuario', 'email', 'matricula'];
+                filename = 'usuarios.csv';
+                break;
+            case 'perfis':
+                data = await Perfil.findAll();
+                fields = ['idPerfil', 'nomePerfil', 'descricao'];
+                filename = 'perfis.csv';
+                break;
+            case 'modulos':
+                data = await Modulo.findAll();
+                fields = ['idModulo', 'nomeModulo', 'descricao'];
+                filename = 'modulos.csv';
+                break;
+            case 'funcoes':
+                data = await Funcao.findAll();
+                fields = ['idFuncao', 'nomeFuncao', 'descricao'];
+                filename = 'funcoes.csv';
+                break;
+            case 'transacoes':
+                data = await Transacao.findAll();
+                fields = ['idTransacao', 'nomeTransacao', 'descricao'];
+                filename = 'transacoes.csv';
+                break;
+            default:
+                return res.status(400).json({ success: false, message: 'Tipo de relatório desconhecido' });
+        }
+
+        const parser = new Parser({ fields });
+        const csv = parser.parse(data.map(item => item.toJSON()));
+
+        res.header('Content-Type', 'text/csv');
+        res.attachment(filename);
+        res.send(csv);
+    } catch (error) {
+        console.error(`Erro ao gerar relatório de ${type}:`, error);
+        res.status(500).json({ success: false, message: `Erro ao gerar relatório de ${type}` });
+    }
+});
+
 
 // Middleware para tratamento de erros
 app.use((err, req, res, next) => {

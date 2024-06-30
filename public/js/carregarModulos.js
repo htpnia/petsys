@@ -1,3 +1,5 @@
+document.addEventListener('DOMContentLoaded', loadModules);
+
 function loadModules() {
     authFetch('/api/modulos', { method: 'GET' })
         .then(({ data, response }) => {
@@ -9,17 +11,21 @@ function loadModules() {
             list.innerHTML = '';
             if (Array.isArray(modules)) {
                 modules.forEach(module => {
-                    const item = document.createElement('li');
-                    item.classList.add('list-group-item');
-                    item.innerHTML = `
-                        <span class="module-info">${module.nomeModulo} - ${module.descricao}</span>
-                        <span class="module-buttons">
-                            <button class="editBtn" onclick="location.href='/editModule?id=${module.idModulo}'">✒️</button>
-                            <button class="deleteBtn" onclick="deleteModule(${module.idModulo})">❌</button>
-                        </span>
-                    `;
-                    item.addEventListener('click', () => showModal(module.nomeModulo, module.descricao));
-                    list.appendChild(item);
+                    fetchModuleDetails(module.idModulo).then(details => {
+                        const item = document.createElement('li');
+                        item.classList.add('list-group-item');
+                        item.innerHTML = `
+                            <span class="module-info">${module.nomeModulo} - ${module.descricao}</span>
+                            <span class="module-buttons">
+                                <button class="editBtn" onclick="location.href='/editModule?id=${module.idModulo}'; event.stopPropagation();">✒️</button>
+                                <button class="deleteBtn" onclick="deleteModule(${module.idModulo}); event.stopPropagation();">❌</button>
+                            </span>
+                        `;
+                        item.addEventListener('click', () => showModal(module.nomeModulo, module.descricao, details));
+                        list.appendChild(item);
+                    }).catch(error => {
+                        console.error('Erro ao carregar detalhes do módulo:', error);
+                    });
                 });
             } else {
                 console.error('Resposta não é um array:', modules);
@@ -27,6 +33,30 @@ function loadModules() {
         })
         .catch(error => {
             console.error('Erro:', error);
+        });
+}
+
+function fetchModuleDetails(idModulo) {
+    const promises = [
+        authFetch(`/api/modulos/${idModulo}/funcoes`, { method: 'GET' }),
+        authFetch(`/api/modulos/${idModulo}/transacoes`, { method: 'GET' })
+    ];
+
+    return Promise.all(promises)
+        .then(responses => {
+            return Promise.all(responses.map(({ data, response }) => {
+                if (!response.ok) {
+                    throw new Error('Falha ao carregar detalhes do módulo');
+                }
+                return data;
+            }));
+        })
+        .then(([funcoes, transacoes]) => {
+            return { funcoes, transacoes };
+        })
+        .catch(error => {
+            console.error('Erro ao buscar detalhes do módulo:', error);
+            return { funcoes: [], transacoes: [] };
         });
 }
 
@@ -52,12 +82,22 @@ function deleteModule(id) {
     }
 }
 
-function showModal(title, body) {
+function showModal(title, body, details) {
     const modal = document.getElementById('infoModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalBody = document.getElementById('modalBody');
+
+    const funcoes = details.funcoes.map(funcao => `<li>${funcao.nomeFuncao}</li>`).join('');
+    const transacoes = details.transacoes.map(transacao => `<li>${transacao.nomeTransacao}</li>`).join('');
+
     modalTitle.innerText = title;
-    modalBody.innerText = body;
+    modalBody.innerHTML = `
+        <p>${body}</p>
+        <h3>Funções</h3>
+        <ul>${funcoes}</ul>
+        <h3>Transações</h3>
+        <ul>${transacoes}</ul>
+    `;
     modal.style.display = "block";
 
     const span = document.getElementsByClassName('close')[0];
@@ -70,5 +110,3 @@ function showModal(title, body) {
         }
     }
 }
-
-document.addEventListener('DOMContentLoaded', loadModules);
