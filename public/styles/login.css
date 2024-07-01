@@ -168,6 +168,13 @@ button:hover {
 
 }
 
+.button-recover {
+    background-color: #ffff;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
 
 @media screen and (max-width: 768px) {
 
@@ -190,24 +197,51 @@ button:hover {
     }
 
     .loginForm label {
-        margin-left: 22px;
+        margin-left: 15px;
     }
 
     .loginForm input {
         display: flex;
         height: 30px;
         width: 150%;
-        margin-left: 22px;
+        margin-left: 10px;
         margin-bottom: 5px;
     }
 
-
-    
-    .recoverPassword {
-        margin: 5px;
-        width: 150%;
-
+    img {
+        width: 200px;
+        height: 100%;
+        margin-left: 120px;
+        margin-top: 30px;
     }
+
+    .imgRecover {
+        width: 200px;
+        height: 100%;
+        margin-left: 120px;
+        margin-top: 0px;
+    }
+
+    .button-recover span {
+        margin-left: 15px;
+        margin-right: 5px;  
+        padding-bottom: 20px;
+        font-size: 12px;
+    }
+
+    .button-recover {
+        margin-left: 50%;
+        width: 100%;
+    }
+
+    .loginButton {
+        width: 100%;
+        font-size: 13px;
+        padding: 0px;
+        margin: 0px
+    }
+    
+   
 }
 
 @media screen and (min-width: 768px) and (max-width: 992px) {
