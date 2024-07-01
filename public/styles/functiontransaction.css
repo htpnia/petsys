@@ -486,7 +486,7 @@ ul .list-group {
     }
 
       .transactionData, .functionData {
-        height: 25vh;
+        height: 33vh;
         width: 75vw;
         margin: 10px;
       }

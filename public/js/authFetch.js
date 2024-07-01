@@ -1,4 +1,3 @@
-// authFetch.js
 function authFetch(url, options = {}) {
     const token = localStorage.getItem('token');
     if (!token) {
