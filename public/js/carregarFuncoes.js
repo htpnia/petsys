@@ -15,7 +15,7 @@ function loadFunctions() {
                     const item = document.createElement('li');
                     item.classList.add('list-group-item');
                     item.innerHTML = `
-                        <span class="function-info">${funcao.nomeFuncao} - ${funcao.descricao}</span>
+                        <span class="function-info">${funcao.nomeFuncao}</span>
                         <span class="function-buttons">
                             <button class="editBtn">✒️</button>
                             <button class="deleteBtn">❌</button>

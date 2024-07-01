@@ -15,7 +15,7 @@ function loadTransactions() {
                     const item = document.createElement('li');
                     item.classList.add('list-group-item');
                     item.innerHTML = `
-                        <span class="transaction-info">${transacao.nomeTransacao} - ${transacao.descricao}</span>
+                        <span class="transaction-info">${transacao.nomeTransacao}</span>
                         <span class="transaction-buttons">
                             <button class="editBtn">✒️</button>
                             <button class="deleteBtn">❌</button>

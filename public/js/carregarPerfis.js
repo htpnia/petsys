@@ -16,7 +16,7 @@ function loadProfiles() {
                     const item = document.createElement('li');
                     item.classList.add('list-group-item');
                     item.innerHTML = `
-                        <span class="profile-info">${perfil.nomePerfil} - ${perfil.descricao}</span>
+                        <span class="profile-info">${perfil.nomePerfil}</span>
                         <span class="profile-buttons">
                             <button class="editBtn">✒️</button>
                             <button class="deleteBtn">❌</button>

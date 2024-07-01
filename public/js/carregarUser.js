@@ -83,13 +83,18 @@ function showModal(usuario, nomePerfil) {
     const modal = document.getElementById('infoModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalBody = document.getElementById('modalBody');
-    modalTitle.innerText = `Detalhes de ${usuario.nomeUsuario}`;
+    modalTitle.innerText = `${usuario.nomeUsuario}`;
     modalBody.innerHTML = `
-        <p><strong>Nome:</strong> ${usuario.nomeUsuario}</p>
-        <p><strong>Matrícula:</strong> ${usuario.matricula}</p>
-        <p><strong>Email:</strong> ${usuario.email}</p>
-        <p><strong>Perfil:</strong> ${nomePerfil}</p>
-        <p><strong>Acesso ao Sistema:</strong> ${usuario.acessoSistema ? 'Sim' : 'Não'}</p>
+        <p><strong>Nome:</strong></p> 
+        <p>${usuario.nomeUsuario}</p>
+        <p><strong>Matrícula:</strong></p> 
+        <p>${usuario.matricula}</p>
+        <p><strong>Email:</strong></p> 
+        <p>${usuario.email}</p>
+        <p><strong>Perfil:</strong></p>
+        <p>${nomePerfil}</p>
+        <p><strong>Acesso ao Sistema:</strong></p>
+        <p>${usuario.acessoSistema ? 'Sim' : 'Não'}</p>
     `;
     modal.style.display = "block";
 

@@ -72,7 +72,8 @@ button img {
   width: 35px;
   height: 35px;
   padding-right: 10px;
-  background-color:#ffff;
+  background-color: rgba(0,0,0,0.01);
+  margin-right: 9px;
 
 }
 .btnDashboard img {
@@ -80,7 +81,7 @@ button img {
   width: 35px;
   height: 35px;
   padding-right: 10px;
-  background-color: #00A651;
+  background-color: rgba(0,0,0,0.01);
 }
 
 .sideBarButtons button:hover {
@@ -89,7 +90,6 @@ button img {
 }
 
 .sideBarButtons .btnDashboard {
-  font-size: 100%;
   font-weight: bold;
   font-stretch: condensed;
   color: #ffff;
@@ -132,7 +132,7 @@ button img {
 .dashboard-card {
   border: 1px solid #37634e;
   border-radius: 5px;
-  width: 120px;
+  width: 100px;
   height: 140px;
   margin-top: 30px;
   margin-left: 30px;
@@ -202,41 +202,51 @@ button img {
 }
 @media screen and (max-width: 768px) {
     
-    .sideBar {
-        width: 15vw; 
-        height: 85vh;
-        justify-content: center;
-      }
-    
-    .headerBar {
-        height: 30px;
-    }
-    
-    .headerBar p{
-        font-size: 20px;
-    }
+  .sideBar {
+    width: 14vw; 
+    height: 85vh;
+    justify-content: center;
+  }
 
-      .dashboardData {
-        height: 70vh;
-        width: 80vw;
-        margin: 10px;
-      }
+.headerBar {
+    height: 30px;
+}
 
-    .userInfo {
-      display: none;
-    }
-  
-    .sideBarButtons button {
-      font-size: 0; 
-      padding: 15px 15px;
-      margin-bottom: 40px;
-    }
+.headerBar p{
+    font-size: 20px;
+}
 
-    .sideBarButtons .btnDashboard {
-      font-size: 0; 
-      padding: 15px 15px;
-      margin-bottom: 40px;
-    }
+.dashboardData {
+  height: 75vh;
+  width: 80vw;
+  margin: 10px;
+}
+
+.userInfo, .userInfo img {
+  display: none;
+}
+
+.sideBarButtons button {
+  font-size: 0; 
+  margin-bottom: 30px;
+  height: 30px;
+}
+
+.sideBarButtons .btnDashboard {
+  font-size: 0; 
+  margin-bottom: 30px;
+  height: 30px;
+}
+
+button img {
+  margin: 0px;
+  padding: 0px 0px 0px 3px;
+}
+
+.btnDashboard img {
+  margin: 0px;
+  padding: 0px 0px 0px 3px;
+}
   
 }
 

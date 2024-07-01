@@ -15,7 +15,7 @@ function loadModules() {
                         const item = document.createElement('li');
                         item.classList.add('list-group-item');
                         item.innerHTML = `
-                            <span class="module-info">${module.nomeModulo} - ${module.descricao}</span>
+                            <span class="module-info">${module.nomeModulo}</span>
                             <span class="module-buttons">
                                 <button class="editBtn" onclick="location.href='/editModule?id=${module.idModulo}'; event.stopPropagation();">✒️</button>
                                 <button class="deleteBtn" onclick="deleteModule(${module.idModulo}); event.stopPropagation();">❌</button>
@@ -92,10 +92,12 @@ function showModal(title, body, details) {
 
     modalTitle.innerText = title;
     modalBody.innerHTML = `
+        <div class="description">
         <p>${body}</p>
-        <h3>Funções</h3>
+        </div>
+        <h2>Funções</h2>
         <ul>${funcoes}</ul>
-        <h3>Transações</h3>
+        <h2>Transações</h2>
         <ul>${transacoes}</ul>
     `;
     modal.style.display = "block";
