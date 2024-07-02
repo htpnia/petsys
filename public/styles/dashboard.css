@@ -120,7 +120,8 @@ button img {
 
 .dashboardData {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
     border: 2px solid #CFCFCF;
     background-color: #F6F4F4;
     border-radius: 10px;
@@ -134,9 +135,6 @@ button img {
   border-radius: 5px;
   width: 100px;
   height: 140px;
-  margin-top: 30px;
-  margin-left: 30px;
-  margin-right: 30px;
   padding: 10px;
   filter: drop-shadow(2px 2px 3px #a1a1a1);
   background-color: #3e6e57;
@@ -213,7 +211,7 @@ button img {
 }
 
 .headerBar p{
-    font-size: 20px;
+  font-size: 90%;
 }
 
 .dashboardData {
@@ -250,8 +248,8 @@ button img {
 
 .dashboardData {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 .img-container {
 }
@@ -294,8 +292,8 @@ button img {
 
 @media screen and (min-width: 768px) and (max-width: 992px) {
   .sideBar {
-      width: 20vw;
-      height: 80vh;
+      width: 15vw;
+      height: 85vh;
     }
   
     .headerBar,
@@ -304,14 +302,17 @@ button img {
     }
   
     .sideBarButtons button {
-        font-size: 0.8rem; 
+        font-size: 0; 
         padding: 18px 0px; 
       }
   
     .sideBarButtons .btnDashboard {
-        font-size: 0.8rem; 
+        font-size: 0;
       }
-  
+      
+    .sideBarButtons button img {
+      padding-left: 30px;
+      }
 
 }
 

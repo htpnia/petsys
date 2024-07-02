@@ -250,5 +250,36 @@ button:hover {
         height: 30px;
     }
 
+    .loginFormContainer {
+        margin-left: 130px;
+    }
+
+    .loginFormContainer form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+    .loginImgContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .loginImgContainer img {
+        width: 100%;
+        margin-left: 260px;
+    }
+
+    .button-recover {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .button-recover span {
+        margin-left: 70px;
+    }
+
 
 }

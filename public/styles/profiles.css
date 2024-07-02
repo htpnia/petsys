@@ -507,8 +507,8 @@ form, h2, label, input, textarea, .form-group {
     }
 
     .headerBar p{
-        font-size: 20px;
-    }
+      font-size: 90%;
+  }
 
     .profileData {
         height: 75vh;
@@ -608,13 +608,36 @@ form, h2, label, input, textarea, .form-group {
 
     
     }
+
+    .profileRegisterData form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+    }
+
+    .form-group select {
+      width: 190px;
+    }
+
+    .btnFormContainer {
+      display: flex;
+      align-items: center;
+    }
+
+    .btnFormContainer button {
+      padding: 5px;
+      margin: 5px;
+      width: 100px;
+      font-size: 12px;
+    }
 }
 
 
 @media screen and (min-width: 768px) and (max-width: 992px) {
   .sideBar {
-      width: 20vw;
-      height: 80vh;
+      width: 15vw;
+      height: 85vh;
     }
   
     .headerBar,
@@ -623,16 +646,24 @@ form, h2, label, input, textarea, .form-group {
     }
   
     .sideBarButtons button {
-      font-size: 0.8rem; 
+      font-size: 0; 
       padding: 18px 0px; 
     }
 
-    .sideBarButtons .btnProfile {
-        font-size: 0.8rem; 
+  .sideBarButtons .btnProfile {
+      font-size: 0;
+    }
+    
+  .sideBarButtons button img {
+    padding-left: 30px;
     }
   
     .createProfileBtn {
       font-size: 15px; 
       padding: 10px 40px; 
+    }
+
+    ul.list-group li {
+      font-size: 16px;
     }
 }

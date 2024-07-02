@@ -441,7 +441,7 @@
   padding: 20px;
   border: 1px solid #c1c1c1;
   border-radius: 30px;
-  max-width: 80%;
+  max-width: 70%;
   max-height: 80%;
 }
 
@@ -535,6 +535,7 @@
 
 .modalInfo ul {
   display: flex;
+  flex-wrap: wrap;
   max-width: 90%;
   min-height: 60%;
   text-decoration: none;
@@ -563,7 +564,7 @@
   }
   
   .headerBar p{
-      font-size: 20px;
+      font-size: 90%;
   }
 
   .moduleData {
@@ -600,8 +601,9 @@
   
   .createModuleBtn, .associateModuleFBtn, .associateModuleTBtn {
     font-size: 12px; 
-    padding: 2px 6px 2px 6px;
+    padding: 2px 0px 2px 0px;
     margin: 5px 3px 5px 3px;
+    width: 100px;
   }
 
   ul li .editBtn {
@@ -652,12 +654,47 @@
     margin: 0px;
     padding: 0px;
   }
+
+  .modalInfo ul {
+    flex-wrap: wrap;
+  }
+
+  .modalInfo li {
+    font-size: 8px;
+  }
+
+  .modalHeader h2 {
+    font-size: 13px;
+  }
+
+  .moduleRegisterData form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+
+  .btnFormContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  .btnFormContainer button {
+    padding: 5px;
+    margin: 5px;
+    width: 100px;
+    font-size: 12px;
+  }
+
+  .create, .cancel {
+    width: 190px;
+  }
 }
 
   @media screen and (min-width: 768px) and (max-width: 992px) {
     .sideBar {
-        width: 20vw;
-        height: 80vh;
+        width: 15vw;
+        height: 85vh;
       }
     
       .headerBar,
@@ -666,16 +703,29 @@
       }
     
       .sideBarButtons button {
-          font-size: 0.8rem; 
-          padding: 18px 0px; 
-        }
-    
-      .sideBarButtons .btnModule {
-          font-size: 0.8rem; 
-        }
-    
+        font-size: 0; 
+        padding: 18px 0px; 
+      }
+  
+    .sideBarButtons .btnModule {
+        font-size: 0;
+      }
+      
+    .sideBarButtons button img {
+      padding-left: 30px;
+      }
+
       .createModuleBtn {
         font-size: 15px; 
         padding: 10px 40px; 
+      }
+
+      .btnCreateContainer button {
+        width: 200px;
+        font-size: 15px;
+      }
+
+      ul.list-group li {
+        font-size: 16px;
       }
   }

@@ -139,8 +139,8 @@ button img {
 
 .dataHeader {
   display: flex;
-  justify-content: space-between;
-  padding: 15px 20px 0px 20px;
+  justify-content: space-around;
+  padding: 15px 20px 0px 0px;
 }
 
 .dataHeaderInfo span {
@@ -149,16 +149,16 @@ button img {
 
 }
 
-.matriculaSpan {
-  padding-left: 25px;
-}
-.emailSpan {
-  padding-left: 40px;
+.dataHeaderButtons {
+  display: flex;
+  justify-content: space-between;
+  width: 130px;
+  margin-left: 30px;
+
 }
 
 .dataHeaderButtons span {
-  margin: 0px 20px 0px 20px;
-  font-size: 15px;
+
 
 }
 
@@ -399,7 +399,7 @@ ul .list-group {
 
 .user-info {
   width: 100px;
-  max-width: 100px; /* Ajuste esta largura conforme necessário */
+  max-width: 100px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -459,7 +459,7 @@ ul .list-group {
   justify-content: center;
   min-width: 30%;
   max-width: 100%;
-  margin-left: 60px;
+  margin-left: 65px;
   margin-right: 85px;
   background-color: #1A5639;
   border: 1px solid #1A5639;
@@ -506,8 +506,8 @@ ul .list-group {
     }
     
     .headerBar p{
-        font-size: 20px;
-    }
+      font-size: 90%;
+  }
 
     .userData {
       height: 75vh;
@@ -559,18 +559,18 @@ ul .list-group {
       background-color: #ffcfcf;
       border-radius: 18px;
       padding: 2px;
-      margin: 1px 10px 1px 0px;
+      margin: 1px 20px 1px 0px;
     }
 
     ul.list-group li {
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      padding: 4px 8px 4px 2px;
-      margin: 0px 0px 3px 2px;
+      padding: 4px 4px 4px 2px;
+      margin: 0px 3px 3px 2px;
       background-color: #ffff;
       border: 1px solid #ddd;
-      font-size: 10px;
+      font-size: 8px;
       transition: background-color 0.3s, box-shadow 0.3s;
     }
 
@@ -605,7 +605,36 @@ ul .list-group {
     .usuarioSpan, .matriculaSpan, .emailSpan, .deleteSpan, .editSpan {
       display: none;
     }
+
+    .userRegisterData form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
     
+    .btnFormContainer button {
+      padding: 5px;
+      margin: 8px;
+      font-size:12px;
+    }
+    
+    .formCheckbox {
+      display: flex;
+      align-items: center;
+      padding: 0px;
+      margin: 5px 0px 5px 0px;
+      width: 160px;
+    }
+
+    .formCheckbox span {
+      width: 100%;
+      font-size: 10px;
+
+    }
+
+    .form-group input {
+      width: 200px;
+    }
  
 
     
@@ -615,8 +644,8 @@ ul .list-group {
 
 @media screen and (min-width: 768px) and (max-width: 992px) {
     .sideBar {
-        width: 20vw;
-        height: 80vh;
+        width: 15vw;
+        height: 85vh;
       }
     
       .headerBar,
@@ -629,17 +658,39 @@ ul .list-group {
       }
     
       .sideBarButtons button {
-        font-size: 0rem; 
+        font-size: 0; 
         padding: 18px 0px; 
       }
   
-      .sideBarButtons .btnUser {
-          font-size: 0rem; 
+    .sideBarButtons .btnUser {
+        font-size: 0;
+      }
+      
+    .sideBarButtons button img {
+      padding-left: 30px;
       }
     
       .createUserBtn {
         font-size: 15px; 
         padding: 10px 40px; 
+      }
+
+      ul.list-group li {
+        font-size: 16px;
+      }
+      
+      .user-info {
+        width: 150px;
+      }
+
+      .user-buttons {
+        width: 60%;
+        justify-content: flex-end;
+      }
+
+      .user-buttons button {
+        padding: 0px;
+        margin: 0px;
       }
 }
 
