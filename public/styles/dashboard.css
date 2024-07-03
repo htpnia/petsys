@@ -97,6 +97,27 @@ button img {
   border: 2px solid #18CE71;
 }
 
+.logout-container {
+  display: flex;
+  justify-content: center;
+  background-color: #ffff;
+  margin: 20px;
+}
+
+.logout {
+  background-color: rgba(0,0,0,0.01);
+}
+
+.logout img {
+
+  height: 3.5vh;
+  width: 3.5vw;
+  background-color: rgba(0,0,0,0.01);
+  margin: 0px;
+  opacity: 0.5;
+
+}
+
 .headerBar {
     border: 2px solid #1A5639;
     border-radius: 0px 30px 30px 0px;
@@ -198,7 +219,7 @@ button img {
   background-color: #ffff;
   filter: drop-shadow(2px 2px 1px #C1C1C1);
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     
   .sideBar {
     width: 14vw; 
@@ -300,19 +321,32 @@ button img {
     .dashboardData {
       margin: 15px; 
     }
+
+    .sideBarButtons {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
   
     .sideBarButtons button {
-        font-size: 0; 
-        padding: 18px 0px; 
-      }
-  
-    .sideBarButtons .btnDashboard {
-        font-size: 0;
-      }
-      
+      font-size: 0; 
+      margin: 10px;
+    }
+    
     .sideBarButtons button img {
-      padding-left: 30px;
-      }
+      margin: 0px;
+      padding: 0px;
+      width: 100%;
+    }
+  
+
+    .userInfo {
+      height: 15vh;
+    }
+
+    .userInfo img {
+        display: none;
+     }
 
 }
 

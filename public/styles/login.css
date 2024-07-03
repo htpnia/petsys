@@ -23,7 +23,7 @@ button {
 
 .loginImgContainer {
     display: flex;
-    justify-content: center;
+    align-items: center;
     border-radius: 30px;
     background-color: #ffff;
     width: 50%;
@@ -121,21 +121,17 @@ span:hover {
 }
 
 img {
-    margin-top : 9vh;
-    margin-left: 5vw;
+    width: 100%;
     border-radius: 30px;
-    width: 350px;
-    height: 350px;
+    margin: 100px;
     filter: drop-shadow(1px 4px 4px #9e9e9e);
 
 }
 
 .imgRecover {
-    margin-top: 9vh;
-    margin-left: 1vw;
+    width: 100%;
     border-radius: 30px;
-    width: 350px;
-    height: 350px;
+    margin: 100px 100px 100px 42px;
     filter: drop-shadow(1px 4px 4px #9e9e9e);
 
 }
@@ -184,6 +180,8 @@ button:hover {
 
     .loginImgContainer {
         height: 28vh;
+        display: flex;
+        align-items: center;
         
     }
 
@@ -209,17 +207,15 @@ button:hover {
     }
 
     img {
-        width: 200px;
-        height: 100%;
-        margin-left: 120px;
-        margin-top: 30px;
+        width: 100%;
+        padding: 0px;
+        margin: 90px 67px 30px 67px;
     }
 
     .imgRecover {
-        width: 200px;
-        height: 100%;
-        margin-left: 120px;
-        margin-top: 0px;
+        width: 100%;
+        padding: 0px;
+        margin: 30px 67px 30px 67px;
     }
 
     .button-recover span {

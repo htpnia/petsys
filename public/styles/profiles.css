@@ -76,6 +76,7 @@ button img {
   background-color: rgba(0,0,0,0.01);
   margin-right: 9px;
 }
+
 .btnProfile img {
   margin: 0px 30px 0px 20px;
   width: 35px;
@@ -95,6 +96,27 @@ button img {
   color: #ffff;
   background-color: #00A651;
   border: 2px solid #18CE71;
+}
+
+.logout-container {
+  display: flex;
+  justify-content: center;
+  background-color: #ffff;
+  margin: 20px;
+}
+
+.logout {
+  background-color: rgba(0,0,0,0.01);
+}
+
+.logout img {
+
+  height: 3.5vh;
+  width: 3.5vw;
+  background-color: rgba(0,0,0,0.01);
+  margin: 0px;
+  opacity: 0.5;
+
 }
 
 .headerBar {
@@ -451,7 +473,7 @@ form, h2, label, input, textarea, .form-group {
   filter: drop-shadow(1px 1px 1px #9e9e9e) brightness(1.2);
 }
 
-.modal-content p, .modal-body p, .modalHeader, .modalInfo p, .modalInfo strong, .modal-content h2 {
+.modal-content p, .modalBody p, .modalHeader, .modalInfo, .modalInfo h3, .modalInfo div, .modalInfo strong, .modal-content h2, .modalBody h3, .modalBody ul {
  background-color: #fefefe;
 }
 
@@ -494,7 +516,32 @@ form, h2, label, input, textarea, .form-group {
   color: #606060;
 }
 
-@media screen and (max-width: 768px) {
+.modalInfo h2 {
+  font-size: 15px;
+  color: #303030;
+  margin-left: 10px;
+
+}
+
+.modalInfo ul {
+  display: flex;
+  flex-direction: column;
+  width: 14vw;
+  margin: 0px;
+  padding: 0px;
+  background-color: #fefefe;
+}
+
+.modalInfo li {
+  width: 30%;
+  font-size: 12px;
+  padding: 5px;
+  margin: 5px;
+
+}
+
+
+@media screen and (max-width: 767px) {
     
     .sideBar {
         width: 14vw; 
@@ -644,18 +691,16 @@ form, h2, label, input, textarea, .form-group {
     .profileData {
       margin: 15px; 
     }
-  
+
     .sideBarButtons button {
       font-size: 0; 
-      padding: 18px 0px; 
-    }
-
-  .sideBarButtons .btnProfile {
-      font-size: 0;
+      margin: 10px;
     }
     
-  .sideBarButtons button img {
-    padding-left: 30px;
+    .sideBarButtons button img {
+      margin: 0px;
+      padding: 0px;
+      width: 100%;
     }
   
     .createProfileBtn {
@@ -666,4 +711,13 @@ form, h2, label, input, textarea, .form-group {
     ul.list-group li {
       font-size: 16px;
     }
+
+    .userInfo {
+      height: 15vh;
+    }
+
+    .userInfo img {
+        display: none;
+     }
+
 }

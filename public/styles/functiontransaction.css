@@ -99,6 +99,27 @@ button img {
   border: 2px solid #18CE71;
 }
 
+.logout-container {
+  display: flex;
+  justify-content: center;
+  background-color: #ffff;
+  margin: 20px;
+}
+
+.logout {
+  background-color: rgba(0,0,0,0.01);
+}
+
+.logout img {
+
+  height: 3.5vh;
+  width: 3.5vw;
+  background-color: rgba(0,0,0,0.01);
+  margin: 0px;
+  opacity: 0.5;
+
+}
+
 .headerBar {
     border: 2px solid #1A5639;
     border-radius: 0px 30px 30px 0px;
@@ -403,7 +424,8 @@ ul .list-group {
   padding: 20px;
   border: 1px solid #c1c1c1;
   border-radius: 30px;
-  max-width: 80%;
+  max-width: 70%;
+  max-height: 80%;
 }
 
 .close {
@@ -426,7 +448,7 @@ ul .list-group {
   filter: drop-shadow(1px 1px 1px #9e9e9e) brightness(1.2);
 }
 
-.modal-content p, .modal-body p, .modalHeader, .modalInfo p, .modalInfo strong, .modal-content h2 {
+.modal-content p, .modalInfo, .modalBody, .modalBody ul, .modalInfo p, .modalInfo strong, .modal-content h2 {
  background-color: #fefefe;
 }
 
@@ -440,15 +462,17 @@ ul .list-group {
   background-color: #1A5639;
   border: 1px solid #1A5639;
   border-radius: 40px;
+  margin-bottom: 15px;
 }
 
 .modalInfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   border: 1px solid #d7d7d7;
   border-radius: 30px;
-  padding: 5px;
+  padding: 1px;
+  margin: 0px;
+  overflow: auto;
+  height: 50vh;
+  width: 100%;
 }
 
 .modalHeader h2 {
@@ -462,14 +486,28 @@ ul .list-group {
 }
 
 .modalInfo p {
-  margin: 1px;
-  font-size: 14px;
-  padding: 2px;
+  justify-content: center;
+  margin: 7px;
+  font-size: 10px;
+  padding: 4px;
   font-weight: bold;
   color: #606060;
 }
 
-@media screen and (max-width: 768px) {
+
+
+.modalInfo h2 {
+  font-size: 15px;
+  color: #303030;
+  margin-left: 10px;
+
+}
+
+.modalBody {
+  padding: 20px;
+}
+
+@media screen and (max-width: 767px) {
     
     .sideBar {
         width: 14vw; 
@@ -483,6 +521,10 @@ ul .list-group {
     
     .headerBar p{
       font-size: 90%;
+  }
+
+  .userInfo, .userInfo img {
+    display: none;
   }
 
       .transactionData, .functionData {
@@ -595,34 +637,42 @@ ul .list-group {
 
 @media screen and (min-width: 768px) and (max-width: 992px) {
   .sideBar {
-      width: 15vw;
-      height: 85vh;
-    }
-  
-    .headerBar,
-    .transactionData,
-    .functionData {
-      margin: 15px; 
-    }
-  
+    width: 15vw;
+    height: 85vh;
+  }
+
+  .headerBar,
+  .functionData, .transactionData {
+    margin: 15px; 
+  }
+
   .sideBarButtons button {
-      font-size: 0; 
-      padding: 18px 0px; 
-    }
-
-  .sideBarButtons .btnFT {
-      font-size: 0;
-    }
-    
+    font-size: 0; 
+    margin: 10px;
+  }
+  
   .sideBarButtons button img {
-    padding-left: 30px;
-    }
-    .createTransactionBtn, .createFunctionBtn {
-      font-size: 15px; 
-      padding: 10px 40px; 
-    }
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
 
-    ul.list-group li {
-      font-size: 16px;
-    }
+  .createFunctionBtn, .createTransactionBtn {
+    font-size: 15px; 
+    padding: 10px 40px; 
+  }
+
+  ul.list-group li {
+    font-size: 16px;
+  }
+
+  .userInfo {
+    height: 15vh;
+  }
+
+  .userInfo img {
+      display: none;
+   }
+
+
 }

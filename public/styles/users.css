@@ -99,6 +99,27 @@ button img {
   border: 2px solid #18CE71;
 }
 
+.logout-container {
+  display: flex;
+  justify-content: center;
+  background-color: #ffff;
+  margin: 20px;
+}
+
+.logout {
+  background-color: rgba(0,0,0,0.01);
+}
+
+.logout img {
+
+  height: 3.5vh;
+  width: 3.5vw;
+  background-color: rgba(0,0,0,0.01);
+  margin: 0px;
+  opacity: 0.5;
+
+}
+
 .headerBar {
     border: 2px solid #1A5639;
     border-radius: 0px 30px 30px 0px;
@@ -493,7 +514,7 @@ ul .list-group {
   color: #606060;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     
       .sideBar {
         width: 14vw; 
@@ -653,22 +674,30 @@ ul .list-group {
         margin: 15px; 
       }
 
-      .userInfo img {
-
+      .userInfo {
+        height: 15vh;
       }
+  
+      .userInfo img {
+          display: none;
+       }  
     
       .sideBarButtons button {
         font-size: 0; 
-        padding: 18px 0px; 
+        padding: 0px;
+        margin: 10px;
       }
   
     .sideBarButtons .btnUser {
         font-size: 0;
+        
       }
       
     .sideBarButtons button img {
-      padding-left: 30px;
-      }
+      margin: 0px;
+      padding: 0px;
+      width: 100%;
+    }
     
       .createUserBtn {
         font-size: 15px; 

@@ -20,11 +20,32 @@
                 console.log('Token recebido:', data.token);
                 localStorage.setItem('token', data.token);
                 console.log('Token armazenado no localStorage:', localStorage.getItem('token'));
-                alert('Login bem-sucedido');
-                window.location.href = '/dashboard'; // Certifique-se de que o caminho está correto
-            } else {
-                alert('Falha no login: ' + data.message);
-            }
+                
+
+                const token = localStorage.getItem('token');
+                console.log('Token recuperado do localStorage:', token);
+
+                fetch('/dashboard', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/dashboard';
+                } else {
+                    throw new Error('Falha ao acessar a dashboard: ' + response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao acessar a dashboard:', error);
+                alert('Erro ao acessar a dashboard: ' + error.message);
+            });
+        } else {
+            alert('Falha no login: ' + data.message);
+        }
         })
         .catch(error => {
             console.error('Erro:', error);

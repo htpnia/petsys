@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Função para atualizar os contadores de cada card
-    function updateCount(elementId, count) {
+   function updateCount(elementId, count) {
         const element = document.getElementById(elementId);
         if (element) {
             element.innerText = count;

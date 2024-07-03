@@ -12,7 +12,6 @@ const Funcao = require('./model/function');
 const ModuloTransacao = require('./model/moduleTransaction');
 const ModuloFuncao = require('./model/moduleFunction');
 const PerfilModulo = require('./model/profileModule');
-const authenticate = require('./public/js/auth')
 const cors = require('cors'); 
 const { Parser } = require('json2csv');
 
@@ -173,14 +172,8 @@ app.post('/reset-password', async (req, res) => {
     }
 });
 
-// Rota de API dashboard
-app.use('/api/dashboard', (req, res) => {
-    res.json({ success: true, message: 'Bem-vindo ao Dashboard!' });
-});
-
-// Rota GET para servir o arquivo de dashboard
 app.get('/dashboard', (req, res) => {
-    res.sendFile(path.join(__dirname, 'view', 'Dashboard/dashboard.html'));
+    res.sendFile(path.join(__dirname, 'view', 'Dashboard/dashboard.html')); // Sirva o arquivo HTML do dashboard
 });
 
 // Rota GET para servir o arquivo 'regUser.html'
