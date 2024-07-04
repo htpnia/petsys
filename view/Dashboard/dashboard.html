@@ -43,6 +43,11 @@
 
             <!-- Data Content -->
             <div class="dashboardData">
+                <div class="chart-header-container">
+                    <h2>Relatórios & Distribuição de Usuários</h2>
+                </div>
+                <div class="dashboard-content">
+                <div class="cards-container">
                 <div class="dashboard-card" id="usersCard" onclick="downloadReport('usuarios')">
                     <div class="img-container">
                         <img src="../../public/images/usuario.svg"/>
@@ -93,6 +98,11 @@
                     <p id="transacoesCount">Carregando</p>
                     </div>
                 </div>
+                </div>
+                <div class="chart-container">
+                    <img id="pieChart" src="/public/images/pie_chart.png" alt="Gráfico de Pizza: Usuários por Perfil">
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -107,5 +117,16 @@
     <script src="../../public/js/authFetch.js"></script>
     <script src="../../public/js/dashboard.js"></script>
     <script src="../../public/js/menu.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/generate-pie-chart')
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                    document.getElementById('pieChart').src = '/public/images/pie_chart.png?' + new Date().getTime();
+                })
+                .catch(error => console.error('Erro ao gerar o gráfico:', error));
+        });
+    </script>
 </body>
 </html>

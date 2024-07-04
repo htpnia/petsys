@@ -929,6 +929,39 @@ app.get('/api/reports/:type', async (req, res) => {
     }
 });
 
+// API para obter a contagem de usuários por perfil
+app.get('/api/users-per-profile', async (req, res) => {
+    try {
+        const [results, metadata] = await sequelize.query(`
+            SELECT perfil.nome_perfil AS nomePerfil, COUNT(usuario.id_usuario) as count
+            FROM Usuario usuario
+            JOIN Perfil perfil ON usuario.id_perfil = perfil.id_perfil
+            GROUP BY perfil.nome_perfil
+        `);
+        if (!results || results.length === 0) {
+            console.error('Nenhum dado encontrado');
+            return res.status(404).json({ message: 'Nenhum dado encontrado' });
+        }
+        res.json(results);
+    } catch (error) {
+        console.error('Erro ao obter contagem de usuários por perfil:', error);
+        res.status(500).json({ message: 'Erro ao obter contagem de usuários por perfil' });
+    }
+});
+
+app.get('/generate-pie-chart', (req, res) => {
+    const scriptPath = path.join(__dirname, 'scripts', 'pizza.py');
+    console.log(`Executando script Python: ${scriptPath}`);
+    exec(`python ${scriptPath}`, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Erro ao executar script Python: ${error}`);
+            console.error(`stderr: ${stderr}`);
+            return res.status(500).send('Erro ao gerar gráfico');
+        }
+        console.log(`stdout: ${stdout}`);
+        res.send('Gráfico gerado com sucesso');
+    });
+});
 
 // Middleware para tratamento de erros
 app.use((err, req, res, next) => {

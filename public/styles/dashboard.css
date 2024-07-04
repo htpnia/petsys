@@ -140,9 +140,6 @@ button img {
 }
 
 .dashboardData {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
     border: 2px solid #CFCFCF;
     background-color: #F6F4F4;
     border-radius: 10px;
@@ -151,12 +148,61 @@ button img {
 
 }
 
+.dashboard-content {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+  margin: 30px 60px 0px 60px;
+  background-color: #f6f4f4;
+
+}
+
+.chart-header-container {
+  display: flex;
+  justify-content: center;
+  background-color: #f6f4f4;
+}
+
+.chart-header-container h2 {
+  background-color: #A1A1A1;
+  color: white;
+  padding: 10px 90px 10px 90px;
+  margin: 30px 0px 5px 0px;
+  font-size: 15px;
+  border-radius: 30px;
+  filter: drop-shadow(2px 2px 3px #a1a1a1);
+}
+
+.chart-container {
+  display: flex;
+  justify-content: center;
+  border: 2px solid #f6f1f1;
+  border-radius: 50px;
+  background-color: #ffff;
+  
+}
+
+.chart-container img {
+  
+
+}
+
+.cards-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  background-color: #F6f4f4;
+  margin: 40px 10px 0px 50px;
+  width: 390px;
+}
+
 .dashboard-card {
   border: 1px solid #37634e;
   border-radius: 5px;
   width: 100px;
-  height: 140px;
-  padding: 10px;
+  height: 120px;
+  padding: 5px 5px 15px 5px;
+  margin: 5px 5px 5px 5px;
   filter: drop-shadow(2px 2px 3px #a1a1a1);
   background-color: #3e6e57;
 }
@@ -204,15 +250,15 @@ button img {
 
 .card-info img {
   background-color: white;
-  height: 20px;
-  width: 20px;
+  height: 15px;
+  width: 15px;
   opacity: 0.6;
 }
 
 .card-info p {
   border: 2px solid #CFCFCF;
   font-size: 10px;
-  padding: 5px 8px 5px 8px;
+  padding: 2px 8px 2px 8px;
   border-radius: 30px;
   color: #606060;
   font-weight: bold;
@@ -267,11 +313,12 @@ button img {
   padding: 0px 0px 0px 3px;
 }
 
-.dashboardData {
+.dashboard-content {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
+
 }
+
 .img-container {
 }
 
@@ -282,8 +329,8 @@ button img {
 .card-info img {
   padding: 0px 0px 0px 0px;
   margin: 0px;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
 }
 
 .card-info {
@@ -295,7 +342,6 @@ button img {
 .card-info h3 {
   margin: 5px 0px 5px 0px;
   padding: 0px;
-  font
 }
 .card-info p{
   margin: 0px;
@@ -303,9 +349,29 @@ button img {
 }
 
 .dashboard-card {
-  margin: 5px 0px 5px 0px;
-  padding: 0px;
+  padding: 2px;
   height: 15%;
+}
+
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  width: 200px;
+}
+.chart-header-container h2 {
+  padding: 10px 20px 10px 20px;
+  margin: 10px;
+  font-size: 13px;
+  width: 300px;
+}
+
+.chart-container {
+  display: none;
 }
 
 }
@@ -347,6 +413,35 @@ button img {
     .userInfo img {
         display: none;
      }
+
+     .dashboard-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+     }
+
+     .cards-container {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 0px;
+      padding: 0px;
+      height: 100%;
+      width: 400px;
+    }
+
+    .chart-container {
+    display: flex;
+    margin-top: 20px;
+    padding: 0px;
+    }
+
+    .chart-container img {
+      padding: 0px;
+      margin: 0px;
+      height: 250px;
+
+    }
 
 }
 
