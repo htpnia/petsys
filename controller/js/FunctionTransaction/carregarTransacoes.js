@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', loadTransactions);
 
-let allTransactions = []; // Variável para armazenar todas as transações
+let allTransactions = []; 
 
 function loadTransactions() {
     authFetch('/api/transacoes', { method: 'GET' })
@@ -9,9 +9,9 @@ function loadTransactions() {
                 console.error('Erro na resposta do servidor:', response.statusText);
                 throw new Error('Falha ao carregar transações');
             }
-            allTransactions = data.transacoes; // Armazena todas as transações
+            allTransactions = data.transacoes; 
             console.log('Transações carregadas:', allTransactions);
-            displayTransactions(allTransactions); // Exibe todas as transações inicialmente
+            displayTransactions(allTransactions);
         })
         .catch(error => {
             console.error('Erro:', error);

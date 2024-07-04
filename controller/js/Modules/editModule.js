@@ -7,9 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    console.log('ID do módulo:', moduleId); // Adicione um log para verificar o ID do módulo
+    console.log('ID do módulo:', moduleId); 
 
-    // Carregar dados do módulo
+    
     authFetch(`/api/modulos/${moduleId}`, { method: 'GET' })
         .then(({ data, response }) => {
             if (!response.ok) {
@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
             alert(error.message);
         });
 
-    // Atualizar módulo ao enviar o formulário
     const editModuleForm = document.getElementById('editModuleForm');
     if (editModuleForm) {
         editModuleForm.addEventListener('submit', function(event) {

@@ -53,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function() {
         alert(error.message);
     });
 
-    // Atualizar usuário ao enviar o formulário
     document.getElementById('editUserForm').addEventListener('submit', function(event) {
         event.preventDefault();
 

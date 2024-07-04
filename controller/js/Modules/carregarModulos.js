@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', loadModules);
 
-let allModules = []; // Variável para armazenar todos os módulos
+let allModules = []; 
 
 function loadModules() {
     authFetch('/api/modulos', { method: 'GET' })
@@ -8,10 +8,10 @@ function loadModules() {
             if (!response.ok) {
                 throw new Error('Falha ao carregar módulos');
             }
-            allModules = data; // Armazena todos os módulos
+            allModules = data; 
             const list = document.getElementById('moduleList');
             list.innerHTML = '';
-            displayModules(allModules); // Exibe todos os módulos inicialmente
+            displayModules(allModules);
         })
         .catch(error => {
             console.error('Erro:', error);

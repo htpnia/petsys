@@ -1,5 +1,5 @@
 document.getElementById('formProfile').addEventListener('submit', function(event) {
-    event.preventDefault();  // Impede que o formulário seja submetido de maneira convencional
+    event.preventDefault();  
 
     const nomePerfil = document.getElementById('nomePerfil').value;
     const descricao = document.getElementById('descricaoPerfil').value;
@@ -9,9 +9,9 @@ document.getElementById('formProfile').addEventListener('submit', function(event
         descricao: descricao
     };
 
-    console.log('Dados do registro de perfil:', perfilData);  // Loga os dados do registro no console para verificação
+    console.log('Dados do registro de perfil:', perfilData);  
 
-    authFetch('/cadperfil', {  // Atualizado para a rota correta
+    authFetch('/cadperfil', {  
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -20,20 +20,20 @@ document.getElementById('formProfile').addEventListener('submit', function(event
     })
     .then(({ data, response }) => {
         if (!response.ok) {
-            throw new Error('Falha na requisição: ' + response.statusText);  // Lança um erro se a resposta não for OK
+            throw new Error('Falha na requisição: ' + response.statusText);  
         }
         return data;
     })
     .then(data => {
         if (data.success) {
             alert('Perfil cadastrado com sucesso!');
-            window.location.href = '/perfis'; // Redirecionar para o painel de administração ou outra página relevante após o sucesso
+            window.location.href = '/perfis'; 
         } else {
-            alert('Falha no cadastro do perfil: ' + data.message);  // Mostra uma mensagem de erro se não for bem-sucedido
+            alert('Falha no cadastro do perfil: ' + data.message);  
         }
     })
     .catch(error => {
         console.error('Erro:', error);
-        alert('Falha no cadastro do perfil: ' + error.message);  // Mostra uma mensagem de erro em caso de falha na requisição
+        alert('Falha no cadastro do perfil: ' + error.message);  
     });
 });

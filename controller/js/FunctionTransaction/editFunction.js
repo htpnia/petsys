@@ -7,9 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    console.log('ID da função:', functionId); // Log the function ID
+    console.log('ID da função:', functionId); 
 
-    // Load function data
     authFetch(`/api/funcoes/${functionId}`, { method: 'GET' })
         .then(({ data, response }) => {
             if (!response.ok) {
@@ -32,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
             alert(error.message);
         });
 
-    // Update function on form submit
     const editFunctionForm = document.getElementById('editFunctionForm');
     if (editFunctionForm) {
         editFunctionForm.addEventListener('submit', function(event) {

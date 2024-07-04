@@ -7,9 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    console.log('ID do perfil:', profileId); // Adicione um log para verificar o ID do perfil
+    console.log('ID do perfil:', profileId); 
 
-    // Carregar dados do perfil
     authFetch(`/api/perfis/${profileId}`, { method: 'GET' })
         .then(({ data, response }) => {
             if (!response.ok) {
@@ -32,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
             alert(error.message);
         });
 
-    // Atualizar perfil ao enviar o formulário
     document.getElementById('editProfileForm').addEventListener('submit', function(event) {
         event.preventDefault();
 

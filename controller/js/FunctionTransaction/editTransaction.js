@@ -7,9 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    console.log('ID da transação:', transactionId); // Log the transaction ID
-
-    // Load transaction data
     authFetch(`/api/transacoes/${transactionId}`, { method: 'GET' })
         .then(({ data, response }) => {
             if (!response.ok) {
@@ -32,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
             alert(error.message);
         });
 
-    // Update transaction on form submit
     const editTransactionForm = document.getElementById('editTransactionForm');
     if (editTransactionForm) {
         editTransactionForm.addEventListener('submit', function(event) {

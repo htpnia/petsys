@@ -38,7 +38,7 @@ document.getElementById('formUser').addEventListener('submit', function(event) {
         idPerfil: idPerfil
     };
 
-    console.log('Dados do registro:', registerData);  // Loga os dados do registro no console para verificação
+    console.log('Dados do registro:', registerData);  
 
     authFetch('/caduser', {
         method: 'POST',
@@ -46,18 +46,18 @@ document.getElementById('formUser').addEventListener('submit', function(event) {
     })
     .then(({ data, response }) => {
         if (!response.ok) {
-            throw new Error('Falha na requisição: ' + response.statusText);  // Lança um erro se a resposta não for OK
+            throw new Error('Falha na requisição: ' + response.statusText);  
         }
 
         if (data.success) {
             alert('Cadastro realizado com sucesso!');
-            window.location.href = '/users'; // Redirecionar para a tela de login ou homepage após o sucesso
+            window.location.href = '/users'; 
         } else {
-            alert('Falha no cadastro: ' + data.message);  // Mostra uma mensagem de erro se não for bem-sucedido
+            alert('Falha no cadastro: ' + data.message);  
         }
     })
     .catch(error => {
         console.error('Erro:', error);
-        alert('Falha no cadastro: ' + error.message);  // Mostra uma mensagem de erro em caso de falha na requisição
+        alert('Falha no cadastro: ' + error.message);  
     });
 });

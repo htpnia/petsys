@@ -821,7 +821,7 @@ app.get('/api/perfis/:id/modulos', async (req, res) => {
             return res.status(404).json({ success: false, message: 'Perfil não encontrado' });
         }
 
-        const modulos = perfil.Modulos; // 'Modulos' deve corresponder ao nome da relação definida no modelo
+        const modulos = perfil.Modulos; 
         res.json(modulos);
     } catch (error) {
         console.error('Erro ao carregar módulos do perfil:', error);
@@ -965,7 +965,7 @@ app.get('/generate-pie-chart', (req, res) => {
 
 // Middleware para tratamento de erros
 app.use((err, req, res, next) => {
-    console.error(err.stack); // Loga o erro no console
+    console.error(err.stack); 
     res.status(500).send('Algo deu errado!');
 });
 

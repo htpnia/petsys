@@ -1,9 +1,9 @@
 document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();  // Impede que o formulário seja submetido de maneira convencional
+    event.preventDefault();  
 
     const email = document.getElementById('email').value;
 
-    console.log('Solicitação de recuperação de senha para o e-mail:', email);  // Loga o e-mail para verificação
+    console.log('Solicitação de recuperação de senha para o e-mail:', email);  
 
     authFetch('/api/recover', {
         method: 'POST',

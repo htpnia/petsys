@@ -9,7 +9,7 @@ function loadUsers() {
                 console.error('Erro na resposta do servidor:', response.statusText);
                 throw new Error('Falha ao carregar usuários');
             }
-            allUsers = data; // Armazena todos os usuários
+            allUsers = data; 
             console.log('Usuários carregados:', allUsers);
             displayUsers(allUsers); 
         })
