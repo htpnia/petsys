@@ -32,6 +32,11 @@
                 <p>Funções & Transações</p>
             </div>
 
+            <!-- Barra de Pesquisa - Transações -->
+            <div class="searchContainer">
+                <img src="../../public/images/lupa-_1_.svg"/><input type="text" id="searchTransactionInput" placeholder="Pesquisar transações..." oninput="filterTransactions()">
+            </div>
+
             <div class="transactionData">
                 <div class="dataHeader">
                     <div class="dataHeaderInfo">
@@ -47,6 +52,11 @@
 
             <div class="btnCreateTransactionContainer">
                 <button class="createTransactionBtn" onclick="window.location.href='/cadtransacao'">Criar transação</button>
+            </div>
+
+            <!-- Barra de Pesquisa - Funções -->
+            <div class="searchContainer">
+                <img src="../../public/images/lupa-_1_.svg"/><input type="text" id="searchFunctionInput" placeholder="Pesquisar funções..." oninput="filterFunctions()">
             </div>
 
             <div class="functionData">

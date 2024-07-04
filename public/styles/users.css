@@ -141,13 +141,32 @@ button img {
     background-color: #1A5639;
 }
 
+.searchContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 98%
+}
+
+.searchContainer img {
+  height: 20px;
+  width: 20px;
+  margin-right: 5px;
+  margin-top: 2px;
+}
+
+.searchContainer input {
+  border-radius: 10px;
+  border: 2px solid #c1c1c1;
+  padding-left: 10px;
+}
+
 .userData, .userRegisterData {
     border: 2px solid #CFCFCF;
     background-color: #F6F4F4;
     border-radius: 10px;
     margin: 10px 15px 20px 30px;
     height: 70vh;
-    overflow: auto;
+    overflow-y: auto;
 
 }
 
@@ -160,28 +179,38 @@ button img {
 
 .dataHeader {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  width: 100%;
   padding: 15px 20px 0px 0px;
 }
 
+.dataHeaderInfo {
+  display: flex;
+  justify-content: space-between;
+  width: 55%;
+  margin-left: 75px;
+  
+}
 .dataHeaderInfo span {
-  margin: 0px 80px 0px 60px;
   font-size: 15px;
 
+
 }
+
 
 .dataHeaderButtons {
   display: flex;
   justify-content: space-between;
-  width: 130px;
-  margin-left: 30px;
+  width: 160px;
+  padding-left: 40px;
+  margin-right: 75px;
 
 }
 
 .dataHeaderButtons span {
-
-
+  margin-left: 10px;
 }
+
 
 .btnCreateContainer {
     display: flex;
@@ -232,12 +261,13 @@ form, h2, label, input, textarea, .form-group {
 }
 .formCheckbox {
   display: flex;
+  align-items: center;
   background-color: #ffff;
   color: #5c5c5c;
   margin-top: 8px;
   padding: 2px 0px 2px 0px;
   height: 6vh;
-  width: 15vw;
+  width: 12vw;
   margin-left: 8vw;
   border: 1px solid #D7D7D7;
   border-radius: 4px;
@@ -248,7 +278,7 @@ form, h2, label, input, textarea, .form-group {
 .formCheckbox input{
   width: 30px;  
   height: 30px;
-  margin-left: 8px;
+  margin-left: 12px;
   margin-top: 3px;
   margin-bottom: 1px;
 
@@ -623,7 +653,7 @@ ul .list-group {
       margin: 0px;
     }
     
-    .usuarioSpan, .matriculaSpan, .emailSpan, .deleteSpan, .editSpan {
+    .usuarioSpan, .matriculaSpan, .perfilSpan, .deleteSpan, .editSpan {
       display: none;
     }
 
@@ -721,5 +751,6 @@ ul .list-group {
         padding: 0px;
         margin: 0px;
       }
+
 }
 

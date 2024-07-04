@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', loadTransactions);
 
+let allTransactions = []; // Variável para armazenar todas as transações
+
 function loadTransactions() {
     authFetch('/api/transacoes', { method: 'GET' })
         .then(({ data, response }) => {
@@ -7,48 +9,53 @@ function loadTransactions() {
                 console.error('Erro na resposta do servidor:', response.statusText);
                 throw new Error('Falha ao carregar transações');
             }
-            console.log('Transações carregadas:', data);
-            const list = document.getElementById('transactionList');
-            list.innerHTML = '';
-            if (Array.isArray(data.transacoes)) {
-                data.transacoes.forEach(transacao => {
-                    const item = document.createElement('li');
-                    item.classList.add('list-group-item');
-                    item.innerHTML = `
-                        <span class="transaction-info">${transacao.nomeTransacao}</span>
-                        <span class="transaction-buttons">
-                            <button class="editBtn">✒️</button>
-                            <button class="deleteBtn">❌</button>
-                        </span>
-                    `;
-                    item.addEventListener('click', (event) => {
-                        if (!event.target.classList.contains('editBtn') && !event.target.classList.contains('deleteBtn')) {
-                            showModal(transacao.nomeTransacao, transacao.descricao);
-                        }
-                    });
-
-                    const editBtn = item.querySelector('.editBtn');
-                    const deleteBtn = item.querySelector('.deleteBtn');
-
-                    editBtn.addEventListener('click', (event) => {
-                        event.stopPropagation();
-                        location.href = `/editTransaction?id=${transacao.idTransacao}`;
-                    });
-
-                    deleteBtn.addEventListener('click', (event) => {
-                        event.stopPropagation();
-                        deleteTransaction(transacao.idTransacao);
-                    });
-
-                    list.appendChild(item);
-                });
-            } else {
-                console.error('Resposta não é um array:', data.transacoes);
-            }
+            allTransactions = data.transacoes; // Armazena todas as transações
+            console.log('Transações carregadas:', allTransactions);
+            displayTransactions(allTransactions); // Exibe todas as transações inicialmente
         })
         .catch(error => {
             console.error('Erro:', error);
         });
+}
+
+function displayTransactions(transactions) {
+    const list = document.getElementById('transactionList');
+    list.innerHTML = '';
+    if (Array.isArray(transactions)) {
+        transactions.forEach(transacao => {
+            const item = document.createElement('li');
+            item.classList.add('list-group-item');
+            item.innerHTML = `
+                <span class="transaction-info">${transacao.nomeTransacao}</span>
+                <span class="transaction-buttons">
+                    <button class="editBtn">✒️</button>
+                    <button class="deleteBtn">❌</button>
+                </span>
+            `;
+            item.addEventListener('click', (event) => {
+                if (!event.target.classList.contains('editBtn') && !event.target.classList.contains('deleteBtn')) {
+                    showModal(transacao.nomeTransacao, transacao.descricao);
+                }
+            });
+
+            const editBtn = item.querySelector('.editBtn');
+            const deleteBtn = item.querySelector('.deleteBtn');
+
+            editBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                location.href = `/editTransaction?id=${transacao.idTransacao}`;
+            });
+
+            deleteBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                deleteTransaction(transacao.idTransacao);
+            });
+
+            list.appendChild(item);
+        });
+    } else {
+        console.error('Resposta não é um array:', transactions);
+    }
 }
 
 function deleteTransaction(id) {
@@ -90,4 +97,12 @@ function showModal(title, body) {
             modal.style.display = "none";
         }
     }
+}
+
+function filterTransactions() {
+    const searchTerm = document.getElementById('searchTransactionInput').value.toLowerCase();
+    const filteredTransactions = allTransactions.filter(transacao => 
+        transacao.nomeTransacao.toLowerCase().includes(searchTerm)
+    );
+    displayTransactions(filteredTransactions);
 }

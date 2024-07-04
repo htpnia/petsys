@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', loadProfiles);
 
+let allProfiles = []; 
+
 function loadProfiles() {
     authFetch('/api/perfis', { method: 'GET' })
         .then(({ data, response }) => {
@@ -7,49 +9,53 @@ function loadProfiles() {
                 console.error('Erro na resposta do servidor:', response.statusText);
                 throw new Error('Falha ao carregar perfis');
             }
-            const perfis = data;
-            console.log('Perfis carregados:', perfis);
-            const list = document.getElementById('profileList');
-            list.innerHTML = '';
-            if (Array.isArray(perfis)) {
-                perfis.forEach(perfil => {
-                    const item = document.createElement('li');
-                    item.classList.add('list-group-item');
-                    item.innerHTML = `
-                        <span class="profile-info">${perfil.nomePerfil}</span>
-                        <span class="profile-buttons">
-                            <button class="editBtn">✒️</button>
-                            <button class="deleteBtn">❌</button>
-                        </span>
-                    `;
-                    item.addEventListener('click', (event) => {
-                        if (!event.target.classList.contains('editBtn') && !event.target.classList.contains('deleteBtn')) {
-                            showModal(perfil);
-                        }
-                    });
-
-                    const editBtn = item.querySelector('.editBtn');
-                    const deleteBtn = item.querySelector('.deleteBtn');
-
-                    editBtn.addEventListener('click', (event) => {
-                        event.stopPropagation();
-                        location.href = `/editProfile?id=${perfil.idPerfil}`;
-                    });
-
-                    deleteBtn.addEventListener('click', (event) => {
-                        event.stopPropagation();
-                        deleteProfile(perfil.idPerfil);
-                    });
-
-                    list.appendChild(item);
-                });
-            } else {
-                console.error('Resposta não é um array:', perfis);
-            }
+            allProfiles = data; 
+            console.log('Perfis carregados:', allProfiles);
+            displayProfiles(allProfiles); 
         })
         .catch(error => {
             console.error('Erro:', error);
         });
+}
+
+function displayProfiles(profiles) {
+    const list = document.getElementById('profileList');
+    list.innerHTML = '';
+    if (Array.isArray(profiles)) {
+        profiles.forEach(perfil => {
+            const item = document.createElement('li');
+            item.classList.add('list-group-item');
+            item.innerHTML = `
+                <span class="profile-info">${perfil.nomePerfil}</span>
+                <span class="profile-buttons">
+                    <button class="editBtn">✒️</button>
+                    <button class="deleteBtn">❌</button>
+                </span>
+            `;
+            item.addEventListener('click', (event) => {
+                if (!event.target.classList.contains('editBtn') && !event.target.classList.contains('deleteBtn')) {
+                    showModal(perfil);
+                }
+            });
+
+            const editBtn = item.querySelector('.editBtn');
+            const deleteBtn = item.querySelector('.deleteBtn');
+
+            editBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                location.href = `/editProfile?id=${perfil.idPerfil}`;
+            });
+
+            deleteBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                deleteProfile(perfil.idPerfil);
+            });
+
+            list.appendChild(item);
+        });
+    } else {
+        console.error('Resposta não é um array:', profiles);
+    }
 }
 
 function deleteProfile(id) {
@@ -115,4 +121,12 @@ function showModal(perfil) {
             }
         }
     });
+}
+
+function filterProfiles() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const filteredProfiles = allProfiles.filter(perfil => 
+        perfil.nomePerfil.toLowerCase().includes(searchTerm)
+    );
+    displayProfiles(filteredProfiles);
 }

@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', loadUsers);
 
+let allUsers = [];
+
 function loadUsers() {
     authFetch('/api/usuarios', { method: 'GET' })
         .then(({ data, response }) => {
@@ -7,37 +9,41 @@ function loadUsers() {
                 console.error('Erro na resposta do servidor:', response.statusText);
                 throw new Error('Falha ao carregar usuários');
             }
-            const usuarios = data;
-            console.log('Usuários carregados:', usuarios);
-            const list = document.getElementById('userList');
-            list.innerHTML = '';
-            if (Array.isArray(usuarios)) {
-                usuarios.forEach(usuario => {
-                    fetchProfileName(usuario.idPerfil).then(nomePerfil => {
-                        const item = document.createElement('li');
-                        item.classList.add('list-group-item');
-                        item.innerHTML = `
-                            <span class="user-info">${usuario.nomeUsuario}</span>
-                            <span class="user-info">${usuario.matricula}</span>
-                            <span class="user-info">${nomePerfil}</span>
-                            <span class="user-buttons">
-                                <button class="editBtn" onclick="location.href='/editUser?id=${usuario.idUsuario}'; event.stopPropagation();">✒️</button>
-                                <button class="deleteBtn" onclick="deleteUser(${usuario.idUsuario}); event.stopPropagation();">❌</button>
-                            </span>
-                        `;
-                        item.addEventListener('click', () => showModal(usuario, nomePerfil));
-                        list.appendChild(item);
-                    }).catch(error => {
-                        console.error('Erro ao carregar perfil:', error);
-                    });
-                });
-            } else {
-                console.error('Resposta não é um array:', usuarios);
-            }
+            allUsers = data; // Armazena todos os usuários
+            console.log('Usuários carregados:', allUsers);
+            displayUsers(allUsers); 
         })
         .catch(error => {
             console.error('Erro:', error);
         });
+}
+
+function displayUsers(users) {
+    const list = document.getElementById('userList');
+    list.innerHTML = '';
+    if (Array.isArray(users)) {
+        users.forEach(usuario => {
+            fetchProfileName(usuario.idPerfil).then(nomePerfil => {
+                const item = document.createElement('li');
+                item.classList.add('list-group-item');
+                item.innerHTML = `
+                    <span class="user-info">${usuario.nomeUsuario}</span>
+                    <span class="user-info">${usuario.matricula}</span>
+                    <span class="user-info">${nomePerfil}</span>
+                    <span class="user-buttons">
+                        <button class="editBtn" onclick="location.href='/editUser?id=${usuario.idUsuario}'; event.stopPropagation();">✒️</button>
+                        <button class="deleteBtn" onclick="deleteUser(${usuario.idUsuario}); event.stopPropagation();">❌</button>
+                    </span>
+                `;
+                item.addEventListener('click', () => showModal(usuario, nomePerfil));
+                list.appendChild(item);
+            }).catch(error => {
+                console.error('Erro ao carregar perfil:', error);
+            });
+        });
+    } else {
+        console.error('Resposta não é um array:', users);
+    }
 }
 
 function fetchProfileName(idPerfil) {
@@ -107,4 +113,13 @@ function showModal(usuario, nomePerfil) {
             modal.style.display = "none";
         }
     }
+}
+
+function filterUsers() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const filteredUsers = allUsers.filter(usuario => 
+        usuario.nomeUsuario.toLowerCase().includes(searchTerm) ||
+        usuario.matricula.toLowerCase().includes(searchTerm)
+    );
+    displayUsers(filteredUsers);
 }

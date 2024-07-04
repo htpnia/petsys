@@ -1,39 +1,47 @@
 document.addEventListener('DOMContentLoaded', loadModules);
 
+let allModules = []; // Variável para armazenar todos os módulos
+
 function loadModules() {
     authFetch('/api/modulos', { method: 'GET' })
         .then(({ data, response }) => {
             if (!response.ok) {
                 throw new Error('Falha ao carregar módulos');
             }
-            const modules = data;
+            allModules = data; // Armazena todos os módulos
             const list = document.getElementById('moduleList');
             list.innerHTML = '';
-            if (Array.isArray(modules)) {
-                modules.forEach(module => {
-                    fetchModuleDetails(module.idModulo).then(details => {
-                        const item = document.createElement('li');
-                        item.classList.add('list-group-item');
-                        item.innerHTML = `
-                            <span class="module-info">${module.nomeModulo}</span>
-                            <span class="module-buttons">
-                                <button class="editBtn" onclick="location.href='/editModule?id=${module.idModulo}'; event.stopPropagation();">✒️</button>
-                                <button class="deleteBtn" onclick="deleteModule(${module.idModulo}); event.stopPropagation();">❌</button>
-                            </span>
-                        `;
-                        item.addEventListener('click', () => showModal(module.nomeModulo, module.descricao, details));
-                        list.appendChild(item);
-                    }).catch(error => {
-                        console.error('Erro ao carregar detalhes do módulo:', error);
-                    });
-                });
-            } else {
-                console.error('Resposta não é um array:', modules);
-            }
+            displayModules(allModules); // Exibe todos os módulos inicialmente
         })
         .catch(error => {
             console.error('Erro:', error);
         });
+}
+
+function displayModules(modules) {
+    const list = document.getElementById('moduleList');
+    list.innerHTML = '';
+    if (Array.isArray(modules)) {
+        modules.forEach(module => {
+            fetchModuleDetails(module.idModulo).then(details => {
+                const item = document.createElement('li');
+                item.classList.add('list-group-item');
+                item.innerHTML = `
+                    <span class="module-info">${module.nomeModulo}</span>
+                    <span class="module-buttons">
+                        <button class="editBtn" onclick="location.href='/editModule?id=${module.idModulo}'; event.stopPropagation();">✒️</button>
+                        <button class="deleteBtn" onclick="deleteModule(${module.idModulo}); event.stopPropagation();">❌</button>
+                    </span>
+                `;
+                item.addEventListener('click', () => showModal(module.nomeModulo, module.descricao, details));
+                list.appendChild(item);
+            }).catch(error => {
+                console.error('Erro ao carregar detalhes do módulo:', error);
+            });
+        });
+    } else {
+        console.error('Resposta não é um array:', modules);
+    }
 }
 
 function fetchModuleDetails(idModulo) {
@@ -111,4 +119,12 @@ function showModal(title, body, details) {
             modal.style.display = "none";
         }
     }
+}
+
+function filterModules() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const filteredModules = allModules.filter(module => 
+        module.nomeModulo.toLowerCase().includes(searchTerm)
+    );
+    displayModules(filteredModules);
 }

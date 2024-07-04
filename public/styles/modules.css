@@ -139,6 +139,26 @@
       color: #ffff;
       background-color: #1A5639;
   }
+
+  .searchContainer {
+    display: flex;
+    justify-content: flex-end;
+    width: 98%
+  }
+  
+  .searchContainer img {
+    height: 20px;
+    width: 20px;
+    margin-right: 5px;
+    margin-top: 2px;
+  }
+  
+  .searchContainer input {
+    border-radius: 10px;
+    border: 2px solid #c1c1c1;
+    padding-left: 10px;
+  }
+
   .moduleData, .moduleRegisterData {
       border: 2px solid #CFCFCF;
       background-color: #F6F4F4;
@@ -160,7 +180,7 @@
   .dataHeader {
     display: flex;
     justify-content: space-between;
-    padding: 15px 20px 0px 20px;
+    padding: 15px 55px 0px 20px;
   }
 
   .dataHeaderInfo span {
@@ -173,6 +193,9 @@
     margin: 0px 20px 0px 20px;
     font-size: 15px;
 
+  }
+
+  .dataHeaderButtons {
   }
 
   .btnCreateContainer {

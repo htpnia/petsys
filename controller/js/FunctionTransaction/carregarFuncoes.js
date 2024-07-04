@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', loadFunctions);
 
+let allFunctions = [];
+
 function loadFunctions() {
     authFetch('/api/funcoes', { method: 'GET' })
         .then(({ data, response }) => {
@@ -7,48 +9,53 @@ function loadFunctions() {
                 console.error('Erro na resposta do servidor:', response.statusText);
                 throw new Error('Falha ao carregar funções');
             }
-            console.log('Funções carregadas:', data);
-            const list = document.getElementById('functionList');
-            list.innerHTML = '';
-            if (Array.isArray(data.funcoes)) {
-                data.funcoes.forEach(funcao => {
-                    const item = document.createElement('li');
-                    item.classList.add('list-group-item');
-                    item.innerHTML = `
-                        <span class="function-info">${funcao.nomeFuncao}</span>
-                        <span class="function-buttons">
-                            <button class="editBtn">✒️</button>
-                            <button class="deleteBtn">❌</button>
-                        </span>
-                    `;
-                    item.addEventListener('click', (event) => {
-                        if (!event.target.classList.contains('editBtn') && !event.target.classList.contains('deleteBtn')) {
-                            showModal(funcao.nomeFuncao, funcao.descricao);
-                        }
-                    });
-                    
-                    const editBtn = item.querySelector('.editBtn');
-                    const deleteBtn = item.querySelector('.deleteBtn');
-
-                    editBtn.addEventListener('click', (event) => {
-                        event.stopPropagation();
-                        location.href = `/editFunction?id=${funcao.idFuncao}`;
-                    });
-
-                    deleteBtn.addEventListener('click', (event) => {
-                        event.stopPropagation();
-                        deleteFunction(funcao.idFuncao);
-                    });
-
-                    list.appendChild(item);
-                });
-            } else {
-                console.error('Resposta não é um array:', data.funcoes);
-            }
+            allFunctions = data.funcoes; 
+            console.log('Funções carregadas:', allFunctions);
+            displayFunctions(allFunctions); 
         })
         .catch(error => {
             console.error('Erro:', error);
         });
+}
+
+function displayFunctions(functions) {
+    const list = document.getElementById('functionList');
+    list.innerHTML = '';
+    if (Array.isArray(functions)) {
+        functions.forEach(funcao => {
+            const item = document.createElement('li');
+            item.classList.add('list-group-item');
+            item.innerHTML = `
+                <span class="function-info">${funcao.nomeFuncao}</span>
+                <span class="function-buttons">
+                    <button class="editBtn">✒️</button>
+                    <button class="deleteBtn">❌</button>
+                </span>
+            `;
+            item.addEventListener('click', (event) => {
+                if (!event.target.classList.contains('editBtn') && !event.target.classList.contains('deleteBtn')) {
+                    showModal(funcao.nomeFuncao, funcao.descricao);
+                }
+            });
+            
+            const editBtn = item.querySelector('.editBtn');
+            const deleteBtn = item.querySelector('.deleteBtn');
+
+            editBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                location.href = `/editFunction?id=${funcao.idFuncao}`;
+            });
+
+            deleteBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                deleteFunction(funcao.idFuncao);
+            });
+
+            list.appendChild(item);
+        });
+    } else {
+        console.error('Resposta não é um array:', functions);
+    }
 }
 
 function deleteFunction(id) {
@@ -90,4 +97,12 @@ function showModal(title, body) {
             modal.style.display = "none";
         }
     }
+}
+
+function filterFunctions() {
+    const searchTerm = document.getElementById('searchFunctionInput').value.toLowerCase();
+    const filteredFunctions = allFunctions.filter(funcao => 
+        funcao.nomeFuncao.toLowerCase().includes(searchTerm)
+    );
+    displayFunctions(filteredFunctions);
 }
