@@ -745,6 +745,9 @@
       .moduleData {
         margin: 15px; 
       }
+      .moduleData {
+        padding-right: 30px;
+      }
     
       .sideBarButtons button {
         font-size: 0; 
@@ -779,6 +782,9 @@
       .userInfo img {
           display: none;
        }
-  
+       
+       .dataHeader {
+        display: none;
+       }
 
   }

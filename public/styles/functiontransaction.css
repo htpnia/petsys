@@ -665,6 +665,10 @@ ul .list-group {
     margin: 15px; 
   }
 
+  .functionData, .transactionData {
+    padding-right: 30px;
+  }
+  
   .sideBarButtons button {
     font-size: 0; 
     margin: 10px;
@@ -693,5 +697,8 @@ ul .list-group {
       display: none;
    }
 
+   .dataHeader {
+    display: none;
+   }
 
 }

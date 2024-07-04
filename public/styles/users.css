@@ -704,6 +704,9 @@ ul .list-group {
         margin: 15px; 
       }
 
+      .userData {
+        padding-right: 30px;
+      }
       .userInfo {
         height: 15vh;
       }
@@ -750,6 +753,18 @@ ul .list-group {
       .user-buttons button {
         padding: 0px;
         margin: 0px;
+      }
+
+      .formCheckbox {
+        width: 230px;
+      }
+
+      .formCheckbox span {
+        width: 200px;
+      }
+
+      .usuarioSpan, .matriculaSpan, .perfilSpan, .deleteSpan, .editSpan {
+        display: none;
       }
 
 }

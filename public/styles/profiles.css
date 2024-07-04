@@ -713,6 +713,10 @@ form, h2, label, input, textarea, .form-group {
       margin: 15px; 
     }
 
+    .profileData {
+      padding-right: 30px;
+    }
+
     .sideBarButtons button {
       font-size: 0; 
       margin: 10px;
@@ -739,6 +743,10 @@ form, h2, label, input, textarea, .form-group {
 
     .userInfo img {
         display: none;
+     }
+
+     .dataHeader {
+      display: none;
      }
 
 }
