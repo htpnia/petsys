@@ -5,10 +5,14 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
 
     console.log('Solicitação de recuperação de senha para o e-mail:', email);  
 
-    authFetch('/api/recover', {
+    fetch('/api/recover', {
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ email })
     })
+    .then(response => response.json().then(data => ({ data, response })))
     .then(({ data, response }) => {
         if (response.ok) {
             alert('E-mail de recuperação enviado com sucesso!');

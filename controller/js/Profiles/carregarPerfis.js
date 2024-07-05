@@ -61,20 +61,20 @@ function displayProfiles(profiles) {
 function deleteProfile(id) {
     if (confirm("Tem certeza que deseja excluir este perfil?")) {
         authFetch(`/api/perfis/${id}`, { method: 'DELETE' })
-        .then(({ response }) => {
+        .then(({ data, response }) => {
             if (response.status === 204) {
                 alert('Perfil excluído com sucesso!');
                 location.reload();
             } else {
-                response.json().then(data => {
+                if (data.message === 'Perfil alocado a usuário.') {
+                    alert('Não foi possível excluir o perfil. Perfil alocado a usuário.');
+                } else {
                     alert('Falha ao excluir perfil: ' + data.message);
-                }).catch(error => {
-                    alert('Falha ao excluir perfil: ' + error.message);
-                });
+                }
             }
         })
         .catch(error => {
-            console.error('Erro:', error);
+            console.error('Erro ao excluir perfil:', error);
             alert('Erro ao excluir perfil: ' + error.message);
         });
     }

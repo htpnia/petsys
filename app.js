@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const sequelize = require('./config/db')
 const jwt = require('jsonwebtoken');
 const { exec } = require('child_process');
+const bcrypt = require('bcrypt');  // Adicionado bcrypt
 const Usuario = require('./model/user'); 
 const Perfil = require('./model/profile');
 const Modulo = require('./model/module');
@@ -15,10 +16,9 @@ const PerfilModulo = require('./model/profileModule');
 const cors = require('cors'); 
 const { Parser } = require('json2csv');
 
-
-
 const app = express();
 const PORT = 3000;
+const SECRET_KEY = 'chave';
 
 app.use(cors({
     origin: 'http://127.0.0.1:3000', // Altere para a origem que você quer permitir
@@ -26,6 +26,12 @@ app.use(cors({
     credentials: true,
     exposedHeaders: ['Authorization']
 }));
+
+// Middleware para parsear o corpo das requisições em JSON
+app.use(bodyParser.json());
+
+// Middleware para servir arquivos estáticos.
+app.use(express.static(path.join(__dirname, '/')));
 
 // Relacionamentos
 
@@ -65,15 +71,6 @@ Transacao.belongsToMany(Modulo, {
     otherKey: 'idModulo'
 });
 
-// Middleware para parsear o corpo das requisições em JSON
-app.use(bodyParser.json());
-
-// Middleware para servir arquivos estáticos.
-app.use(express.static(path.join(__dirname, '/')));
-
-
-const SECRET_KEY = 'chave';
-
 // Rota raiz para direcionar para a página de login
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'Login/login.html'));
@@ -92,7 +89,8 @@ app.post('/login', async (req, res) => {
             return res.status(400).json({ success: false, message: 'Usuário não encontrado' });
         }
 
-        if (senha !== user.senha) { 
+        const senhaValida = await bcrypt.compare(senha, user.senha);
+        if (!senhaValida) {
             return res.status(400).json({ success: false, message: 'Senha incorreta' });
         }
 
@@ -162,7 +160,7 @@ app.post('/reset-password', async (req, res) => {
         }
 
         // Atualizar a senha do usuário
-        usuario.senha = newPassword;
+        usuario.senha = await bcrypt.hash(newPassword, 10);
         await usuario.save();
 
         res.json({ success: true, message: 'Senha redefinida com sucesso' });
@@ -275,7 +273,8 @@ app.get('/associateProfileModule', (req, res) => {
 app.post('/caduser', async (req, res) => {
     try {
         const { nomeUsuario, email, matricula, senha, idPerfil, acessoSistema } = req.body;
-        const novoUsuario = await Usuario.create({ nomeUsuario, email, matricula, senha, idPerfil, acessoSistema });
+        const hashedPassword = await bcrypt.hash(senha, 10); // Hash da senha
+        const novoUsuario = await Usuario.create({ nomeUsuario, email, matricula, senha: hashedPassword, idPerfil, acessoSistema });
         res.status(201).json({ success: true, usuario: novoUsuario });
     } catch (error) {
         console.error('Erro ao criar usuário:', error);
@@ -467,28 +466,29 @@ app.get('/api/funcoes/:id', async (req, res) => {
 
 // Atualizar um usuário
 app.put('/api/usuarios/:id', async (req, res) => {
-        const { id } = req.params;
-        const { nomeUsuario, email, matricula, senha, idPerfil, acessoSistema } = req.body;
-        try {
-            const usuario = await Usuario.findByPk(id);
-            if (!usuario) {
-                return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
-            }
-            usuario.nomeUsuario = nomeUsuario;
-            usuario.email = email;
-            usuario.matricula = matricula;
-            if (senha) {
-                usuario.senha = senha; // Atualizar a senha somente se for fornecida
-            }
-            usuario.idPerfil = idPerfil;
-            usuario.acessoSistema = acessoSistema;
-            await usuario.save();
-            res.json({ success: true, usuario });
-        } catch (error) {
-            console.error('Erro ao atualizar usuário:', error);
-            res.status(500).json({ success: false, message: 'Erro ao atualizar usuário' });
+    const { id } = req.params;
+    const { nomeUsuario, email, matricula, senha, idPerfil, acessoSistema } = req.body;
+    try {
+        const usuario = await Usuario.findByPk(id);
+        if (!usuario) {
+            return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
         }
-    });
+        usuario.nomeUsuario = nomeUsuario;
+        usuario.email = email;
+        usuario.matricula = matricula;
+        if (senha) {
+            usuario.senha = await bcrypt.hash(senha, 10); // Atualizar a senha somente se for fornecida
+        }
+        usuario.idPerfil = idPerfil;
+        usuario.acessoSistema = acessoSistema;
+        await usuario.save();
+        res.json({ success: true, usuario });
+    } catch (error) {
+        console.error('Erro ao atualizar usuário:', error);
+        res.status(500).json({ success: false, message: 'Erro ao atualizar usuário' });
+    }
+});
+
 // Atualizar um perfil
 app.put('/api/perfis/:id', async (req, res) => {
     try {
@@ -599,12 +599,16 @@ app.delete('/api/usuarios/:id', async (req, res) => {
 app.delete('/api/perfis/:id', async (req, res) => {
     const { id } = req.params;
     try {
+        const usuarios = await Usuario.findAll({ where: { idPerfil: id } });
+        if (usuarios.length > 0) {
+            return res.status(400).json({ success: false, message: 'Perfil alocado a usuário.' });
+        }
+
         const perfil = await Perfil.findByPk(id);
         if (!perfil) {
             return res.status(404).json({ success: false, message: 'Perfil não encontrado' });
         }
 
-        // Remover associações na tabela PerfilModulo
         await PerfilModulo.destroy({ where: { idPerfil: id } });
 
         await perfil.destroy();
