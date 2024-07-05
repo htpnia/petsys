@@ -20,8 +20,7 @@ document.getElementById('formTransaction').addEventListener('submit', function(e
         }
         if (data.success) {
             alert('Transacao cadastrada com sucesso!');
-            window.location.href = '/funcoestransacoes'; 
-            alert('Falha no cadastro de transacao: ' + data.message);  
+            window.location.href = '/funcoestransacoes';  
         }
     })
     .catch(error => {

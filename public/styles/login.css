@@ -277,5 +277,13 @@ button:hover {
         margin-left: 70px;
     }
 
+    .loginImgContainer {
+        margin-bottom: 30px;
+    }
+
+    .loginImgContainer img {
+        margin-top: 60px;
+        margin-right: 10px;
+    }
 
 }
