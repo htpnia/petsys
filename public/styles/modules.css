@@ -787,4 +787,7 @@
         display: none;
        }
 
+       .create, .cancel {
+        width: 160px;
+       }
   }
