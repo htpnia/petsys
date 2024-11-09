@@ -21,7 +21,7 @@ const PORT = 3000;
 const SECRET_KEY = 'chave';
 
 app.use(cors({
-    origin: 'http://127.0.0.1:3000', // Altere para a origem que você quer permitir
+    origin: 'http://127.0.0.1:3000',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     exposedHeaders: ['Authorization']
@@ -79,11 +79,8 @@ app.get('/', (req, res) => {
 // Rota de login
 app.post('/login', async (req, res) => {
     const { email, senha } = req.body;
-    console.log('Tentativa de login:', { email, senha });
-
     try {
         const user = await Usuario.findOne({ where: { email } });
-        console.log('Usuário encontrado:', user);
 
         if (!user) {
             return res.status(400).json({ success: false, message: 'Usuário não encontrado' });
