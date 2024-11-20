@@ -106,7 +106,7 @@ function showModal(perfil) {
         modalTitle.innerText = perfil.nomePerfil;
         modalBody.innerHTML = `
             <p>${perfil.descricao}</p>
-            <h3>Módulos Associados</h3>
+            <h3>Pets associados</h3>
             <ul>${modulosList}</ul>
         `;
         modal.style.display = "block";

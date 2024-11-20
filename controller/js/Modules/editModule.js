@@ -52,10 +52,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Erro na resposta do servidor:', response.statusText);
                     throw new Error('Falha ao atualizar módulo.');
                 }
-                console.log('Resposta da atualização do módulo:', data);
                 if (data.success) {
-                    alert('Módulo atualizado com sucesso!');
-                    window.location.href = '/modulos';
+                    alert('Pet atualizado com sucesso!');
+                    window.location.href = '/pets';
                 } else {
                     alert('Falha ao atualizar módulo: ' + data.message);
                 }
@@ -70,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (cancelButton) {
             cancelButton.addEventListener('click', function(event) {
                 event.preventDefault();
-                window.location.href = '/modulos';
+                window.location.href = '/pets';
             });
         }
     } else {

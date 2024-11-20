@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedOptions = document.querySelectorAll('input[name="transacao"]:checked');
         const transactionIds = Array.from(selectedOptions).map(option => option.value);
 
-        console.log({ moduleId, transactionIds }); // Confirme que os dados estão corretos
+        console.log({ moduleId, transactionIds });
 
         authFetch('/api/modulosTransacoes/associar', {
             method: 'POST',

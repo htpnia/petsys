@@ -59,11 +59,11 @@ function displayFunctions(functions) {
 }
 
 function deleteFunction(id) {
-    if (confirm("Tem certeza que deseja excluir esta função?")) {
+    if (confirm("Tem certeza que deseja excluir esta necessidade?")) {
         authFetch(`/api/funcoes/${id}`, { method: 'DELETE' })
         .then(({ response }) => {
             if (response.status === 204) {
-                alert('Função excluída com sucesso!');
+                alert('Necessidade excluída com sucesso!');
                 location.reload();
             } else {
                 response.json().then(data => {

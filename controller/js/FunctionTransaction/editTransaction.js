@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 console.log('Resposta da atualização da transação:', data);
                 if (data.success) {
-                    alert('Transação atualizada com sucesso!');
-                    window.location.href = '/funcoestransacoes';
+                    alert('Doença atualizada com sucesso!');
+                    window.location.href = '/necessidades';
                 } else {
                     alert('Falha ao atualizar transação: ' + data.message);
                 }
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (cancelButton) {
             cancelButton.addEventListener('click', function(event) {
                 event.preventDefault();
-                window.location.href = '/funcoestransacoes';
+                window.location.href = '/necessidades';
             });
         }
     } else {

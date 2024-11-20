@@ -20,8 +20,8 @@ document.getElementById('formFunction').addEventListener('submit', function(even
             throw new Error('Falha na requisição: ' + response.statusText);  
         }
         if (data.success) {
-            alert('Funcao cadastrada com sucesso!');
-            window.location.href = '/funcoestransacoes';
+            alert('Necessidade cadastrada com sucesso!');
+            window.location.href = '/necessidades';
         } else {
             alert('Falha no cadastro do funcao: ' + data.message);  
         }

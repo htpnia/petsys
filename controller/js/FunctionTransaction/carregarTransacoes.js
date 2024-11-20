@@ -59,11 +59,11 @@ function displayTransactions(transactions) {
 }
 
 function deleteTransaction(id) {
-    if (confirm("Tem certeza que deseja excluir esta transação?")) {
+    if (confirm("Tem certeza que deseja excluir esta doença?")) {
         authFetch(`/api/transacoes/${id}`, { method: 'DELETE' })
         .then(({ response }) => {
             if (response.status === 204) {
-                alert('Transação excluída com sucesso!');
+                alert('Doença excluída com sucesso!');
                 location.reload();
             } else {
                 response.json().then(data => {

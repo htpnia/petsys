@@ -8,8 +8,6 @@ document.getElementById('formModule').addEventListener('submit', function(event)
         descricao: descricao
     };
 
-    console.log('Dados do registro de módulo:', moduleData);  
-
     authFetch('/cadmodulo', {  
         method: 'POST',
         headers: {
@@ -24,8 +22,8 @@ document.getElementById('formModule').addEventListener('submit', function(event)
         }
         console.log('Dados da resposta da API de cadastro de módulo:', data);
         if (data.success) {
-            alert('Módulo cadastrado com sucesso!');
-            window.location.href = '/modulos'; 
+            alert('Pet cadastrado com sucesso!');
+            window.location.href = '/pets'; 
         } else {
             alert('Falha no cadastro do módulo: ' + data.message);  
         }

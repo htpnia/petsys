@@ -69,11 +69,11 @@ function fetchModuleDetails(idModulo) {
 }
 
 function deleteModule(id) {
-    if (confirm("Tem certeza que deseja excluir este módulo?")) {
+    if (confirm("Tem certeza que deseja excluir este pet?")) {
         authFetch(`/api/modulos/${id}`, { method: 'DELETE' })
         .then(({ response }) => {
             if (response.status === 204) {
-                alert('Módulo excluído com sucesso!');
+                alert('Pet excluído com sucesso!');
                 location.reload();
             } else {
                 response.json().then(data => {
@@ -103,9 +103,9 @@ function showModal(title, body, details) {
         <div class="description">
         <p>${body}</p>
         </div>
-        <h2>Funções</h2>
+        <h2>Doenças</h2>
         <ul>${funcoes}</ul>
-        <h2>Transações</h2>
+        <h2>Necessidades</h2>
         <ul>${transacoes}</ul>
     `;
     modal.style.display = "block";

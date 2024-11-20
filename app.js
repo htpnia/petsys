@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const sequelize = require('./config/db')
 const jwt = require('jsonwebtoken');
 const { exec } = require('child_process');
-const bcrypt = require('bcrypt');  // Adicionado bcrypt
+const bcrypt = require('bcrypt');
 const Usuario = require('./model/user'); 
 const Perfil = require('./model/profile');
 const Modulo = require('./model/module');
@@ -182,12 +182,12 @@ app.get('/perfis', (req, res) => {
 });
 
 // Rota GET para servir o arquivo 'regModule.html' para cadastro de módulo
-app.get('/modulos', (req, res) => {
+app.get('/pets', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'Modules/modules.html'));
 });
 
 // Rota GET para servir o arquivo 'regFunction.html' para cadastro de função
-app.get('/funcoestransacoes', (req, res) => {
+app.get('/necessidades', (req, res) => {
     res.sendFile(path.join(__dirname, 'view', 'FunctionTransaction/functiontransaction.html'));
 });
 

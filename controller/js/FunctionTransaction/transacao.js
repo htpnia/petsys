@@ -19,8 +19,8 @@ document.getElementById('formTransaction').addEventListener('submit', function(e
             throw new Error('Falha na requisição: ' + response.statusText);  
         }
         if (data.success) {
-            alert('Transacao cadastrada com sucesso!');
-            window.location.href = '/funcoestransacoes';  
+            alert('Doença cadastrada com sucesso!');
+            window.location.href = '/necessidades';  
         }
     })
     .catch(error => {

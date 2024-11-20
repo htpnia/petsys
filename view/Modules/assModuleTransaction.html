@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QQTech - BaB Módulos</title>
+    <title>PETsys</title>
 
     <!-- Normalize CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -28,8 +28,8 @@
                 <button class="btnDashboard" onclick="navigateToPage(this)"><img src="/public/images/dashboard.svg"/>Dashboard</button>
                 <button class="btnUser" onclick="navigateToPage(this)"><img src="/public/images/usuario.svg"/>Usuários</button>
                 <button class="btnProfile" onclick="navigateToPage(this)"><img src="/public/images/perfis.svg"/>Perfis</button>
-                <button class="btnModule" onclick="navigateToPage(this)"><img src="/public/images/modulos.svg"/>Módulos</button>
-                <button class="btnFT" onclick="navigateToPage(this)"><img src="/public/images/ft.svg"/>Funções&Transações</button>
+                <button class="btnModule" onclick="navigateToPage(this)"><img src="/public/images/modulos.svg"/>Pets</button>
+                <button class="btnFT" onclick="navigateToPage(this)"><img src="/public/images/ft.svg"/>Doenças & Necessidades</button>
             </div>
             <div class="logout-container">
                 <span class="logout"><img src="../../public/images/sair-_1_.svg"/></span>
@@ -38,7 +38,7 @@
         <div class="pageContent">
             <!-- Header Bar -->
             <div class="headerBar">
-                <p>Associação: Módulos & Transações</p>
+                <p>Associação: Pets & Necessidades</p>
             </div>
 
             <!-- Formulário de Associação -->
@@ -46,17 +46,17 @@
                 <div class="formContainer">
                 <form id="moduleTransactionForm">
                     <div class="form-group">
-                        <label for="moduleSelect">Selecione o Módulo:</label>
+                        <label for="moduleSelect">Selecione o pet:</label>
                         <br>
                         <select class="moduleSelect" id="moduleSelect" name="moduleSelect" required></select>
                     </div>
                     <div class="form-group">
-                        <label for="transactionList">Selecione as Transações:</label>
+                        <label for="transactionList">Selecione as doenças:</label>
                         <div id="transactionList" class="checkbox-list"></div>
                     </div>
                     <div class="btnFormContainer">
                         <button class="create" type="submit">Associar</button>
-                        <button class="cancel" type="button" onclick="window.location.href='/modulos'">Voltar</button>
+                        <button class="cancel" type="button" onclick="window.location.href='/pets'">Voltar</button>
                     </div>
                 </form>
                 </div>

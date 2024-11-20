@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 console.log('Resposta da atualização da função:', data);
                 if (data.success) {
-                    alert('Função atualizada com sucesso!');
-                    window.location.href = '/funcoestransacoes';
+                    alert('Necessidade atualizada com sucesso!');
+                    window.location.href = '/necessidades';
                 } else {
                     alert('Falha ao atualizar função: ' + data.message);
                 }
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (cancelButton) {
             cancelButton.addEventListener('click', function(event) {
                 event.preventDefault();
-                window.location.href = '/funcoestransacoes';
+                window.location.href = '/necessidades';
             });
         }
     } else {

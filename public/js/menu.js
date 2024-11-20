@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
             "Dashboard": "/dashboard",
             "Perfis": "/perfis",
             "Usuários": "/users",
-            "Módulos": "/modulos",
-            "Funções&Transações": "/funcoestransacoes",
+            "Pets": "/pets",
+            "Doenças & Necessidades": "/necessidades",
         };
 
         const clickedButtonText = button.textContent.trim();
